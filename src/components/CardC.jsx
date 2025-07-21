@@ -1,0 +1,82 @@
+import "./../css/CardC.css";
+import personalImg from "/img/personal.png";
+import mensileImg from "/img/mensile.jpg";
+import giornaImg from "/img/full-shot-woman-doing-burpees-indoors.jpg";
+import consuImg from "/img/Consulenza.jpg";
+import { useEffect, useState } from "react";
+const services = [
+  {
+    id: 1,
+    img: personalImg,
+    title: "PERSONAL",
+    desc: "Lezione private personalizzate con assistenza continua e monitoraggio completo.",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Vorrei sapere di più sulle lezioni private con un personal trainer.",
+  },
+  {
+    id: 2,
+    img: mensileImg,
+    title: "MENSILE",
+    desc: "Piano mensile, ti permette di accedere a scheda personalizzata, sala pesi, sala corsi, spogliatoio.",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Vorrei sapere se è possibile fare un ingresso giornaliero e qual è il costo.",
+  },
+  {
+    id: 3,
+    img: giornaImg,
+    title: "GIORNALIERO",
+    desc: "Singolo ingresso in giornata con piena disponibilità da parte della struttura e staff.",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Mi interessano le informazioni sull'abbonamento mensile.",
+  },
+  {
+    id: 4,
+    img: consuImg,
+    title: "CONSULENZA",
+    desc: " Consigli personalizzati sul piano di allenamento più  adatto alle tue esigenze e ai tuoi obiettivi.",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Vorrei ricevere maggiori informazioni sul piano di consulenza personalizzata.",
+  },
+];
+
+export default function CardC() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  return (
+    <>
+      {services.map((service) => (
+        <div key={service.id} className="col">
+          <div
+            onMouseEnter={() => {
+              setIsVisible(true);
+            }}
+            onMouseLeave={() => {
+              setIsVisible(false);
+            }}
+            className="card"
+          >
+            <img className="card-img-top" src={service.img} alt="Title" />
+            <h4 className="card-title fs_size_card_title p-3">
+              {service.title}
+            </h4>
+            <div
+              className={`card-body cardBodyHome ${isVisible ? "enter" : ""}`}
+            >
+              <div className="card_content p-3">
+                <p className="card-text fs_size_card_desc">{service.desc}</p>
+                <a
+                  className="btn btn-md bt_bg_color"
+                  href={service.infoMessage}
+                  role="button"
+                  target="_blank"
+                >
+                  Contattaci
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}

@@ -1,0 +1,24 @@
+header {
+  position: sticky;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  .bg_nav {
+    background-color: white;
+    a {
+      font-size: 20px;
+      text-decoration: none;
+      color: black;
+    }
+    .nav-link:hover {
+      color: #ff4d00;
+    }
+    img {
+      width: 50px;
+      border-radius: 10%;
+    }
+    h1 {
+      text-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+  }
+}
