@@ -6,3 +6,38 @@ main {
     color: white;
   }
 }
+
+@media screen and (max-width: 577px) {
+  .jumbo {
+    height: 500px;
+    h1 {
+      font-size: 40px;
+    }
+    main {
+      .fs_size_title_lg {
+        font-weight: 600;
+        font-size: 30px;
+      }
+      .fs_size_card_title {
+        font-size: 23px;
+      }
+      .fs_size_card_desc {
+        font-size: 18px;
+      }
+      .fs_size_address {
+        font-size: 18px;
+      }
+      .fs_size_info_open {
+        font-size: 18px;
+        line-height: 1.8rem;
+      }
+      .fs_size_desc {
+        font-size: 20px;
+      }
+      .cardBodyHome.enter {
+        height: 100px;
+        opacity: 1;
+      }
+    }
+  }
+}

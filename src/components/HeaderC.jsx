@@ -9,7 +9,7 @@ export default function Header() {
       <nav className="navbar navbar-expand-md navbar-light bg_nav">
         <div className="container">
           <a className="navbar-brand" href="#">
-            <img className="mx-3" src="img/Frame 2.png" alt="Logo" />
+            <img src="img/Frame 2.png" alt="Logo" />
           </a>
           <div className="justify-content-center">
             <h1 className="fs-4 fw-semibold">PALASPORTMAX</h1>
