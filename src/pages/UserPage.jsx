@@ -5,9 +5,7 @@ export default function UserPage() {
   return (
     <div>
       {" "}
-      <Header></Header>
       <MainUser></MainUser>
-      <Footer></Footer>
     </div>
   );
 }

@@ -5,9 +5,7 @@ import Footer from "../components/FooterC";
 export default function AdminPage() {
   return (
     <div>
-      <Header></Header>
       <MainAdmin></MainAdmin>
-      <Footer></Footer>
     </div>
   );
 }

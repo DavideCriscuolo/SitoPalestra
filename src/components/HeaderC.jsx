@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import "./../css/Header.css";
+import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
 
 export default function Header() {
+  const menu = [
+    {
+      id: 1,
+      to: "#Chi_siamo",
+      title: "Chi Siamo",
+    },
+    {
+      id: 2,
+      to: "#service",
+      title: "I Nostri Servizi",
+    },
+  ];
+
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-light bg_nav">
@@ -30,16 +43,16 @@ export default function Header() {
             id="collapsibleNavId"
           >
             <ul className="navbar-nav ">
-              <li className="nav-item">
-                <HashLink className="nav-link" smooth to="/#Chi_siamo">
-                  Chi Siamo
-                </HashLink>
-              </li>
-              <li className="nav-item">
-                <HashLink className="nav-link" smooth to="/#service">
-                  I Nostri Servizi
-                </HashLink>
-              </li>
+              {menu.map((link) => {
+                return (
+                  <li key={link.id} className="nav-item">
+                    <NavLink className="nav-link" to={link.to}>
+                      {link.title}
+                    </NavLink>
+                  </li>
+                );
+              })}
+
               <li className="nav-item">
                 <a id="linkAccedi" className="nav-link" href="">
                   Accedi
