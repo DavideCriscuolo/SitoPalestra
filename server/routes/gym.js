@@ -6,5 +6,6 @@ const router = express.Router();
 router.get("/", gymController.index);
 
 router.get("/:email", gymController.show);
+router.put("/:id", gymController.update);
 
 export default router;

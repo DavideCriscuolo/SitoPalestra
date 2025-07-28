@@ -1,6 +1,56 @@
+import axios from "axios"; // per fare richieste  http al server
+
+import { use, useEffect, useState } from "react";
+
 import Jumbo from "./JumboC";
 
 export default function MainAdmin() {
+  // Logica per ricevere  tutti i dati dall endpoint tramite una chiamata ajax fatta con axios
+
+  const url = "http://localhost:5000/gym/";
+
+  const [dataUser, setDataUser] = useState([]);
+
+  function requestData() {
+    axios.get(url).then((res) => {
+      setDataUser(res.data);
+      console.log(res.data); // se vedi il log due volte è colpa dello strictMode, ignoralo
+    });
+  }
+  useEffect(requestData, []);
+  /*------------------------------------------------------*/
+
+  /* Qui c'è la logica lato front end  per fare il put dei dati di un iscritto dove il value dell option corrisponde all id dell iscritto nella tabella sql*/
+
+  const [formData, setFormData] = useState({
+    spalle: 0,
+    vita: 0,
+    petto: 0,
+    gambaSinistra: 0,
+    gambaDestra: 0,
+  });
+
+  function handleChange(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  const [idUser, setId] = useState("");
+
+  function handleSelect(e) {
+    setId(e.target.value);
+  }
+
+  function sendMisure(e) {
+    e.preventDefault();
+
+    const urlSend = `http://localhost:5000/gym/${idUser}`;
+    axios.put(urlSend, formData).then((res) => {
+      console.log(res.data, urlSend);
+    });
+
+    /*------------------------------------------------------*/
+  }
+
   return (
     <main className="user_main">
       <Jumbo></Jumbo>
@@ -19,79 +69,98 @@ export default function MainAdmin() {
               <div className="col border my-4">
                 <div className="selectUser">
                   <div className="mb-3">
-                    <form id="formAdminMisure" action="">
-                      <label for="" className="form-label">
+                    <form onSubmit={sendMisure} id="formAdminMisure" action="">
+                      <label htmlFor="" className="form-label">
                         Iscritto
                       </label>
                       <select
                         className="form-select form-select-lg"
                         name="selectUser"
                         id="selectUser"
-                      ></select>
+                        value={idUser}
+                        onChange={handleSelect}
+                      >
+                        <option value="">-- Seleziona un utente --</option>
+                        {dataUser.map((user) => {
+                          const fullName = `${user.nome} ${user.cognome}`;
+                          return (
+                            <option key={user.id} value={user.id}>
+                              {fullName}
+                            </option>
+                          );
+                        })}
+                      </select>
                       <div className="mb-3">
                         <div className="my-3">
-                          <label for="" className="form-label">
+                          <label htmlFor="" className="form-label">
                             Misura1
                           </label>
                           <input
                             type="number"
                             className="form-control"
-                            name="inputMisura1"
-                            id="inputMisura1"
+                            name="spalle"
+                            id="spalle"
                             aria-describedby="helpId"
-                            placeholder="Inserisci Misura vita"
+                            placeholder="Inserisci Misura Spalle"
+                            value={formData.spalle}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="my-3">
-                          <label for="" className="form-label">
+                          <label htmlFor="" className="form-label">
                             Misura1
                           </label>
                           <input
                             type="number"
                             className="form-control"
-                            name="inputMisura1"
+                            name="petto"
                             id="inputMisura2"
                             aria-describedby="helpId"
-                            placeholder="Inserisci Misura vita"
+                            placeholder="Inserisci Misura Petto"
+                            value={formData.petto}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="my-3">
-                          <label for="" className="form-label">
+                          <label htmlFor="" className="form-label">
                             Misura1
                           </label>
                           <input
                             type="number"
                             className="form-control"
-                            name="inputMisura1"
-                            id="inputMisura3"
+                            name="vita"
+                            id="vita"
                             aria-describedby="helpId"
                             placeholder="Inserisci Misura vita"
+                            value={formData.vita}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="my-3">
-                          <label for="" className="form-label">
+                          <label htmlFor="" className="form-label">
                             Misura1
                           </label>
                           <input
                             type="number"
                             className="form-control"
-                            name="inputMisura1"
+                            name="gambaSinistra"
                             id="inputMisura4"
                             aria-describedby="helpId"
-                            placeholder="Inserisci Misura vita"
+                            placeholder="Inserisci Misura Gamba Lato Sinistro"
+                            value={formData.gambaSinistra}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="my-3">
-                          <label for="" className="form-label">
+                          <label htmlFor="" className="form-label">
                             Data
                           </label>
                           <input
                             type="date"
                             className="form-control"
-                            name="inputData"
+                            name="gambaDestra"
                             id="inputData"
                             aria-describedby="helpId"
-                            placeholder="Inserisci Misura vita"
                           />
                         </div>
                         <div>
@@ -103,7 +172,7 @@ export default function MainAdmin() {
                     </form>
                     <form id="formAdminScheda" action="">
                       <div className="mb-3">
-                        <label for="" className="form-label">
+                        <label htmlFor="" className="form-label">
                           Seleziona file
                         </label>
                         <input

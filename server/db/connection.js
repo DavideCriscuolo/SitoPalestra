@@ -13,7 +13,7 @@ console.log(connection);
 
 connection.connect((err) => {
   if (err) {
-    console.log(err.sqlMessage);
+    console.log(err.message);
   } else {
     console.log("Connection Success");
   }

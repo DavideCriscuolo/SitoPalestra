@@ -13,6 +13,7 @@ function App() {
             <Route path="/" element={<Home></Home>} />
             <Route path="/user" element={<UserPage></UserPage>} />
             <Route path="/admin" element={<AdminPage></AdminPage>} />
+            <Route path="/*" element={<h1>Not Fuond</h1>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
