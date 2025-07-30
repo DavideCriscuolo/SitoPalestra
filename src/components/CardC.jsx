@@ -3,7 +3,7 @@ import personalImg from "/img/personal.png";
 import mensileImg from "/img/mensile.jpg";
 import giornaImg from "/img/full-shot-woman-doing-burpees-indoors.jpg";
 import consuImg from "/img/Consulenza.jpg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const services = [
   {
     id: 1,

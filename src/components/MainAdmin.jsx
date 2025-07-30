@@ -3,6 +3,7 @@ import axios from "axios"; // per fare richieste  http al server
 import { use, useEffect, useState } from "react";
 
 import Jumbo from "./JumboC";
+import { data } from "react-router-dom";
 
 export default function MainAdmin() {
   // Logica per ricevere  tutti i dati dall endpoint tramite una chiamata ajax fatta con axios
@@ -23,11 +24,19 @@ export default function MainAdmin() {
   /* Qui c'è la logica lato front end  per fare il put dei dati di un iscritto dove il value dell option corrisponde all id dell iscritto nella tabella sql*/
 
   const [formData, setFormData] = useState({
-    spalle: 0,
-    vita: 0,
-    petto: 0,
-    gambaSinistra: 0,
-    gambaDestra: 0,
+    spalle: "",
+    vita: "",
+    petto: "",
+    gambaSinistra: "",
+    gambaDestra: "",
+    peso: "",
+    bicipiteDestro: "",
+    bicipiteSinistro: "",
+    polpaccioDestro: "",
+    polpaccioSinistro: "",
+    plica: "",
+    id_iscritto: "",
+    data: "",
   });
 
   function handleChange(e) {
@@ -36,20 +45,32 @@ export default function MainAdmin() {
 
   const [idUser, setId] = useState("");
 
-  function handleSelect(e) {
-    setId(e.target.value);
+  function handleSelect(id) {
+    setId(id);
+    console.log(idUser);
   }
 
   function sendMisure(e) {
     e.preventDefault();
 
     const urlSend = `http://localhost:5000/gym/${idUser}`;
-    axios.put(urlSend, formData).then((res) => {
-      console.log(res.data, urlSend);
-    });
 
-    /*------------------------------------------------------*/
+    fetch(urlSend, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("fatto", data);
+      })
+      .catch((err) => {
+        console.error("Errore");
+      });
   }
+  /*------------------------------------------------------*/
 
   return (
     <main className="user_main">
@@ -77,14 +98,18 @@ export default function MainAdmin() {
                         className="form-select form-select-lg"
                         name="selectUser"
                         id="selectUser"
-                        value={idUser}
-                        onChange={handleSelect}
                       >
                         <option value="">-- Seleziona un utente --</option>
                         {dataUser.map((user) => {
                           const fullName = `${user.nome} ${user.cognome}`;
                           return (
-                            <option key={user.id} value={user.id}>
+                            <option
+                              key={user.id}
+                              onClick={() => {
+                                console.log(user.id);
+                                handleSelect(user.id);
+                              }}
+                            >
                               {fullName}
                             </option>
                           );
@@ -92,9 +117,6 @@ export default function MainAdmin() {
                       </select>
                       <div className="mb-3">
                         <div className="my-3">
-                          <label htmlFor="" className="form-label">
-                            Misura1
-                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -107,14 +129,11 @@ export default function MainAdmin() {
                           />
                         </div>
                         <div className="my-3">
-                          <label htmlFor="" className="form-label">
-                            Misura1
-                          </label>
                           <input
                             type="number"
                             className="form-control"
                             name="petto"
-                            id="inputMisura2"
+                            id="petto"
                             aria-describedby="helpId"
                             placeholder="Inserisci Misura Petto"
                             value={formData.petto}
@@ -122,9 +141,6 @@ export default function MainAdmin() {
                           />
                         </div>
                         <div className="my-3">
-                          <label htmlFor="" className="form-label">
-                            Misura1
-                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -137,9 +153,6 @@ export default function MainAdmin() {
                           />
                         </div>
                         <div className="my-3">
-                          <label htmlFor="" className="form-label">
-                            Misura1
-                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -152,17 +165,104 @@ export default function MainAdmin() {
                           />
                         </div>
                         <div className="my-3">
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="gambaDestra"
+                            id="inputMisura4"
+                            aria-describedby="helpId"
+                            placeholder="Inserisci Misura Gamba Lato Sinistro"
+                            value={formData.gambaDestra}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="my-3">
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="peso"
+                            id="inputMisura4"
+                            aria-describedby="helpId"
+                            placeholder="Inserisci Misura Gamba Lato Sinistro"
+                            value={formData.peso}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="my-3">
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="bicipiteDestro"
+                            id="bicipiteDestro"
+                            aria-describedby="helpId"
+                            placeholder="Inserisci Misura Gamba Lato Sinistro"
+                            value={formData.bicipiteDestro}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="my-3">
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="bicipiteSinistro"
+                            id="bicipiteSinistro"
+                            aria-describedby="helpId"
+                            placeholder="Inserisci Misura Bicipite Sinistro"
+                            value={formData.bicipiteSinistro}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="my-3">
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="polpaccioDestro"
+                            id="polpaccioDestro"
+                            aria-describedby="helpId"
+                            placeholder="Inserisci Misura Polpaccio Destro"
+                            value={formData.polpaccioDestro}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="my-3">
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="polpaccioSinistro"
+                            id="polpaccioSinistro"
+                            aria-describedby="helpId"
+                            placeholder="Inserisci Misura Polpaccio Sinistro"
+                            value={formData.polpaccioSinistro}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="my-3">
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="plica"
+                            id="plica"
+                            aria-describedby="helpId"
+                            placeholder="Inserisci Misura Plica"
+                            value={formData.plica}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="my-3">
                           <label htmlFor="" className="form-label">
                             Data
                           </label>
                           <input
                             type="date"
                             className="form-control"
-                            name="gambaDestra"
-                            id="inputData"
+                            name="data"
+                            id="data"
                             aria-describedby="helpId"
+                            value={formData.data}
+                            onChange={handleChange}
                           />
                         </div>
+
                         <div>
                           <button className="btn btn-dark" type="submit">
                             Invia Misure
