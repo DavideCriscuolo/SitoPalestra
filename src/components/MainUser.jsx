@@ -1,4 +1,20 @@
+import { useEffect, useState } from "react";
+
 export default function MainUser() {
+  const [email, setEmail] = useState("");
+  const url = `http://localhost:5000/gym/user/davide123@gmail.com`;
+  const [dataUser, setDataUser] = useState({});
+
+  function requestData() {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setDataUser(data);
+      });
+  }
+  useEffect(requestData, []);
+
   return (
     <main className="user_main">
       <div className="container-fluid">
@@ -15,18 +31,56 @@ export default function MainUser() {
       <div className="container mt-4">
         <div className="card w-100 h-100 my-3">
           <div className="cardtop d-flex justify-content-center my-3">
-            <img
-              className=" w-25 rounded-circle "
-              src="./assets/img/Frame 2.png"
-              alt=""
-            />
+            <div>
+              <h2>
+                Ciao {dataUser.nome} {dataUser.cognome}
+              </h2>
+            </div>
           </div>
           <div className="card-body m-3">
             <div id="titleCard" className="title_card text-center"></div>
             <div className="row row-cols-1 row-cols-sm-1 row-cols-md-2">
               <div id="colMisure" className="col border  my-4">
-                <h2 className="text-center py-2">Misure</h2>
-                <ul id="ListMisure" className="py-3"></ul>
+                <div>
+                  {" "}
+                  <h2 className="text-center py-2">Misure</h2>{" "}
+                </div>
+                <div>
+                  {" "}
+                  <ul id="ListMisure" className="list-group py-3">
+                    <li className="list-group-item">
+                      <span>Peso:</span>
+                      {dataUser.peso} Kg
+                    </li>
+                    <li className="list-group-item">
+                      <span>Spalle: </span>
+                      {dataUser.spalle} cm
+                    </li>
+                    <li className="list-group-item">
+                      <span>Petto: </span> {dataUser.petto} cm
+                    </li>
+                    <li className="list-group-item">
+                      <span>Vita: </span> {dataUser.vita} cm
+                    </li>
+                    <li className="list-group-item">
+                      <span>Gamba Sinistra: </span> {dataUser.gambaSinistra} cm
+                    </li>
+                    <li className="list-group-item">
+                      <span>Gamba Destra: </span> {dataUser.gambaDestra} cm
+                    </li>
+                    <li className="list-group-item">
+                      <span>Polapccio Destro: </span> {dataUser.polpaccioDestro}{" "}
+                      cm
+                    </li>
+                    <li className="list-group-item">
+                      <span>Polapccio Sinistro: </span>{" "}
+                      {dataUser.polpaccioSinistro} cm
+                    </li>
+                    <li className="list-group-item">
+                      <span>Plica: </span> {dataUser.plica} %
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div className="col border  my-4">
                 <h2>Scheda</h2>

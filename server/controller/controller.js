@@ -36,6 +36,29 @@ export const show = (req, res) => {
     return res.json(results[0]);
   });
 };
+export const showEmail = (req, res) => {
+  const email = req.params.email;
+  console.log("req.params.email:", req.params.email);
+
+  const sql =
+    "SELECT * FROM iscritti  JOIN `info_iscritti` ON `info_iscritti`.`id_iscritto` = `iscritti`.`id` WHERE `email` = ? ";
+  connection.query(sql, [email], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        err: err.message,
+      });
+    }
+    console.log(results);
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        err: "Iscritto non trovato",
+      });
+    }
+    console.log(results[0]);
+    return res.json(results[0]);
+  });
+};
 
 export const update = (req, res) => {
   const id_iscritto = Number(req.params.id);
