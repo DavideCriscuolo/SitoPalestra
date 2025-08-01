@@ -15,6 +15,13 @@ export default function MainUser() {
   }
   useEffect(requestData, []);
 
+  //converti la data dell ogetto dataUser in giorno mese e anno
+  const data = new Date(dataUser.data);
+  const giorno = data.getDate();
+  const mese = data.getMonth() + 1;
+  const anno = data.getFullYear();
+  console.log(data);
+
   return (
     <main className="user_main">
       <div className="container-fluid">
@@ -78,6 +85,9 @@ export default function MainUser() {
                     </li>
                     <li className="list-group-item">
                       <span>Plica: </span> {dataUser.plica} %
+                    </li>
+                    <li className="list-group-item">
+                      <span>Data di inserimento: </span> {giorno}-{mese}-{anno}
                     </li>
                   </ul>
                 </div>
