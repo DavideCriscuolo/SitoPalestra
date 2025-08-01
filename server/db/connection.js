@@ -1,10 +1,14 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import mysql from "mysql2";
 
 const credentials = {
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "gym",
+  host: process.env.DB_H,
+  user: process.env.DB_USER,
+  password: process.env.DB_PW,
+  database: process.env.DB_NAME,
 };
 
 const connection = mysql.createConnection(credentials);

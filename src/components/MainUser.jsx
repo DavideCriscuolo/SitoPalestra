@@ -49,7 +49,7 @@ export default function MainUser() {
                   {" "}
                   <ul id="ListMisure" className="list-group py-3">
                     <li className="list-group-item">
-                      <span>Peso:</span>
+                      <span>Peso: </span>
                       {dataUser.peso} Kg
                     </li>
                     <li className="list-group-item">
