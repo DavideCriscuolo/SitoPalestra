@@ -1,9 +1,8 @@
 import axios from "axios"; // per fare richieste  http al server
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Jumbo from "./JumboC";
-import { data } from "react-router-dom";
 
 export default function MainAdmin() {
   // Logica per ricevere  tutti i dati dall endpoint tramite una chiamata ajax fatta con axios

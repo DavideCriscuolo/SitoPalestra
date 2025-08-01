@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-
+import { use, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 export default function MainUser() {
-  const [email, setEmail] = useState("");
-  const url = `http://localhost:5000/gym/user/davide123@gmail.com`;
   const [dataUser, setDataUser] = useState({});
-
+  const location = useLocation(); // per usare la funzione location
+  const email = location.state?.email; // per usare la funzione state  che restituisce l'oggetto location
+  const url = `http://localhost:5000/gym/user/${email}`;
   function requestData() {
     fetch(url)
       .then((res) => res.json())

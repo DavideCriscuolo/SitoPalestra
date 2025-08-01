@@ -59,6 +59,30 @@ export const showEmail = (req, res) => {
     return res.json(results[0]);
   });
 };
+export const validate = (req, res) => {
+  const email = req.body.email;
+  console.log(req.body.email);
+
+  const sql = "SELECT * FROM iscritti WHERE `email` = ? LIMIT 1"; //  Limit serve per evitare di ottenere piu di un risultato
+  connection.query(sql, [email], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        err: err.message,
+      });
+    }
+    console.log(results);
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        err: "email non trovata",
+      });
+    }
+    console.log(results[0]);
+    return res
+      .status(200)
+      .json({ message: "Email trovata", utente: results[0] });
+  });
+};
 
 export const update = (req, res) => {
   const id_iscritto = Number(req.params.id);
