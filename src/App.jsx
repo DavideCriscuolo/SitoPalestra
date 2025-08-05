@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import UserPage from "./pages/UserPage";
 import AdminPage from "./pages/AdminPage";
 import Defaultlayout from "./layouts/DefaultLayout";
-import ModaleLogin from "./components/ModaleLogin";
+import PageLogin from "./components/PageLogin";
 function App() {
   return (
     <>
@@ -13,7 +13,7 @@ function App() {
             <Route path="/" element={<Home></Home>} />
             <Route path="/user" element={<UserPage></UserPage>} />
             <Route path="/admin" element={<AdminPage></AdminPage>} />
-            <Route path="/modaleLogin" element={<ModaleLogin></ModaleLogin>} />
+            <Route path="/login" element={<PageLogin></PageLogin>} />
             <Route path="/*" element={<h1>Not Fuond</h1>}></Route>
           </Route>
         </Routes>

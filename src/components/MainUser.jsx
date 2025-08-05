@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 export default function MainUser() {
   const [dataUser, setDataUser] = useState({});
@@ -53,43 +53,57 @@ export default function MainUser() {
                   <h2 className="text-center py-2">Misure</h2>{" "}
                 </div>
                 <div>
-                  {" "}
-                  <ul id="ListMisure" className="list-group py-3">
-                    <li className="list-group-item">
-                      <span>Peso: </span>
-                      {dataUser.peso} Kg
-                    </li>
-                    <li className="list-group-item">
-                      <span>Spalle: </span>
-                      {dataUser.spalle} cm
-                    </li>
-                    <li className="list-group-item">
-                      <span>Petto: </span> {dataUser.petto} cm
-                    </li>
-                    <li className="list-group-item">
-                      <span>Vita: </span> {dataUser.vita} cm
-                    </li>
-                    <li className="list-group-item">
-                      <span>Gamba Sinistra: </span> {dataUser.gambaSinistra} cm
-                    </li>
-                    <li className="list-group-item">
-                      <span>Gamba Destra: </span> {dataUser.gambaDestra} cm
-                    </li>
-                    <li className="list-group-item">
-                      <span>Polapccio Destro: </span> {dataUser.polpaccioDestro}{" "}
-                      cm
-                    </li>
-                    <li className="list-group-item">
-                      <span>Polapccio Sinistro: </span>{" "}
-                      {dataUser.polpaccioSinistro} cm
-                    </li>
-                    <li className="list-group-item">
-                      <span>Plica: </span> {dataUser.plica} %
-                    </li>
-                    <li className="list-group-item">
-                      <span>Data di inserimento: </span> {giorno}-{mese}-{anno}
-                    </li>
-                  </ul>
+                  {dataUser.peso &&
+                  dataUser.spalle &&
+                  dataUser.petto &&
+                  dataUser.vita &&
+                  dataUser.gambaSinistra &&
+                  dataUser.gambaDestra &&
+                  dataUser.polpaccioDestro &&
+                  dataUser.polpaccioSinistro &&
+                  dataUser.plica &&
+                  dataUser.data ? (
+                    <ul id="ListMisure" className="list-group py-3">
+                      <li className="list-group-item">
+                        <span>Peso: </span>
+                        {dataUser.peso} Kg
+                      </li>
+                      <li className="list-group-item">
+                        <span>Spalle: </span>
+                        {dataUser.spalle} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Petto: </span> {dataUser.petto} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Vita: </span> {dataUser.vita} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Gamba Sinistra: </span> {dataUser.gambaSinistra}{" "}
+                        cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Gamba Destra: </span> {dataUser.gambaDestra} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Polapccio Destro: </span>{" "}
+                        {dataUser.polpaccioDestro} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Polapccio Sinistro: </span>{" "}
+                        {dataUser.polpaccioSinistro} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Plica: </span> {dataUser.plica} %
+                      </li>
+                      <li className="list-group-item">
+                        <span>Data di inserimento: </span> {giorno}-{mese}-
+                        {anno}
+                      </li>
+                    </ul>
+                  ) : (
+                    <p className="text-center">Non ci sono misure</p>
+                  )}
                 </div>
               </div>
               <div className="col border  my-4">

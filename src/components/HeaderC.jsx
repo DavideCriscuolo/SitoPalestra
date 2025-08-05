@@ -41,9 +41,9 @@ export default function Header() {
                 </HashLink>
               </li>
               <li className="nav-item">
-                <a id="linkAccedi" className="nav-link" href="">
+                <NavLink id="linkAccedi" className="nav-link" to={"/login"}>
                   Accedi
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
