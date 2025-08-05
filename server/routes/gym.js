@@ -8,5 +8,6 @@ router.get("/", gymController.index);
 router.get("/:id", gymController.show);
 router.get("/user/:email", gymController.showEmail);
 router.put("/:id", gymController.update);
-router.post("/validate", gymController.validate);
+router.post("/validate/user", gymController.validate);
+router.post("/validate/admin", gymController.validateAdmin);
 export default router;

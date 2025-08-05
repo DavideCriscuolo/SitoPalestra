@@ -5,11 +5,12 @@ export default function ModaleLogin() {
   const navigate = useNavigate(); // per usare la funzione navigate
   function handleChange(e) {
     setEmail(e.target.value);
+    sessionStorage.setItem("email", e.target.value);
     console.log(e.target.value);
   }
   function validate(e) {
     e.preventDefault();
-    const url = `http://localhost:5000/gym/validate`;
+    const url = `http://localhost:5000/gym/validate/user`;
     fetch(url, {
       method: "Post", // specifico il metodo di richiesta
       headers: {
@@ -17,10 +18,23 @@ export default function ModaleLogin() {
       },
       body: JSON.stringify({ email }), // invia i dati come JSON al server tramite il corpo della richiesta
     }).then((res) => {
-      if (res.ok) {
+      if (res.ok && email) {
         navigate("/user", { state: { email } });
       } else {
-        alert("email non trovata");
+        const urlAdmin = `http://localhost:5000/gym/validate/admin`;
+        fetch(urlAdmin, {
+          method: "Post", // specifico il metodo di richiesta
+          headers: {
+            "Content-Type": "application/json", // specifica il tipo di dati che stai inviando
+          },
+          body: JSON.stringify({ email }), // invia i dati come JSON al server tramite il corpo della richiesta
+        }).then((res) => {
+          if (res.ok && email) {
+            navigate("/admin", { state: { email } });
+          } else {
+            alert("email non trovata");
+          }
+        });
       }
     });
   }
