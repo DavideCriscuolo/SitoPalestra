@@ -6,7 +6,7 @@ export default function PageLogin() {
   const navigate = useNavigate(); // per usare la funzione navigate
   function handleChange(e) {
     setEmail(e.target.value);
-    localStorage.setItem("email", e.target.value);
+    sessionStorage.setItem("email", e.target.value);
     console.log(e.target.value);
   }
   function validate(e) {

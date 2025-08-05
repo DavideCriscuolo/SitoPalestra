@@ -60,6 +60,8 @@ export const showEmail = (req, res) => {
   });
 };
 export const validate = (req, res) => {
+  // per il sistema di validazione devo prendere l'email dal form e verificare che sia presente nel db
+
   const email = req.body.email;
   console.log(req.body.email);
 
@@ -77,6 +79,7 @@ export const validate = (req, res) => {
         err: "email non trovata",
       });
     }
+
     console.log(results[0]);
     return res
       .status(200)
