@@ -1,72 +1,104 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import JumboC from "./JumboC";
+import "./../css/PageLogin.css";
 export default function PageLogin() {
   const [email, setEmail] = useState("");
-  const navigate = useNavigate(); // per usare la funzione navigate
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // per navigare dopo il login
+
   function handleChange(e) {
     setEmail(e.target.value);
-    sessionStorage.setItem("email", e.target.value);
-    console.log(e.target.value);
-  }
-  function validate(e) {
-    e.preventDefault();
-    const url = `http://localhost:5000/gym/validate/user`;
-    fetch(url, {
-      method: "Post", // specifico il metodo di richiesta
-      headers: {
-        "Content-Type": "application/json", // specifica il tipo di dati che stai inviando
-      },
-      body: JSON.stringify({ email }), // invia i dati come JSON al server tramite il corpo della richiesta
-    }).then((res) => {
-      if (res.ok && email) {
-        navigate("/user", { state: { email } });
-      } else {
-        const urlAdmin = `http://localhost:5000/gym/validate/admin`;
-        fetch(urlAdmin, {
-          method: "Post", // specifico il metodo di richiesta
-          headers: {
-            "Content-Type": "application/json", // specifica il tipo di dati che stai inviando
-          },
-          body: JSON.stringify({ email }), // invia i dati come JSON al server tramite il corpo della richiesta
-        }).then((res) => {
-          if (res.ok && email) {
-            navigate("/admin", { state: { email } });
-          } else {
-            alert("email non trovata");
-          }
-        });
-      }
-    });
+    sessionStorage.setItem("email", e.target.value); // opzionale: memorizzi anche in sessione
   }
 
+  function handlePassword(e) {
+    setPassword(e.target.value);
+  }
+
+  async function validate(e) {
+    e.preventDefault();
+
+    const url = `http://localhost:5000/gym/login`;
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.log("Login fallito");
+        console.log(data);
+        return;
+      }
+      console.log("Risposta login:", data);
+
+      if (!data.token) {
+        alert("Login fallito: token non ricevuto");
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      console.log(data.token);
+      localStorage.setItem("email", email);
+
+      navigate("/user");
+    } catch (error) {
+      console.error("Errore nella richiesta:", error);
+    }
+  }
   return (
     <>
       <JumboC></JumboC>
-      <div className="container">
-        <form onSubmit={validate} className="mb-3">
-          <label htmlFor="" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            id="email"
-            aria-describedby="emailHelpId"
-            placeholder="abc@mail.com"
-            onChange={handleChange}
-            value={email}
-          />
-          <small id="emailHelpId" className="form-text text-muted">
-            Help text
-          </small>
-          <button type="submit" className="btn btn-primary">
-            {" "}
-            Submit
-          </button>
-        </form>
-      </div>
+      <main className="main_login">
+        <div className="container  d-flex justify-content-center flex-column ">
+          <form onSubmit={validate} className="mb-3">
+            <label htmlFor="" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              id="email"
+              aria-describedby="emailHelpId"
+              placeholder="abc@mail.com"
+              onChange={handleChange}
+              value={email}
+            />
+            <label htmlFor="" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              id="password"
+              aria-describedby="emailHelpId"
+              placeholder="password"
+              onChange={handlePassword}
+              value={password}
+            />
+
+            <button type="submit" className="btn btn-primary my-3">
+              {" "}
+              Accedi
+            </button>
+          </form>
+          <div className="">
+            <NavLink className={"btn btn-primary  "} to="/register">
+              Registrati
+            </NavLink>
+          </div>
+        </div>
+      </main>
     </>
   );
 }

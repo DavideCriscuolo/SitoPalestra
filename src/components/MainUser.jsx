@@ -1,26 +1,72 @@
+import e from "cors";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function MainUser() {
-  const [dataUser, setDataUser] = useState({});
-  const location = useLocation(); // per usare la funzione location
-  const email = location.state?.email; // per usare la funzione state  che restituisce l'oggetto location
-  const url = `http://localhost:5000/gym/user/${email}`;
-  function requestData() {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setDataUser(data);
-      });
-  }
-  useEffect(requestData, []);
+  const [dataUser, setDataUser] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  //converti la data dell ogetto dataUser in giorno mese e anno
+  // Prendi email da location.state
+  const email = location.state?.email || localStorage.getItem("email");
+  console.log(email);
+
+  const url = `http://localhost:5000/gym/user/${email}`;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    console.log("token nella pagina user", token);
+    // Se non c’è token, vai alla login
+    if (!token) {
+      console.log("token inesistente");
+      navigate("/");
+      return;
+    }
+
+    // Se manca email, anche torno indietro (per sicurezza)
+    if (!email) {
+      console.log("email inesistente");
+      navigate("/");
+      return;
+    }
+
+    // Funzione per fare la richiesta dati
+    function requestData() {
+      fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`, // se la rotta è protetta
+        },
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Errore nel recupero dati");
+          return res.json();
+        })
+        .then((data) => {
+          console.log("Dati utente:", data);
+          setDataUser(data);
+        })
+        .catch((err) => {
+          console.error(err);
+          // Se errore (token scaduto o altro) fai logout
+          localStorage.removeItem("token");
+          navigate("/");
+        });
+    }
+
+    requestData();
+  }, [email, navigate, url]);
+
+  // Se i dati utente non ci sono ancora mostra caricamento
+  if (!dataUser) {
+    return <p>Caricamento dati utente...</p>;
+  }
+
+  // Converti la data in giorno, mese, anno (assumendo dataUser.data è stringa data valida)
   const data = new Date(dataUser.data);
   const giorno = data.getDate();
   const mese = data.getMonth() + 1;
   const anno = data.getFullYear();
-  console.log(data);
 
   return (
     <main className="user_main">

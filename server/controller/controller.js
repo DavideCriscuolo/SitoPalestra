@@ -1,5 +1,6 @@
 import connection from "./../db/connection.js";
-
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 export const index = (req, res) => {
   const sql = "SELECT * FROM iscritti;";
 
@@ -41,7 +42,7 @@ export const showEmail = (req, res) => {
   console.log("req.params.email:", req.params.email);
 
   const sql =
-    "SELECT * FROM iscritti  JOIN `info_iscritti` ON `info_iscritti`.`id_iscritto` = `iscritti`.`id` WHERE `email` = ? ";
+    "SELECT * FROM iscritti LEFT JOIN `info_iscritti` ON `info_iscritti`.`id_iscritto` = `iscritti`.`id` WHERE `email` = ? ";
   connection.query(sql, [email], (err, results) => {
     if (err) {
       return res.status(500).json({
@@ -59,56 +60,74 @@ export const showEmail = (req, res) => {
     return res.json(results[0]);
   });
 };
-export const validate = (req, res) => {
-  // per il sistema di validazione devo prendere l'email dal form e verificare che sia presente nel db
+export const login = (req, res) => {
+  const { email, password } = req.body;
+  const sql = "SELECT * FROM iscritti WHERE `email` = ?;";
 
-  const email = req.body.email;
-  console.log(req.body.email);
-
-  const sql = "SELECT * FROM iscritti WHERE `email` = ? LIMIT 1"; //  Limit serve per evitare di ottenere piu di un risultato
   connection.query(sql, [email], (err, results) => {
-    if (err) {
-      return res.status(500).json({
-        err: err.message,
-      });
-    }
-    console.log(results);
-
-    if (results.length === 0) {
-      return res.status(404).json({
-        err: "email non trovata",
-      });
+    if (err || results.length === 0) {
+      return res.status(401).json({ message: "Credenziali errate" });
     }
 
-    console.log(results[0]);
-    return res
-      .status(200)
-      .json({ message: "Email trovata", utente: results[0] });
+    const user = results[0];
+    console.log(password, "password inserita");
+    console.log(user.password, "password nel db");
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) {
+        return res.status(500).json({ message: "Errore server" });
+      }
+      if (!isMatch) {
+        return res.status(401).json({ message: "Password errata" });
+      }
+
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      res.json({ token });
+    });
   });
 };
-export const validateAdmin = (req, res) => {
-  const email = req.body.email;
-  console.log(req.body.email);
 
-  const sql = "SELECT * FROM admin_gym WHERE `email` = ? LIMIT 1"; //  Limit serve per evitare di ottenere piu di un risultato
-  connection.query(sql, [email], (err, results) => {
-    if (err) {
-      return res.status(500).json({
-        err: err.message,
-      });
-    }
-    console.log(results);
+export const register = (req, res) => {
+  const { nome, cognome, email, password } = req.body;
 
-    if (results.length === 0) {
-      return res.status(404).json({
-        err: "email non trovata",
-      });
+  // Controllo base (email e password non vuote)
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email e password richieste" });
+  }
+
+  // Verifica se l’utente esiste già (opzionale ma consigliato)
+  const sqlCheck = "SELECT * FROM iscritti WHERE email = ?";
+  connection.query(sqlCheck, [email], (err, results) => {
+    if (err) return res.status(500).json({ message: "Errore DB" });
+
+    if (results.length > 0) {
+      return res.status(409).json({ message: "Utente già registrato" });
     }
-    console.log(results[0]);
-    return res
-      .status(200)
-      .json({ message: "Email trovata", utente: results[0] });
+
+    // Hash della password
+    bcrypt.hash(password, 10, (err, hash) => {
+      if (err) return res.status(500).json({ message: "Errore hashing" });
+
+      // Inserisci nuovo utente con password hashata
+      const sqlInsert =
+        "INSERT INTO iscritti (nome, cognome, email, password) VALUES ( ?, ?, ?, ?)";
+      connection.query(sqlInsert, [nome, cognome, email, hash], (err2) => {
+        if (err2) {
+          console.error("Errore inserimento:", err2); // <-- aggiungi questo log
+          return res.status(500).json({ message: "Errore inserimento" });
+        }
+
+        res.json({ message: "Registrazione completata" });
+      });
+    });
   });
+};
+
+export const profile = (req, res) => {
+  res.json({ message: "Acesso autorizzato", user: req.user }); //
 };
 
 export const update = (req, res) => {

@@ -1,0 +1,105 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function MainRegistrazione() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nome, setNome] = useState("");
+  const [cognome, setCognome] = useState("");
+
+  const navigate = useNavigate(); // per navigare dopo il login
+
+  function handleChange(e) {
+    setEmail(e.target.value);
+    sessionStorage.setItem("email", e.target.value); // memorizzi anche in sessione
+  }
+
+  function register(e) {
+    e.preventDefault();
+    const url = `http://localhost:5000/gym/register`;
+    console.log({ nome, cognome, email, password });
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nome, cognome, email, password }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        navigate("/login");
+        console.log("fatto", data);
+      })
+      .catch((err) => {
+        console.error("Errore");
+      });
+  }
+
+  return (
+    <>
+      <main className="main_login">
+        <div className="container  d-flex justify-content-center flex-column">
+          <form onSubmit={register} className="mb-3">
+            <label htmlFor="" className="form-label">
+              Nome
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="nome"
+              id="nome"
+              aria-describedby="emailHelpId"
+              placeholder="Nome"
+              onChange={(e) => setNome(e.target.value)}
+              value={nome}
+            />
+            <label htmlFor="" className="form-label mt-3">
+              Cognome
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="congome"
+              id="cognome"
+              aria-describedby="emailHelpId"
+              placeholder="Cognome"
+              onChange={(e) => setCognome(e.target.value)}
+              value={cognome}
+            />
+            <label htmlFor="" className="form-label mt-3">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              id="email"
+              aria-describedby="emailHelpId"
+              placeholder="Email"
+              onChange={handleChange}
+              value={email}
+            />
+            <label htmlFor="" className="form-label mt-3">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              id="password"
+              aria-describedby="emailHelpId"
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+            <button type="submit" className="btn btn-primary my-2">
+              {" "}
+              Submit
+            </button>
+          </form>
+        </div>
+      </main>
+    </>
+  );
+}
