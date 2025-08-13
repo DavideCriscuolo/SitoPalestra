@@ -3,9 +3,11 @@ import Home from "./pages/Home";
 import UserPage from "./pages/UserPage";
 import AdminPage from "./pages/AdminPage";
 import Defaultlayout from "./layouts/DefaultLayout";
-import PageLogin from "./components/PageLogin";
+import PageLogin from "./pages/PageLoginUser";
 import NotFound from "./pages/NotFound";
 import Registrazione from "./pages/Regitrazione";
+import PageLoginAdmin from "./pages/PageLoginAdmin";
+import AdminRoute from "./components/AdminRoute";
 function App() {
   return (
     <>
@@ -14,13 +16,27 @@ function App() {
           <Route element={<Defaultlayout></Defaultlayout>}>
             <Route path="/" element={<Home></Home>} />
             <Route path="/user" element={<UserPage></UserPage>} />
-            <Route path="/admin" element={<AdminPage></AdminPage>} />
+
             <Route path="/login" element={<PageLogin></PageLogin>} />
+            <Route
+              path="/login_admin"
+              element={<PageLoginAdmin></PageLoginAdmin>}
+            ></Route>
             <Route
               path="/register"
               element={<Registrazione></Registrazione>}
             ></Route>
-            <Route path="/*" element={<NotFound></NotFound>}></Route>
+            {/* Pagina protetta */}
+
+            <Route path="*" element={<NotFound></NotFound>}></Route>
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminPage></AdminPage>
+                </AdminRoute>
+              }
+            ></Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -60,6 +60,35 @@ export const showEmail = (req, res) => {
     return res.json(results[0]);
   });
 };
+export const loginAdmin = (req, res) => {
+  const { email, password } = req.body;
+  const sql = "SELECT * FROM admin_gym WHERE `email` = ?;";
+
+  connection.query(sql, [email], (err, results) => {
+    if (err || results.length === 0) {
+      return res.status(401).json({ message: "Credenziali errate" });
+    }
+
+    const user = results[0];
+    console.log(password, "password inserita");
+    console.log(user.password, "password nel db");
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) {
+        return res.status(500).json({ message: "Errore server" });
+      }
+      if (!isMatch) {
+        return res.status(401).json({ message: "Password errata" });
+      }
+
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      res.json({ token });
+    });
+  });
+};
 export const login = (req, res) => {
   const { email, password } = req.body;
   const sql = "SELECT * FROM iscritti WHERE `email` = ?;";

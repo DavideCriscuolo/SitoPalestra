@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import JumboC from "./JumboC";
+
 import "./../css/PageLogin.css";
-export default function PageLogin() {
+export default function MainLoginAdmin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // per navigare dopo il login
@@ -20,7 +20,7 @@ export default function PageLogin() {
   async function validate(e) {
     e.preventDefault();
 
-    const url = `http://localhost:5000/gym/login`;
+    const url = `http://localhost:5000/gym/login/admin`;
 
     try {
       const res = await fetch(url, {
@@ -48,15 +48,16 @@ export default function PageLogin() {
       localStorage.setItem("token", data.token);
       console.log(data.token);
       localStorage.setItem("email", email);
-
-      navigate("/user");
+      const payload = JSON.parse(atob(data.token.split(".")[1]));
+      const ruolo = payload.role; // "admin" o "user"
+      console.log("Ruolo attuale:", ruolo);
+      navigate("/admin", { replace: true });
     } catch (error) {
       console.error("Errore nella richiesta:", error);
     }
   }
   return (
     <>
-      <JumboC></JumboC>
       <main className="main_login">
         <div className="container  d-flex justify-content-center flex-column ">
           <form onSubmit={validate} className="mb-3">
@@ -92,11 +93,6 @@ export default function PageLogin() {
               Accedi
             </button>
           </form>
-          <div className="">
-            <NavLink className={"btn btn-primary  "} to="/register">
-              Registrati
-            </NavLink>
-          </div>
         </div>
       </main>
     </>

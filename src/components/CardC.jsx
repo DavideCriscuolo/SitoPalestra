@@ -46,21 +46,41 @@ export default function CardC() {
     <>
       {services.map((service) => (
         <div key={service.id} className="col">
-          <div
-            onMouseEnter={() => {
-              setIsVisible(true);
-            }}
-            onMouseLeave={() => {
-              setIsVisible(false);
-            }}
-            className="card"
-          >
-            <img className="card-img-top" src={service.img} alt="Title" />
-            <h4 className="card-title fs_size_card_title p-3">
-              {service.title}
-            </h4>
+          <div className="card">
+            <img
+              className="card-img-top "
+              src={service.img}
+              alt="Title"
+              onClick={() => {
+                setIsVisible(service.id);
+              }}
+              onDoubleClick={() => {
+                setIsVisible(false);
+              }}
+            />
+            <div className="d-flex justify-content-around align-items-center">
+              <h4 className="card-title fs_size_card_title m-0 py-3 px-1">
+                {service.title}
+              </h4>
+              <div className="m-0-auto py-3 px-1 text-center">
+                <button
+                  className="btn btn-sm"
+                  onClick={() => {
+                    setIsVisible(service.id);
+                  }}
+                  onDoubleClick={() => {
+                    setIsVisible(false);
+                  }}
+                >
+                  Scopri di piu`
+                </button>
+              </div>
+            </div>
+
             <div
-              className={`card-body cardBodyHome ${isVisible ? "enter" : ""}`}
+              className={`card-body cardBodyHome ${
+                isVisible === service.id && "enter"
+              }`}
             >
               <div className="card_content p-3">
                 <p className="card-text fs_size_card_desc">{service.desc}</p>

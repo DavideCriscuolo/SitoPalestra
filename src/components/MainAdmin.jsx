@@ -6,16 +6,29 @@ import Jumbo from "./JumboC";
 
 export default function MainAdmin() {
   // Logica per ricevere  tutti i dati dall endpoint tramite una chiamata ajax fatta con axios
-
+  const token = localStorage.getItem("token");
   const url = "http://localhost:5000/gym/";
 
   const [dataUser, setDataUser] = useState([]);
 
   function requestData() {
-    axios.get(url).then((res) => {
-      setDataUser(res.data);
-      console.log(res.data); // se vedi il log due volte è colpa dello strictMode, ignoralo
-    });
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`, // <- importantissimo
+        },
+      })
+      .then((res) => {
+        console.log("Dati admin:", res.data);
+        setDataUser(res.data);
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 401) {
+          console.log("Errore 401: token mancante o non valido");
+        } else {
+          console.error(err);
+        }
+      });
   }
   useEffect(requestData, []);
   /*------------------------------------------------------*/

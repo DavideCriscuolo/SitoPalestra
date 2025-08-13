@@ -14,8 +14,8 @@ export default function AdminPage() {
   }, [email, navigate]);
 
   return (
-    <div>
+    <>
       <MainAdmin></MainAdmin>
-    </div>
+    </>
   );
 }

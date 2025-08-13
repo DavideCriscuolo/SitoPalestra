@@ -5,6 +5,11 @@ main {
     background-color: #ff4d00;
     color: white;
   }
+  .btn:first-child:active {
+    background-color: #ff4d00;
+    color: white;
+    border: none;
+  }
 }
 
 @media screen and (max-width: 577px) {
