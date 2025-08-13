@@ -1,4 +1,3 @@
-import e from "cors";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +34,7 @@ export default function MainUser() {
     function requestData() {
       fetch(url, {
         headers: {
-          Authorization: `Bearer ${token}`, // se la rotta è protetta
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
         .then((res) => {
@@ -99,8 +98,7 @@ export default function MainUser() {
                   <h2 className="text-center py-2">Misure</h2>{" "}
                 </div>
                 <div>
-                  {dataUser.peso &&
-                  dataUser.spalle &&
+                  {dataUser.spalle &&
                   dataUser.petto &&
                   dataUser.vita &&
                   dataUser.gambaSinistra &&

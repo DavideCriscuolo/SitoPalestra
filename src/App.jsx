@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Registrazione from "./pages/Regitrazione";
 import PageLoginAdmin from "./pages/PageLoginAdmin";
 import AdminRoute from "./components/AdminRoute";
+import UserRoute from "./components/UserRoute";
 function App() {
   return (
     <>
@@ -15,7 +16,6 @@ function App() {
         <Routes>
           <Route element={<Defaultlayout></Defaultlayout>}>
             <Route path="/" element={<Home></Home>} />
-            <Route path="/user" element={<UserPage></UserPage>} />
 
             <Route path="/login" element={<PageLogin></PageLogin>} />
             <Route
@@ -26,7 +26,7 @@ function App() {
               path="/register"
               element={<Registrazione></Registrazione>}
             ></Route>
-            {/* Pagina protetta */}
+            {/* Pagine protette */}
 
             <Route path="*" element={<NotFound></NotFound>}></Route>
             <Route
@@ -35,6 +35,14 @@ function App() {
                 <AdminRoute>
                   <AdminPage></AdminPage>
                 </AdminRoute>
+              }
+            ></Route>
+            <Route
+              path="/user"
+              element={
+                <UserRoute>
+                  <UserPage></UserPage>
+                </UserRoute>
               }
             ></Route>
           </Route>

@@ -51,7 +51,7 @@ export default function MainLogin() {
       const payload = JSON.parse(atob(data.token.split(".")[1]));
       const ruolo = payload.role; // "admin" o "user"
       console.log("Ruolo attuale:", ruolo);
-      navigate("/user");
+      navigate("/user", { replace: true });
     } catch (error) {
       console.error("Errore nella richiesta:", error);
     }
