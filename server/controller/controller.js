@@ -1,6 +1,12 @@
 import connection from "./../db/connection.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+// Importa il modulo 'fs' di Node.js (File System) per leggere, scrivere e controllare file sul server
+import fs from "fs";
+
+// Importa il modulo 'path' di Node.js per creare percorsi compatibili su tutti i sistemi operativi
+import path from "path";
+
 export const index = (req, res) => {
   const sql = "SELECT * FROM iscritti;";
 
@@ -235,4 +241,25 @@ export const update = (req, res) => {
       });
     }
   );
+};
+
+export const scheda = (req, res) => {
+  // Crea il percorso completo del file sul disco
+  // process.cwd() = cartella in cui sta girando il server
+  // path.join(...) concatena i pezzi del percorso in modo sicuro
+  const filePath = path.join(
+    process.cwd(),
+    "uploads",
+    "schede",
+    req.params.fileName
+  );
+
+  // Controlla se il file esiste davvero nella cartella
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ message: "File non trovato" });
+  }
+
+  // Se esiste, invia il file al client
+  // res.sendFile legge il file e lo spedisce come risposta HTTP
+  res.sendFile(filePath);
 };

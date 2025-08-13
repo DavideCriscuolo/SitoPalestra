@@ -152,10 +152,12 @@ export default function MainUser() {
               </div>
               <div className="col border  my-4">
                 <h2>Scheda</h2>
-
-                <a href="https://picsum.photos/200" download>
-                  Scheda.pfd
-                </a>
+                <iframe
+                  src={`http://localhost:5000${dataUser.scheda}`}
+                  frameborder="0"
+                  width="100%"
+                  height="600px"
+                ></iframe>
               </div>
             </div>
           </div>
