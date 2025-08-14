@@ -15,5 +15,7 @@ router.post("/login/admin", gymController.loginAdmin);
 router.get("/profile", verifyToken, gymController.profile);
 router.post("/register", gymController.register);
 router.get("/schede/:fileName", verifyToken, gymController.scheda);
+router.post("/reset-password", gymController.resetPassword);
+router.post("/request-reset", gymController.requestReset);
 
 export default router;

@@ -14,8 +14,8 @@ export default function UserPage() {
   }, [email, navigate]);
 
   return (
-    <div>
+    <>
       <MainUser></MainUser>
-    </div>
+    </>
   );
 }

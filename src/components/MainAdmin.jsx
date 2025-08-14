@@ -86,13 +86,12 @@ export default function MainAdmin() {
 
   return (
     <main className="user_main">
-      <Jumbo></Jumbo>
       <div className="container mt-4">
         <div className="card w-100 h-100 my-3">
           <div className="cardtop d-flex justify-content-center my-3">
             <img
               className=" w-25  rounded-circle "
-              src="img/Frame 2.png"
+              src="img/Frame2.png"
               alt=""
             />
           </div>

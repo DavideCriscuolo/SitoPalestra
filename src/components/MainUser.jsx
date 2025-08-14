@@ -69,17 +69,6 @@ export default function MainUser() {
 
   return (
     <main className="user_main">
-      <div className="container-fluid">
-        <div className=" jumbo px-sm-3 p-5 mb-4 bg-light rounded-3  my-5 d-flex align-items-end ">
-          <div className="container-fluid py-5 text-white">
-            <h1 className="fw-bold">PALASPORTMAX</h1>
-            <p className="col-md-8 fs-4 fst-italic">
-              COSTRUISCI LA TUA FORZA. SUPERA I TUOI LIMITI. DIVENTA LA TUA
-              VERSIONE MIGLIORE.
-            </p>
-          </div>
-        </div>
-      </div>
       <div className="container mt-4">
         <div className="card w-100 h-100 my-3">
           <div className="cardtop d-flex justify-content-center my-3">

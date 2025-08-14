@@ -56,6 +56,18 @@ export default function MainLogin() {
       console.error("Errore nella richiesta:", error);
     }
   }
+  function sendEmailReset(e) {
+    e.preventDefault();
+    const url = `http://localhost:5000/gym/request-reset`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+    alert("Email di reset inviata");
+  }
   return (
     <>
       <main className="main_login">
@@ -100,6 +112,13 @@ export default function MainLogin() {
             <NavLink className={"btn btn-primary  "} to="/login_admin">
               Admin
             </NavLink>
+            <button
+              className="btn btn-primary "
+              onClick={sendEmailReset}
+              type="click"
+            >
+              Password Dimenticata?
+            </button>
           </div>
         </div>
       </main>

@@ -9,6 +9,7 @@ import Registrazione from "./pages/Regitrazione";
 import PageLoginAdmin from "./pages/PageLoginAdmin";
 import AdminRoute from "./components/AdminRoute";
 import UserRoute from "./components/UserRoute";
+import PageResetP from "./pages/PageResetP";
 function App() {
   return (
     <>
@@ -26,6 +27,11 @@ function App() {
               path="/register"
               element={<Registrazione></Registrazione>}
             ></Route>
+            <Route
+              path="/reset-password/:token"
+              element={<PageResetP></PageResetP>}
+            ></Route>
+
             {/* Pagine protette */}
 
             <Route path="*" element={<NotFound></NotFound>}></Route>

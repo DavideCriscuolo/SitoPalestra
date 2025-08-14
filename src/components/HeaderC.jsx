@@ -9,7 +9,7 @@ export default function Header() {
       <nav className="navbar navbar-expand-md navbar-light bg_nav">
         <div className="container">
           <HashLink className="navbar-brand" to="/">
-            <img src="img/Frame 2.png" alt="Logo" />
+            <img src="/img/Frame2.png" alt="Logo" />
           </HashLink>
           <div className="justify-content-center">
             <h1 className="fs-4 fw-semibold">PALASPORTMAX</h1>

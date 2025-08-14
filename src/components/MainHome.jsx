@@ -6,8 +6,6 @@ import CardC from "./CardC";
 export default function MainHome() {
   return (
     <main>
-      <Jumbo></Jumbo>
-
       <div className="container">
         <section id="Chi_siamo" className="my-5">
           <h3 className="fs_size_title_lg">Chi Siamo</h3>
