@@ -34,13 +34,13 @@ export default function MainHome() {
                 <p>
                   Orari Apertura / Chiusura
                   <br />
-                  <strong>Lunedì / Mercoledì / Venerdì</strong>
+                  <strong>Lunedì / Mercoledì / Venerdì </strong>
                   8:50 - 12:00 / 13:30 - 21:00
                   <br />
-                  <strong>Martedì / Giovedì</strong>
+                  <strong>Martedì / Giovedì </strong>
                   8:50 - 12:00 / 15:30 - 21:00
                   <br />
-                  <strong>Sabato</strong>
+                  <strong>Sabato </strong>
                   8:50 - 12:00
                 </p>
               </div>
@@ -48,8 +48,8 @@ export default function MainHome() {
             <div className="col">
               <div className="address fs_size_address">
                 <p>
-                  Vieni a trocarci in
-                  <strong>Via Nazionale 62, Eboli, Salerno</strong>
+                  Vieni a trovarci in
+                  <strong> Via Nazionale 62, Eboli, Salerno</strong>
                 </p>
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3028.7363945925913!2d15.0546933!3d40.613639299999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13395fe6dd2f57b9%3A0x5078dfd861c50915!2spalestra%20palasportmax!5e0!3m2!1sit!2sit!4v1748375916457!5m2!1sit!2sit"

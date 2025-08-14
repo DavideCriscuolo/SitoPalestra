@@ -8,11 +8,11 @@ export default function Header() {
     <header>
       <nav className="navbar navbar-expand-md navbar-light bg_nav">
         <div className="container">
-          <HashLink className="navbar-brand" to="/">
+          <NavLink className="navbar-brand" to="/">
             <img src="/img/Frame2.png" alt="Logo" />
-          </HashLink>
+          </NavLink>
           <div className="justify-content-center">
-            <h1 className="fs-4 fw-semibold">PALASPORTMAX</h1>
+            <h1 className="fs-4 m-0 fw-semibold">PALASPORTMAX</h1>
           </div>
           <button
             className="navbar-toggler d-lg-none"

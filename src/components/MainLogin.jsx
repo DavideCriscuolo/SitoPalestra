@@ -100,25 +100,33 @@ export default function MainLogin() {
               value={password}
             />
 
-            <button type="submit" className="btn btn-primary my-3">
+            <button type="submit" className="btn btn-secondary my-3">
               {" "}
               Accedi
             </button>
           </form>
-          <div className="">
-            <NavLink className={"btn btn-primary  "} to="/register">
-              Registrati
-            </NavLink>
-            <NavLink className={"btn btn-primary  "} to="/login_admin">
-              Admin
-            </NavLink>
-            <button
-              className="btn btn-primary "
-              onClick={sendEmailReset}
-              type="click"
-            >
-              Password Dimenticata?
-            </button>
+          <div className="d-flex flex-wrap gap-3 ">
+            <div>
+              <NavLink className={"btn btn-secondary my-3  "} to="/register">
+                Registrati
+              </NavLink>
+            </div>
+            <div>
+              {" "}
+              <NavLink className={"btn btn-secondary  my-3 "} to="/login_admin">
+                Area Personal Trainer
+              </NavLink>{" "}
+            </div>
+            <div>
+              {" "}
+              <button
+                className="btn my-3  btn-secondary"
+                onClick={sendEmailReset}
+                type="click"
+              >
+                Password Dimenticata?
+              </button>{" "}
+            </div>
           </div>
         </div>
       </main>

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./../css/MainUser.css";
+import { NavLink } from "react-router-dom";
+
 export default function MainUser() {
   const [dataUser, setDataUser] = useState(null);
   const navigate = useNavigate();
@@ -66,7 +70,6 @@ export default function MainUser() {
   const giorno = data.getDate();
   const mese = data.getMonth() + 1;
   const anno = data.getFullYear();
-
   return (
     <main className="user_main">
       <div className="container mt-4">
@@ -80,7 +83,7 @@ export default function MainUser() {
           </div>
           <div className="card-body m-3">
             <div id="titleCard" className="title_card text-center"></div>
-            <div className="row row-cols-1 row-cols-sm-1 row-cols-md-2">
+            <div className="row row-cols-1">
               <div id="colMisure" className="col border  my-4">
                 <div>
                   {" "}
@@ -138,16 +141,23 @@ export default function MainUser() {
                     <p className="text-center">Non ci sono misure</p>
                   )}
                 </div>
+                <div className="py-2">
+                  <Link
+                    className="btn "
+                    to={`http://localhost:5000${dataUser.scheda}`}
+                    target="_blank"
+                    rel="noopener noreferrer" //evita l accesso alla finestra padre
+                  >
+                    Vai alla scheda
+                  </Link>
+                </div>
               </div>
-              <div className="col border  my-4">
-                <h2>Scheda</h2>
-                <iframe
-                  src={`http://localhost:5000${dataUser.scheda}`}
-                  frameborder="0"
-                  width="100%"
-                  height="600px"
-                ></iframe>
-              </div>
+            </div>
+            <div className="text-center">
+              <NavLink className="btn btn-secondary" to="/">
+                {" "}
+                Logut
+              </NavLink>
             </div>
           </div>
         </div>
