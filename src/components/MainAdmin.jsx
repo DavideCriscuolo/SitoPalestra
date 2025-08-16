@@ -9,7 +9,11 @@ export default function MainAdmin() {
   const token = localStorage.getItem("token");
   const url = "http://localhost:5000/gym/";
 
+  const [misurePresenti, setMisurePresenti] = useState(false);
   const [dataUser, setDataUser] = useState([]);
+  const [idUser, setId] = useState("");
+
+  const [file, setFile] = useState(null);
 
   function requestData() {
     axios
@@ -30,9 +34,61 @@ export default function MainAdmin() {
         }
       });
   }
+  if (
+    dataUser.spalle &&
+    dataUser.petto &&
+    dataUser.vita &&
+    dataUser.gambaSinistra &&
+    dataUser.gambaDestra &&
+    dataUser.peso &&
+    dataUser.bicipiteDestro &&
+    dataUser.bicipiteSinistro &&
+    dataUser.polpaccioDestro &&
+    dataUser.polpaccioSinistro &&
+    dataUser.plica &&
+    dataUser.data &&
+    dataUser.scheda
+  ) {
+    setMisurePresenti(true);
+  }
+
   useEffect(requestData, []);
 
-  const [idUser, setId] = useState("");
+  // Quando selezioni il file
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  // Funzione per inviare il file
+  function uploadScheda(e) {
+    e.preventDefault();
+
+    if (!file) return alert("Seleziona un file");
+
+    const formData = new FormData();
+    formData.append("scheda", file);
+
+    fetch(`http://localhost:5000/gym/updatedaScheda/${idUser}`, {
+      method: "PUT",
+      body: formData,
+    })
+      .then(async (res) => {
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const data = await res.json();
+          console.log("fatto", data);
+          alert(data.message);
+        } else {
+          const text = await res.text();
+          console.log("Risposta non JSON:", text);
+          alert("Errore: il server non ha restituito JSON");
+        }
+      })
+      .catch((err) => {
+        console.error("Errore upload", err);
+        alert("Errore upload");
+      });
+  }
 
   function handleSelect(id) {
     setId(id);
@@ -83,10 +139,10 @@ export default function MainAdmin() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function sendMisure(e) {
+  function sendUpdateMisure(e) {
     e.preventDefault();
 
-    const urlSend = `http://localhost:5000/gym/${idUser}`;
+    const urlSend = `http://localhost:5000/gym/updateMisure/${idUser}`;
 
     fetch(urlSend, {
       method: "PUT",
@@ -102,6 +158,36 @@ export default function MainAdmin() {
       .catch((err) => {
         console.error("Errore");
       });
+  }
+  function sendInsertMisure(e) {
+    e.preventDefault();
+    console.log(formData);
+    const urlSend = `http://localhost:5000/gym/insert/${idUser}`;
+
+    fetch(urlSend, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("fatto", data);
+      })
+      .catch((err) => {
+        console.error("Errore");
+      });
+  }
+
+  function handleSumbitMisure(e) {
+    e.preventDefault();
+
+    if (misurePresenti) {
+      sendUpdateMisure(e);
+    } else {
+      sendInsertMisure(e);
+    }
   }
   /*------------------------------------------------------*/
 
@@ -122,7 +208,11 @@ export default function MainAdmin() {
               <div className="col border my-4">
                 <div className="selectUser">
                   <div className="mb-3">
-                    <form onSubmit={sendMisure} id="formAdminMisure" action="">
+                    <form
+                      onSubmit={handleSumbitMisure}
+                      id="formAdminMisure"
+                      action=""
+                    >
                       <label htmlFor="" className="form-label">
                         Iscritto
                       </label>
@@ -296,13 +386,20 @@ export default function MainAdmin() {
                         </div>
 
                         <div>
-                          <button className="btn btn-dark" type="submit">
-                            Invia Misure
+                          <button className="btn btn-dark " type="submit">
+                            Aggiorna Misure Esistenti
+                          </button>
+                          <button className="btn btn-dark mx-3" type="submit">
+                            Inserisci Misure
                           </button>
                         </div>
                       </div>
                     </form>
-                    <form id="formAdminScheda" action="">
+                    <form
+                      onSubmit={uploadScheda}
+                      id="formAdminScheda"
+                      action=""
+                    >
                       <div className="mb-3">
                         <label htmlFor="" className="form-label">
                           Seleziona file
@@ -310,10 +407,11 @@ export default function MainAdmin() {
                         <input
                           type="file"
                           className="form-control"
-                          name=""
-                          id=""
+                          name="scheda"
+                          id="scheda"
                           placeholder=""
                           aria-describedby="fileHelpId"
+                          onChange={handleFile}
                         />
                       </div>
                       <button className="btn btn-dark" type="submit">

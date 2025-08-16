@@ -144,7 +144,7 @@ export default function MainUser() {
                 <div className="py-2">
                   <Link
                     className="btn "
-                    to={`http://localhost:5000${dataUser.scheda}`}
+                    to={`http://localhost:5000/uploads/schede/${dataUser.scheda}`}
                     target="_blank"
                     rel="noopener noreferrer" //evita l accesso alla finestra padre
                   >

@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto"; // Importa il modulo 'crypto' di Node.js per generare token univoci per il reset password
 import sendgrid from "@sendgrid/mail"; // Importa il modulo '@sendgrid/mail' per inviare email tramite SendGrid
+
 // Importa il modulo 'fs' di Node.js (File System) per leggere, scrivere e controllare file sul server
 import fs from "fs";
 import dotenv from "dotenv";
@@ -246,6 +247,94 @@ export const update = (req, res) => {
     }
   );
 };
+export const store = (req, res) => {
+  const id_iscritto = Number(req.params.id);
+  console.log("BODY RICEVUTO:", req.body);
+  console.log("ID ISCRITTO:", id_iscritto);
+
+  const spalle = req.body.spalle !== "" ? Number(req.body.spalle) : null;
+  const petto = req.body.petto !== "" ? Number(req.body.petto) : null;
+  const vita = req.body.vita !== "" ? Number(req.body.vita) : null;
+  const gambaSinistra =
+    req.body.gambaSinistra !== "" ? Number(req.body.gambaSinistra) : null;
+  const gambaDestra =
+    req.body.gambaDestra !== "" ? Number(req.body.gambaDestra) : null;
+  const peso = req.body.peso !== "" ? Number(req.body.peso) : null;
+  const bicipiteDestro =
+    req.body.bicipiteDestro !== "" ? Number(req.body.bicipiteDestro) : null;
+  const bicipiteSinistro =
+    req.body.bicipiteSinistro !== "" ? Number(req.body.bicipiteSinistro) : null;
+  const polpaccioDestro =
+    req.body.polpaccioDestro !== "" ? Number(req.body.polpaccioDestro) : null;
+  const polpaccioSinistro =
+    req.body.polpaccioSinistro !== ""
+      ? Number(req.body.polpaccioSinistro)
+      : null;
+  const plica = req.body.plica !== "" ? Number(req.body.plica) : null;
+  const data = req.body.data || null; // se vuoi consentire NULL
+
+  if (
+    [
+      spalle,
+      petto,
+      vita,
+      gambaSinistra,
+      gambaDestra,
+      peso,
+      bicipiteDestro,
+      bicipiteSinistro,
+      polpaccioDestro,
+      polpaccioSinistro,
+      plica,
+    ].some(isNaN)
+  ) {
+    return res
+      .status(400)
+      .json({ err: "Alcuni campi obbligatori sono mancanti o non numerici" });
+  }
+
+  const sql = `
+    INSERT INTO info_iscritti 
+    (id_iscritto, spalle, petto, vita, gambaSinistra, gambaDestra, peso, bicipiteDestro, bicipiteSinistro, polpaccioDestro, polpaccioSinistro, plica, data)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  connection.query(
+    sql,
+    [
+      id_iscritto,
+      spalle,
+      petto,
+      vita,
+      gambaSinistra,
+      gambaDestra,
+      peso,
+      bicipiteDestro,
+      bicipiteSinistro,
+      polpaccioDestro,
+      polpaccioSinistro,
+      plica,
+      data,
+    ],
+    (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          err: err.message,
+          message: "Non è stato possibile aggiornare le misure",
+        });
+      }
+
+      if (results.affectedRows === 0) {
+        return res.status(404).json({ err: "Iscritto non trovato" });
+      }
+
+      return res.json({
+        message: "Misure aggiornate con successo",
+        results,
+      });
+    }
+  );
+};
 
 export const scheda = (req, res) => {
   // Crea il percorso completo del file sul disco
@@ -266,6 +355,34 @@ export const scheda = (req, res) => {
   // Se esiste, invia il file al client
   // res.sendFile legge il file e lo spedisce come risposta HTTP
   res.sendFile(filePath);
+};
+export const uploadaScheda = (req, res) => {
+  console.log("req.file:", req.file);
+  console.log("req.body:", req.body);
+  // Controllo file
+  if (!req.file) {
+    return res.status(400).json({ error: "Nessun file caricato" });
+  }
+
+  const filename = req.file.filename;
+  const id = req.params.id;
+
+  // Aggiorna il DB
+  connection.query(
+    "UPDATE info_iscritti SET scheda = ? WHERE id_iscritto = ?",
+    [filename, id],
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Errore salvataggio DB" });
+      }
+
+      res.json({
+        message: "File caricato e salvato in DB!",
+        filename,
+      });
+    }
+  );
 };
 
 // Funzione per inviare email di reset password
@@ -397,5 +514,4 @@ export const deleteUser = (req, res) => {
     }
     return res.json({ message: "Utente eliminato con successo" });
   });
-
 };
