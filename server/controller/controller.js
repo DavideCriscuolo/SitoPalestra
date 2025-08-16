@@ -383,3 +383,19 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ error: "Errore generico server" });
   }
 };
+
+export const deleteUser = (req, res) => {
+  const { id } = req.params;
+
+  const sql = "DELETE FROM iscritti WHERE id = ?;";
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Errore server" });
+    }
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Utente non trovato" });
+    }
+    return res.json({ message: "Utente eliminato con successo" });
+  });
+
+};

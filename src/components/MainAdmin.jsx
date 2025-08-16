@@ -31,6 +31,34 @@ export default function MainAdmin() {
       });
   }
   useEffect(requestData, []);
+
+  const [idUser, setId] = useState("");
+
+  function handleSelect(id) {
+    setId(id);
+    console.log(idUser);
+  }
+  function handleDelete(e) {
+    e.preventDefault();
+    const urlDelete = `http://localhost:5000/gym/deleteUser/${idUser}`;
+    fetch(urlDelete, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idUser }),
+    }).then((res) => {
+      if (res.ok) {
+        requestData();
+        setId("");
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  }
+
   /*------------------------------------------------------*/
 
   /* Qui c'è la logica lato front end  per fare il put dei dati di un iscritto dove il value dell option corrisponde all id dell iscritto nella tabella sql*/
@@ -53,13 +81,6 @@ export default function MainAdmin() {
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-
-  const [idUser, setId] = useState("");
-
-  function handleSelect(id) {
-    setId(id);
-    console.log(idUser);
   }
 
   function sendMisure(e) {
@@ -297,6 +318,12 @@ export default function MainAdmin() {
                       </div>
                       <button className="btn btn-dark" type="submit">
                         Invia Scheda
+                      </button>
+                      <button
+                        onClick={handleDelete}
+                        className=" mx-3 btn btn-danger"
+                      >
+                        Elimina iscritto
                       </button>
                     </form>
                   </div>

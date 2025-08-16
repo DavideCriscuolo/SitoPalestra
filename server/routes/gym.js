@@ -17,5 +17,5 @@ router.post("/register", gymController.register);
 router.get("/schede/:fileName", verifyToken, gymController.scheda);
 router.post("/reset-password", gymController.resetPassword);
 router.post("/request-reset", gymController.requestReset);
-
+router.delete("/deleteUser/:id", gymController.deleteUser);
 export default router;
