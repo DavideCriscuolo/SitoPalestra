@@ -33,5 +33,5 @@ app.get("/test-db", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server in ascolto su http://localhost:${port}`);
+  console.log(`Server in ascolto su ${port}`);
 });
