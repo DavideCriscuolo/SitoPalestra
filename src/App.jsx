@@ -1,15 +1,25 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"; //serve per la navigazione tra le pagine
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 import Home from "./pages/Home";
 import UserPage from "./pages/UserPage";
 import AdminPage from "./pages/AdminPage";
 import Defaultlayout from "./layouts/DefaultLayout";
 import PageLogin from "./pages/PageLoginUser";
 import NotFound from "./pages/NotFound";
+
 import Registrazione from "./pages/Regitrazione";
 import PageLoginAdmin from "./pages/PageLoginAdmin";
 import AdminRoute from "./components/AdminRoute";
 import UserRoute from "./components/UserRoute";
 import PageResetP from "./pages/PageResetP";
+
+// <script
+//   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+//   integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+//   crossorigin="anonymous"
+// ></script>;
 function App() {
   return (
     <>
