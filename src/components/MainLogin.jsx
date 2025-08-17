@@ -21,7 +21,7 @@ export default function MainLogin() {
   async function validate(e) {
     e.preventDefault();
 
-    const url = `http://localhost:5000/gym/login`;
+    const url = import.meta.env.VITE_URL_LOGIN;
 
     try {
       const res = await fetch(url, {
@@ -60,7 +60,7 @@ export default function MainLogin() {
   }
   function sendEmailReset(e) {
     e.preventDefault();
-    const url = `http://localhost:5000/gym/request-reset`;
+    const url = import.meta.env.VITE_URL_REQUEST_RESET;
     fetch(url, {
       method: "POST",
       headers: {

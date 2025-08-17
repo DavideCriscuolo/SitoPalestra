@@ -21,7 +21,7 @@ export default function MainLoginAdmin() {
   async function validate(e) {
     e.preventDefault();
 
-    const url = `http://localhost:5000/gym/login/admin`;
+    const url = import.meta.env.VITE_URL_LOGIN_ADMIN;
 
     try {
       const res = await fetch(url, {

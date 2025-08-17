@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ShowProfile from "./ShowProfile";
+
 export default function FormMisure(prop) {
   const [file, setFile] = useState(null);
   const [operationSucess, setoperationSucces] = useState(false);
   const [operationUpload, setOperationUpload] = useState(false);
   const [operationDelete, setOperationDelete] = useState(false);
   const [operationUpdate, setOperationUpdate] = useState(false);
+  const [dataUser, setDataUser] = useState([]);
+  const [isClicked, setIsClicked] = useState(false);
   const [formData, setFormData] = useState({
     spalle: "",
     vita: "",
@@ -32,7 +36,7 @@ export default function FormMisure(prop) {
   function sendUpdateMisure(e) {
     e.preventDefault();
 
-    const urlSend = `http://localhost:5000/gym/updateMisure/${idUser}`;
+    const urlSend = import.meta.env.VITE_URL_UPDATE + idUser;
 
     fetch(urlSend, {
       method: "PUT",
@@ -53,40 +57,31 @@ export default function FormMisure(prop) {
         console.error("Errore");
       });
   }
-  function sendInsertMisure(e) {
-    e.preventDefault();
-    console.log(formData);
-    const urlSend = `http://localhost:5000/gym/insert/${idUser}`;
+  // function sendInsertMisure(e) {
+  //   e.preventDefault();
+  //   console.log(formData);
+  //   const urlSend = import.meta.env.VITE_URL_INSERT + idUser;
 
-    fetch(urlSend, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("fatto", data);
-        setoperationSucces(true);
-        setTimeout(() => {
-          setoperationSucces(false);
-        }, 1500);
-      })
-      .catch((err) => {
-        console.error("Errore");
-      });
-  }
+  //   fetch(urlSend, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(formData),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("fatto", data);
+  //       setoperationSucces(true);
+  //       setTimeout(() => {
+  //         setoperationSucces(false);
+  //       }, 1500);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Errore");
+  //     });
+  // }  //funzione per l insermiento
 
-  function handleSumbitMisure(e) {
-    e.preventDefault();
-
-    if (prop.misurePresenti) {
-      sendUpdateMisure(e);
-    } else {
-      sendInsertMisure(e);
-    }
-  }
   const handleFile = (e) => {
     setFile(e.target.files[0]);
   };
@@ -99,8 +94,8 @@ export default function FormMisure(prop) {
 
     const formData = new FormData();
     formData.append("scheda", file);
-
-    fetch(`http://localhost:5000/gym/updatedaScheda/${idUser}`, {
+    const url = import.meta.env.VITE_URL_UPLOAD_SCHEDA + idUser;
+    fetch(url, {
       method: "PUT",
       body: formData,
     })
@@ -127,7 +122,7 @@ export default function FormMisure(prop) {
 
   function handleDelete(e) {
     e.preventDefault();
-    const urlDelete = `http://localhost:5000/gym/deleteUser/${idUser}`;
+    const urlDelete = import.meta.env.VITE_URL_DELETE + idUser;
     fetch(urlDelete, {
       method: "DELETE",
       headers: {
@@ -149,10 +144,23 @@ export default function FormMisure(prop) {
       }
     });
   }
-
+  const urlProfile = import.meta.env.VITE_URL_PROFILEUSER + idUser;
+  function ShowProfileUser() {
+    console.log(idUser);
+    console.log(urlProfile);
+    fetch(urlProfile)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setDataUser(data);
+      });
+  }
+  useEffect(() => {
+    ShowProfileUser();
+  }, [idUser]);
   return (
     <>
-      <form onSubmit={handleSumbitMisure} id="formAdminMisure" action="">
+      <form onSubmit={sendUpdateMisure} id="formAdminMisure" action="">
         {operationDelete && (
           <div className="alert alert-success" role="alert">
             Utente eliminato con successo
@@ -161,11 +169,6 @@ export default function FormMisure(prop) {
         {operationUpload && (
           <div className="alert alert-success" role="alert">
             Scheda caricata con successo
-          </div>
-        )}
-        {operationSucess && (
-          <div className="alert alert-success" role="alert">
-            Misure inserite con successo
           </div>
         )}
         {operationUpdate && (
@@ -348,13 +351,7 @@ export default function FormMisure(prop) {
           <div className="d-flex flex-wrap gap-3">
             <div>
               <button className="btn btn-dark " type="submit">
-                Aggiorna Misure Esistenti
-              </button>
-            </div>
-
-            <div className="">
-              <button className="btn btn-dark " type="submit">
-                Inserisci Misure
+                Invia
               </button>
             </div>
           </div>
@@ -382,6 +379,18 @@ export default function FormMisure(prop) {
           Elimina iscritto
         </button>
       </form>
+      <div className="my-3">
+        <button
+          className="btn btn-dark"
+          onClick={() => {
+            setIsClicked(true);
+            ShowProfileUser();
+          }}
+        >
+          Mostra utente
+        </button>
+        {isClicked ? <ShowProfile dataUser={dataUser}></ShowProfile> : null}
+      </div>
     </>
   );
 }

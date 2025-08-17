@@ -1,16 +1,17 @@
 import axios from "axios"; // per fare richieste  http al server
 
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 import Jumbo from "./JumboC";
 import LoaderC from "./LoaderC";
 import FormMisure from "./FormMisure";
+
 export default function MainAdmin() {
   // Logica per ricevere  tutti i dati dall endpoint tramite una chiamata ajax fatta con axios
   const token = localStorage.getItem("token");
-  const url = "http://localhost:5000/gym/";
+  const url = import.meta.env.VITE_URL_REQUEST_DATA_ADMIN;
   const [isLoading, setIsLoading] = useState(true);
-  const [misurePresenti, setMisurePresenti] = useState(false);
+
   const [dataUser, setDataUser] = useState([]);
 
   function requestData() {
@@ -32,23 +33,6 @@ export default function MainAdmin() {
           console.error(err);
         }
       });
-  }
-  if (
-    dataUser.spalle &&
-    dataUser.petto &&
-    dataUser.vita &&
-    dataUser.gambaSinistra &&
-    dataUser.gambaDestra &&
-    dataUser.peso &&
-    dataUser.bicipiteDestro &&
-    dataUser.bicipiteSinistro &&
-    dataUser.polpaccioDestro &&
-    dataUser.polpaccioSinistro &&
-    dataUser.plica &&
-    dataUser.data &&
-    dataUser.scheda
-  ) {
-    setMisurePresenti(true);
   }
 
   useEffect(requestData, []);
@@ -75,8 +59,6 @@ export default function MainAdmin() {
                     <div className="mb-3">
                       <FormMisure
                         users={dataUser}
-                        misurePresenti={misurePresenti}
-                        setMisurePresenti={setMisurePresenti}
                         requestData={requestData}
                       ></FormMisure>
                     </div>

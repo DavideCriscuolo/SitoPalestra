@@ -8,7 +8,7 @@ export default function ResetPass() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const url = `http://localhost:5000/gym/reset-password`;
+    const url = import.meta.env.VITE_URL_RESET_PASSWORD;
     fetch(url, {
       method: "POST",
       headers: {

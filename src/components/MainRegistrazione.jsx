@@ -16,7 +16,7 @@ export default function MainRegistrazione() {
 
   function register(e) {
     e.preventDefault();
-    const url = `http://localhost:5000/gym/register`;
+    const url = import.meta.env.VITE_URL_REGISTER;
     console.log({ nome, cognome, email, password });
 
     fetch(url, {

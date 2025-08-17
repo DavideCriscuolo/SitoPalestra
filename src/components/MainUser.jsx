@@ -15,7 +15,7 @@ export default function MainUser() {
   const email = location.state?.email || localStorage.getItem("email");
   console.log(email);
 
-  const url = `http://localhost:5000/gym/user/${email}`;
+  const url = import.meta.env.VITE_URL_USER + email;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -149,7 +149,7 @@ export default function MainUser() {
                   <div className="py-2">
                     <Link
                       className="btn "
-                      to={`http://localhost:5000/uploads/schede/${dataUser.scheda}`}
+                      to={import.meta.env.VITE_URL_SCHEDA + dataUser.scheda}
                       target="_blank"
                       rel="noopener noreferrer" //evita l accesso alla finestra padre
                     >

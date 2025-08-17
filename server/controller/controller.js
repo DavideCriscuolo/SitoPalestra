@@ -25,7 +25,29 @@ export const index = (req, res) => {
     res.json(results);
   });
 };
+export const showProfileUser = (req, res) => {
+  const id_iscritto = req.params.id;
+  console.log("req.params.id:", req.params.id);
 
+  const sql =
+    "SELECT * FROM iscritti LEFT JOIN `info_iscritti` ON `info_iscritti`.`id_iscritto` = `iscritti`.`id` WHERE `id_iscritto` = ? ";
+  connection.query(sql, [id_iscritto], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        err: err.message,
+      });
+    }
+    console.log(results);
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        err: "Iscritto non trovato",
+      });
+    }
+    console.log(results[0]);
+    return res.json(results[0]);
+  });
+};
 export const show = (req, res) => {
   const id = Number(req.params.id);
   console.log("req.params.id:", req.params.id);
@@ -133,12 +155,10 @@ export const login = (req, res) => {
 export const register = (req, res) => {
   const { nome, cognome, email, password } = req.body;
 
-  // Controllo base (email e password non vuote)
   if (!email || !password) {
     return res.status(400).json({ message: "Email e password richieste" });
   }
 
-  // Verifica se l’utente esiste già (opzionale ma consigliato)
   const sqlCheck = "SELECT * FROM iscritti WHERE email = ?";
   connection.query(sqlCheck, [email], (err, results) => {
     if (err) return res.status(500).json({ message: "Errore DB" });
@@ -147,21 +167,37 @@ export const register = (req, res) => {
       return res.status(409).json({ message: "Utente già registrato" });
     }
 
-    // Hash della password
     bcrypt.hash(password, 10, (err, hash) => {
       if (err) return res.status(500).json({ message: "Errore hashing" });
 
-      // Inserisci nuovo utente con password hashata
       const sqlInsert =
-        "INSERT INTO iscritti (nome, cognome, email, password) VALUES ( ?, ?, ?, ?)";
-      connection.query(sqlInsert, [nome, cognome, email, hash], (err2) => {
-        if (err2) {
-          console.error("Errore inserimento:", err2); // <-- aggiungi questo log
-          return res.status(500).json({ message: "Errore inserimento" });
-        }
+        "INSERT INTO iscritti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
+      connection.query(
+        sqlInsert,
+        [nome, cognome, email, hash],
+        (err2, result) => {
+          if (err2) {
+            console.error("Errore inserimento:", err2);
+            return res.status(500).json({ message: "Errore inserimento" });
+          }
 
-        res.json({ message: "Registrazione completata" });
-      });
+          const newUserId = result.insertId;
+
+          // Creazione automatica della riga in info_iscritti
+          const sqlInsertInfo =
+            "INSERT INTO info_iscritti (id_iscritto) VALUES (?)";
+          connection.query(sqlInsertInfo, [newUserId], (err3) => {
+            if (err3) {
+              console.error("Errore creazione info_iscritti:", err3);
+              return res
+                .status(500)
+                .json({ message: "Errore creazione info_iscritti" });
+            }
+
+            res.json({ message: "Registrazione completata", id: newUserId });
+          });
+        }
+      );
     });
   });
 };
@@ -329,7 +365,7 @@ export const store = (req, res) => {
       }
 
       return res.json({
-        message: "Misure aggiornate con successo",
+        message: "Misure Inserite con successo",
         results,
       });
     }

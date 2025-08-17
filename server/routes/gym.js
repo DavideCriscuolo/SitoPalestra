@@ -11,7 +11,12 @@ router.get("/", verifyToken, verifyAdmin, gymController.index);
 
 router.get("/:id", gymController.show);
 router.get("/user/:email", verifyToken, verifyUser, gymController.showEmail);
-router.put("updateMisure/:id", gymController.update);
+router.get(
+  "/admin_showProfileUser/:id",
+
+  gymController.showProfileUser
+);
+router.put("/updateMisure/:id", gymController.update);
 router.post("/insert/:id", gymController.store);
 router.post("/login", gymController.login);
 router.post("/login/admin", gymController.loginAdmin);
