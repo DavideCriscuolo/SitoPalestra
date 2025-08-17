@@ -306,13 +306,18 @@ export default function FormMisure(prop) {
             />
           </div>
 
-          <div>
-            <button className="btn btn-dark " type="submit">
-              Aggiorna Misure Esistenti
-            </button>
-            <button className="btn btn-dark mx-3" type="submit">
-              Inserisci Misure
-            </button>
+          <div className="d-flex flex-wrap gap-3">
+            <div>
+              <button className="btn btn-dark " type="submit">
+                Aggiorna Misure Esistenti
+              </button>
+            </div>
+
+            <div className="">
+              <button className="btn btn-dark " type="submit">
+                Inserisci Misure
+              </button>
+            </div>
           </div>
         </div>
       </form>

@@ -7,6 +7,7 @@ export default function MainLoginAdmin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // per navigare dopo il login
+  const [loginFallito, setLoginFallito] = useState(false);
 
   function handleChange(e) {
     setEmail(e.target.value);
@@ -34,6 +35,7 @@ export default function MainLoginAdmin() {
       const data = await res.json();
 
       if (!res.ok) {
+        setLoginFallito(true);
         console.log("Login fallito");
         console.log(data);
         return;
@@ -60,6 +62,11 @@ export default function MainLoginAdmin() {
     <>
       <main className="main_login">
         <div className="container  d-flex justify-content-center flex-column ">
+          {loginFallito && (
+            <div className="alert alert-danger" role="alert">
+              Password o email errati
+            </div>
+          )}
           <form onSubmit={validate} className="mb-3">
             <label htmlFor="" className="form-label">
               Email
@@ -88,7 +95,7 @@ export default function MainLoginAdmin() {
               value={password}
             />
 
-            <button type="submit" className="btn btn-primary my-3">
+            <button type="submit" className="btn btn-secondary my-3">
               {" "}
               Accedi
             </button>

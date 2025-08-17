@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./../css/MainUser.css";
 import { NavLink } from "react-router-dom";
-
+import LoaderC from "./LoaderC";
 export default function MainUser() {
   const [dataUser, setDataUser] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
 
   // Prendi email da location.state
   const email = location.state?.email || localStorage.getItem("email");
@@ -46,6 +47,7 @@ export default function MainUser() {
           return res.json();
         })
         .then((data) => {
+          setIsLoading(false);
           console.log("Dati utente:", data);
           setDataUser(data);
         })
@@ -73,94 +75,98 @@ export default function MainUser() {
   return (
     <main className="user_main">
       <div className="container mt-4">
-        <div className="card w-100 h-100 my-3">
-          <div className="cardtop d-flex justify-content-center my-3">
-            <div>
-              <h2>
-                Ciao {dataUser.nome} {dataUser.cognome}
-              </h2>
-            </div>
-          </div>
-          <div className="card-body m-3">
-            <div id="titleCard" className="title_card text-center"></div>
-            <div className="row row-cols-1">
-              <div id="colMisure" className="col border  my-4">
-                <div>
-                  {" "}
-                  <h2 className="text-center py-2">Misure</h2>{" "}
-                </div>
-                <div>
-                  {dataUser.spalle &&
-                  dataUser.petto &&
-                  dataUser.vita &&
-                  dataUser.gambaSinistra &&
-                  dataUser.gambaDestra &&
-                  dataUser.polpaccioDestro &&
-                  dataUser.polpaccioSinistro &&
-                  dataUser.plica &&
-                  dataUser.data ? (
-                    <ul id="ListMisure" className="list-group py-3">
-                      <li className="list-group-item">
-                        <span>Peso: </span>
-                        {dataUser.peso} Kg
-                      </li>
-                      <li className="list-group-item">
-                        <span>Spalle: </span>
-                        {dataUser.spalle} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Petto: </span> {dataUser.petto} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Vita: </span> {dataUser.vita} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Gamba Sinistra: </span> {dataUser.gambaSinistra}{" "}
-                        cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Gamba Destra: </span> {dataUser.gambaDestra} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Polapccio Destro: </span>{" "}
-                        {dataUser.polpaccioDestro} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Polapccio Sinistro: </span>{" "}
-                        {dataUser.polpaccioSinistro} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Plica: </span> {dataUser.plica} %
-                      </li>
-                      <li className="list-group-item">
-                        <span>Data di inserimento: </span> {giorno}-{mese}-
-                        {anno}
-                      </li>
-                    </ul>
-                  ) : (
-                    <p className="text-center">Non ci sono misure</p>
-                  )}
-                </div>
-                <div className="py-2">
-                  <Link
-                    className="btn "
-                    to={`http://localhost:5000/uploads/schede/${dataUser.scheda}`}
-                    target="_blank"
-                    rel="noopener noreferrer" //evita l accesso alla finestra padre
-                  >
-                    Vai alla scheda
-                  </Link>
-                </div>
+        {isLoading ? (
+          <LoaderC />
+        ) : (
+          <div className="card w-100 h-100 my-3">
+            <div className="cardtop d-flex justify-content-center my-3">
+              <div>
+                <h2>
+                  Ciao {dataUser.nome} {dataUser.cognome}
+                </h2>
               </div>
             </div>
-            <div className="text-center">
-              <NavLink className="btn btn-secondary" to="/">
-                {" "}
-                Logut
-              </NavLink>
+            <div className="card-body m-3">
+              <div id="titleCard" className="title_card text-center"></div>
+              <div className="row row-cols-1">
+                <div id="colMisure" className="col border  my-4">
+                  <div>
+                    {" "}
+                    <h2 className="text-center py-2">Misure</h2>{" "}
+                  </div>
+                  <div>
+                    {dataUser.spalle &&
+                    dataUser.petto &&
+                    dataUser.vita &&
+                    dataUser.gambaSinistra &&
+                    dataUser.gambaDestra &&
+                    dataUser.polpaccioDestro &&
+                    dataUser.polpaccioSinistro &&
+                    dataUser.plica &&
+                    dataUser.data ? (
+                      <ul id="ListMisure" className="list-group py-3">
+                        <li className="list-group-item">
+                          <span>Peso: </span>
+                          {dataUser.peso} Kg
+                        </li>
+                        <li className="list-group-item">
+                          <span>Spalle: </span>
+                          {dataUser.spalle} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Petto: </span> {dataUser.petto} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Vita: </span> {dataUser.vita} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Gamba Sinistra: </span> {dataUser.gambaSinistra}{" "}
+                          cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Gamba Destra: </span> {dataUser.gambaDestra} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Polapccio Destro: </span>{" "}
+                          {dataUser.polpaccioDestro} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Polapccio Sinistro: </span>{" "}
+                          {dataUser.polpaccioSinistro} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Plica: </span> {dataUser.plica} %
+                        </li>
+                        <li className="list-group-item">
+                          <span>Data di inserimento: </span> {giorno}-{mese}-
+                          {anno}
+                        </li>
+                      </ul>
+                    ) : (
+                      <p className="text-center">Non ci sono misure</p>
+                    )}
+                  </div>
+                  <div className="py-2">
+                    <Link
+                      className="btn "
+                      to={`http://localhost:5000/uploads/schede/${dataUser.scheda}`}
+                      target="_blank"
+                      rel="noopener noreferrer" //evita l accesso alla finestra padre
+                    >
+                      Vai alla scheda
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center">
+                <NavLink className="btn btn-secondary" to="/">
+                  {" "}
+                  Logut
+                </NavLink>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   );

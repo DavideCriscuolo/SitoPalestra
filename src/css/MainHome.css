@@ -1,6 +1,5 @@
 main {
-  min-height: 100vh;
-
+  min-height: 500px;
   .btn:hover {
     background-color: #ff4d00;
     color: white;

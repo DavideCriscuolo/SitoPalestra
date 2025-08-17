@@ -7,6 +7,7 @@ export default function MainLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // per navigare dopo il login
+  const [loginFallito, setLoginFallito] = useState(false);
 
   function handleChange(e) {
     setEmail(e.target.value);
@@ -34,6 +35,7 @@ export default function MainLogin() {
       const data = await res.json();
 
       if (!res.ok) {
+        setLoginFallito(true);
         console.log("Login fallito");
         console.log(data);
         return;
@@ -72,13 +74,18 @@ export default function MainLogin() {
     <>
       <main className="main_login">
         <div className="container  d-flex justify-content-center flex-column ">
+          {loginFallito && (
+            <div className="alert alert-danger" role="alert">
+              Password o email errati
+            </div>
+          )}
           <form onSubmit={validate} className="mb-3">
-            <label htmlFor="" className="form-label">
+            <label htmlFor="" className="form-label ">
               Email
             </label>
             <input
               type="email"
-              className="form-control"
+              className="form-control mb-3"
               name="email"
               id="email"
               aria-describedby="emailHelpId"
@@ -86,7 +93,7 @@ export default function MainLogin() {
               onChange={handleChange}
               value={email}
             />
-            <label htmlFor="" className="form-label">
+            <label htmlFor="" className="form-label ">
               Password
             </label>
             <input

@@ -27,19 +27,21 @@ export default function MainHome() {
           </div>
         </section>
         <section id="contact" className="my-5">
-          <h3 className="py-3 fs_size_title_lg">Contattaci</h3>
-          <div className="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 d-flex justify-content-between">
+          <h3 className="py-3 fs_size_title_lg">Orari</h3>
+          <div className="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2">
             <div className="col">
               <div className="info_open fs_size_info_open">
                 <p>
-                  Orari Apertura / Chiusura
-                  <br />
                   <strong>Lunedì / Mercoledì / Venerdì </strong>
                   8:50 - 12:00 / 13:30 - 21:00
-                  <br />
+                </p>
+                <p>
+                  {" "}
                   <strong>Martedì / Giovedì </strong>
                   8:50 - 12:00 / 15:30 - 21:00
-                  <br />
+                </p>
+                <p>
+                  {" "}
                   <strong>Sabato </strong>
                   8:50 - 12:00
                 </p>
