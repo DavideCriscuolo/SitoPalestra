@@ -51,7 +51,7 @@ export default function FormMisure(prop) {
         setOperationUpdate(true);
         setTimeout(() => {
           setOperationUpdate(false);
-        }, 1500);
+        }, 3000);
       })
       .catch((err) => {
         console.error("Errore");
@@ -75,7 +75,7 @@ export default function FormMisure(prop) {
   //       setoperationSucces(true);
   //       setTimeout(() => {
   //         setoperationSucces(false);
-  //       }, 1500);
+  //       }, 3000);
   //     })
   //     .catch((err) => {
   //       console.error("Errore");
@@ -107,7 +107,7 @@ export default function FormMisure(prop) {
           setOperationUpload(true);
           setTimeout(() => {
             setOperationUpload(false);
-          }, 1500);
+          }, 3000);
         } else {
           const text = await res.text();
           console.log("Risposta non JSON:", text);
@@ -134,7 +134,7 @@ export default function FormMisure(prop) {
         setOperationDelete(true);
         setTimeout(() => {
           setOperationDelete(false);
-        }, 1500);
+        }, 3000);
         prop.requestData();
         setIdUser("");
       } else {
@@ -372,12 +372,14 @@ export default function FormMisure(prop) {
             onChange={handleFile}
           />
         </div>
-        <button className="btn btn-dark" type="submit">
-          Invia Scheda
-        </button>
-        <button onClick={handleDelete} className=" mx-3 btn btn-danger">
-          Elimina iscritto
-        </button>
+        <div className="d-flex flex-wrap gap-3">
+          <button className="btn btn-dark" type="submit">
+            Invia Scheda
+          </button>
+          <button onClick={handleDelete} className="btn btn-danger">
+            Elimina iscritto
+          </button>{" "}
+        </div>
       </form>
       <div className="my-3">
         <button

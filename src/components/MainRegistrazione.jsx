@@ -14,6 +14,7 @@ export default function MainRegistrazione() {
     sessionStorage.setItem("email", e.target.value); // memorizzi anche in sessione
   }
 
+  const [registerSuccess, setRegisterSuccess] = useState(false);
   function register(e) {
     e.preventDefault();
     const url = import.meta.env.VITE_URL_REGISTER;
@@ -28,8 +29,14 @@ export default function MainRegistrazione() {
     })
       .then((res) => res.json())
       .then((data) => {
-        navigate("/login");
-        console.log("fatto", data);
+        setRegisterSuccess(true);
+        setTimeout(() => {
+          setRegisterSuccess(false);
+        }, 3500);
+        //dopo vai al login
+        setTimeout(() => {
+          navigate("/login");
+        }, 4000);
       })
       .catch((err) => {
         console.error("Errore");
@@ -40,6 +47,15 @@ export default function MainRegistrazione() {
     <>
       <main className="main_login">
         <div className="container  d-flex justify-content-center flex-column">
+          {registerSuccess && (
+            <div className="alert alert-success" role="alert">
+              Registrazione avvenuta con successo!
+              <span className="fw-bold">
+                {" "}
+                Sarai reindirizzato al login automaticamente
+              </span>
+            </div>
+          )}
           <form onSubmit={register} className="mb-3">
             <label htmlFor="" className="form-label">
               Nome
@@ -93,9 +109,9 @@ export default function MainRegistrazione() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
-            <button type="submit" className="btn btn-primary my-2">
+            <button type="submit" className="btn btn-secondary my-2">
               {" "}
-              Submit
+              Registrati
             </button>
           </form>
         </div>

@@ -58,6 +58,7 @@ export default function MainLogin() {
       console.error("Errore nella richiesta:", error);
     }
   }
+  const [emailReset, setEmailReset] = useState(false);
   function sendEmailReset(e) {
     e.preventDefault();
     const url = import.meta.env.VITE_URL_REQUEST_RESET;
@@ -68,12 +69,21 @@ export default function MainLogin() {
       },
       body: JSON.stringify({ email }),
     });
-    alert("Email di reset inviata");
+    setEmailReset(true);
+    setTimeout(() => {
+      setEmailReset(false);
+    }, 3000);
   }
   return (
     <>
       <main className="main_login">
         <div className="container  d-flex justify-content-center flex-column ">
+          {emailReset && (
+            <div className="alert alert-success" role="alert">
+              Email di reset inviata, controlla la tua casella di posta e negli
+              spam
+            </div>
+          )}
           {loginFallito && (
             <div className="alert alert-danger" role="alert">
               Password o email errati
