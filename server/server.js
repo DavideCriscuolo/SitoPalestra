@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import path from "path";
 import gymRouter from "./routes/gym.js";
+import connection from "./db/connection.js";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +24,12 @@ app.use(express.static(path.join(__dirname, "dist")));
 // Catch-all per React Router
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+app.get("/test-db", (req, res) => {
+  connection.query("SELECT 1+1 AS result", (err, results) => {
+    if (err) return res.status(500).send(err);
+    res.send(results);
+  });
 });
 
 app.listen(port, () => {
