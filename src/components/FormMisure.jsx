@@ -1,6 +1,10 @@
 import { useState } from "react";
 export default function FormMisure(prop) {
   const [file, setFile] = useState(null);
+  const [operationSucess, setoperationSucces] = useState(false);
+  const [operationUpload, setOperationUpload] = useState(false);
+  const [operationDelete, setOperationDelete] = useState(false);
+  const [operationUpdate, setOperationUpdate] = useState(false);
   const [formData, setFormData] = useState({
     spalle: "",
     vita: "",
@@ -40,6 +44,10 @@ export default function FormMisure(prop) {
       .then((res) => res.json())
       .then((data) => {
         console.log("fatto", data);
+        setOperationUpdate(true);
+        setTimeout(() => {
+          setOperationUpdate(false);
+        }, 1500);
       })
       .catch((err) => {
         console.error("Errore");
@@ -60,6 +68,10 @@ export default function FormMisure(prop) {
       .then((res) => res.json())
       .then((data) => {
         console.log("fatto", data);
+        setoperationSucces(true);
+        setTimeout(() => {
+          setoperationSucces(false);
+        }, 1500);
       })
       .catch((err) => {
         console.error("Errore");
@@ -97,7 +109,10 @@ export default function FormMisure(prop) {
         if (contentType && contentType.includes("application/json")) {
           const data = await res.json();
           console.log("fatto", data);
-          alert(data.message);
+          setOperationUpload(true);
+          setTimeout(() => {
+            setOperationUpload(false);
+          }, 1500);
         } else {
           const text = await res.text();
           console.log("Risposta non JSON:", text);
@@ -121,6 +136,10 @@ export default function FormMisure(prop) {
       body: JSON.stringify({ idUser }),
     }).then((res) => {
       if (res.ok) {
+        setOperationDelete(true);
+        setTimeout(() => {
+          setOperationDelete(false);
+        }, 1500);
         prop.requestData();
         setIdUser("");
       } else {
@@ -134,6 +153,26 @@ export default function FormMisure(prop) {
   return (
     <>
       <form onSubmit={handleSumbitMisure} id="formAdminMisure" action="">
+        {operationDelete && (
+          <div className="alert alert-success" role="alert">
+            Utente eliminato con successo
+          </div>
+        )}
+        {operationUpload && (
+          <div className="alert alert-success" role="alert">
+            Scheda caricata con successo
+          </div>
+        )}
+        {operationSucess && (
+          <div className="alert alert-success" role="alert">
+            Misure inserite con successo
+          </div>
+        )}
+        {operationUpdate && (
+          <div className="alert alert-success" role="alert">
+            Misure aggiornate con successo
+          </div>
+        )}
         <label htmlFor="" className="form-label">
           Iscritto
         </label>

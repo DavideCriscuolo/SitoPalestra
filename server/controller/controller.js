@@ -504,9 +504,11 @@ export const resetPassword = async (req, res) => {
 export const deleteUser = (req, res) => {
   const { id } = req.params;
 
-  const sql = "DELETE FROM iscritti WHERE id = ?;";
+  const sql = "DELETE FROM iscritti WHERE id = ?"; //
+  //cancelli in automatico i record figli quando elimini il genitore
   connection.query(sql, [id], (err, results) => {
     if (err) {
+      console.log(err);
       return res.status(500).json({ error: "Errore server" });
     }
     if (results.affectedRows === 0) {
