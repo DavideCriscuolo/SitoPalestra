@@ -1,4 +1,4 @@
-import "./../css/Jumbo.css";
+import "./../css/Jumbo.scss";
 
 export default function Jumbo() {
   return (

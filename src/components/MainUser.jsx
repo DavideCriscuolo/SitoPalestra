@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "./../css/MainUser.css";
+import "./../css/MainUser.scss";
 import { NavLink } from "react-router-dom";
 import LoaderC from "./LoaderC";
 export default function MainUser() {

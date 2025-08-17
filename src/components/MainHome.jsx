@@ -1,5 +1,5 @@
 import React from "react";
-import "./../css/MainHome.css";
+import "./../css/MainHome.scss";
 import Jumbo from "./JumboC";
 import CardC from "./CardC";
 

@@ -1,4 +1,4 @@
-import "./../css/CardC.css";
+import "./../css/CardC.scss";
 
 import { useState } from "react";
 const services = [
