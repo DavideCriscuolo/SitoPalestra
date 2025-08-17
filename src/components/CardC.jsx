@@ -7,28 +7,32 @@ const services = [
     img: "/img/personal.png",
     title: "PERSONAL",
     desc: "Lezione private personalizzate con assistenza continua e monitoraggio completo.",
-    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Vorrei%20sapere%20di%20piu%20sulle%20lezioni%20private%20con%20un%20personal%20trainer.",
   },
   {
     id: 2,
     img: "/img/mensile.jpg",
     title: "MENSILE",
     desc: "Piano mensile, ti permette di accedere a scheda personalizzata, sala pesi, sala corsi, spogliatoio.",
-    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Mi%20interessano%20le%20informazioni%20sull'abbonamento%20mensile.",
   },
   {
     id: 3,
     img: "/img/full-shot-woman-doing-burpees-indoors.jpg",
     title: "GIORNALIERO",
     desc: "Singolo ingresso in giornata con piena disponibilità da parte della struttura e staff.",
-    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Vorrei%20sapere%20se%20è%20possibile%20fare%20un%20ingresso%20giornaliero%20e%20qual%20è%20il%20costo.",
   },
   {
     id: 4,
     img: "/img/Consulenza.jpg",
     title: "CONSULENZA",
     desc: "Consigli personalizzati sul piano di allenamento più adatto alle tue esigenze e ai tuoi obiettivi.",
-    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
+    infoMessage:
+      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Vorrei%20ricevere%20maggiori%20informazioni%20sul%20piano%20di%20consulenza%20personalizzata.",
   },
 ];
 
