@@ -1,41 +1,34 @@
 import "./../css/CardC.css";
-import personalImg from "/img/personal.png";
-import mensileImg from "/img/mensile.jpg";
-import giornaImg from "/img/full-shot-woman-doing-burpees-indoors.jpg";
-import consuImg from "/img/Consulenza.jpg";
+
 import { useState } from "react";
 const services = [
   {
     id: 1,
-    img: personalImg,
+    img: "/img/personal.png",
     title: "PERSONAL",
     desc: "Lezione private personalizzate con assistenza continua e monitoraggio completo.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Vorrei sapere di più sulle lezioni private con un personal trainer.",
+    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
   },
   {
     id: 2,
-    img: mensileImg,
+    img: "/img/mensile.jpg",
     title: "MENSILE",
     desc: "Piano mensile, ti permette di accedere a scheda personalizzata, sala pesi, sala corsi, spogliatoio.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Vorrei sapere se è possibile fare un ingresso giornaliero e qual è il costo.",
+    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
   },
   {
     id: 3,
-    img: giornaImg,
+    img: "/img/full-shot-woman-doing-burpees-indoors.jpg",
     title: "GIORNALIERO",
     desc: "Singolo ingresso in giornata con piena disponibilità da parte della struttura e staff.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Mi interessano le informazioni sull'abbonamento mensile.",
+    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
   },
   {
     id: 4,
-    img: consuImg,
+    img: "/img/Consulenza.jpg",
     title: "CONSULENZA",
-    desc: " Consigli personalizzati sul piano di allenamento più  adatto alle tue esigenze e ai tuoi obiettivi.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+39 3280203014&text=Ciao! Vorrei ricevere maggiori informazioni sul piano di consulenza personalizzata.",
+    desc: "Consigli personalizzati sul piano di allenamento più adatto alle tue esigenze e ai tuoi obiettivi.",
+    infoMessage: "https://api.whatsapp.com/send?phone=+39...",
   },
 ];
 

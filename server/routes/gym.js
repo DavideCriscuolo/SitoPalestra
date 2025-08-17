@@ -7,15 +7,11 @@ import { uploadScheda } from "../middleware/configMulter.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, verifyAdmin, gymController.index);
-
-router.get("/:id", gymController.show);
 router.get("/user/:email", verifyToken, verifyUser, gymController.showEmail);
-router.get(
-  "/admin_showProfileUser/:id",
+router.get("/admin_showProfileUser/:id", gymController.showProfileUser);
+router.get("/:id", gymController.show);
 
-  gymController.showProfileUser
-);
+router.get("/", verifyToken, verifyAdmin, gymController.index);
 router.put("/updateMisure/:id", gymController.update);
 router.post("/insert/:id", gymController.store);
 router.post("/login", gymController.login);
@@ -26,7 +22,6 @@ router.get("/schede/:fileName", verifyToken, gymController.scheda);
 router.post("/reset-password", gymController.resetPassword);
 router.post("/request-reset", gymController.requestReset);
 router.delete("/deleteUser/:id", gymController.deleteUser);
-
 router.put("/updatedaScheda/:id", uploadScheda, gymController.uploadaScheda);
 
 export default router;
