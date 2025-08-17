@@ -36,7 +36,7 @@ export default function MainRegistrazione() {
         //dopo vai al login
         setTimeout(() => {
           navigate("/login");
-        }, 4000);
+        }, 3500);
       })
       .catch((err) => {
         console.error("Errore");

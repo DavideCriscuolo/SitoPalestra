@@ -15,7 +15,7 @@ export default function MainUser() {
   const email = location.state?.email || localStorage.getItem("email");
   console.log(email);
 
-  const url = import.meta.env.VITE_URL_USER + email;
+  const url = import.meta.env.VITE_URL_USER + encodeURIComponent(email);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

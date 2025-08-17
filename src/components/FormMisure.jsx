@@ -3,7 +3,7 @@ import ShowProfile from "./ShowProfile";
 
 export default function FormMisure(prop) {
   const [file, setFile] = useState(null);
-  const [operationSucess, setoperationSucces] = useState(false);
+
   const [operationUpload, setOperationUpload] = useState(false);
   const [operationDelete, setOperationDelete] = useState(false);
   const [operationUpdate, setOperationUpdate] = useState(false);
@@ -33,10 +33,9 @@ export default function FormMisure(prop) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  const urlSend = import.meta.env.VITE_URL_UPDATE + encodeURIComponent(idUser);
   function sendUpdateMisure(e) {
     e.preventDefault();
-
-    const urlSend = import.meta.env.VITE_URL_UPDATE + idUser;
 
     fetch(urlSend, {
       method: "PUT",
@@ -94,7 +93,8 @@ export default function FormMisure(prop) {
 
     const formData = new FormData();
     formData.append("scheda", file);
-    const url = import.meta.env.VITE_URL_UPLOAD_SCHEDA + idUser;
+    const url =
+      import.meta.env.VITE_URL_UPLOAD_SCHEDA + encodeURIComponent(idUser);
     fetch(url, {
       method: "PUT",
       body: formData,
@@ -122,7 +122,8 @@ export default function FormMisure(prop) {
 
   function handleDelete(e) {
     e.preventDefault();
-    const urlDelete = import.meta.env.VITE_URL_DELETE + idUser;
+    const urlDelete =
+      import.meta.env.VITE_URL_DELETE + encodeURIComponent(idUser);
     fetch(urlDelete, {
       method: "DELETE",
       headers: {
@@ -144,7 +145,8 @@ export default function FormMisure(prop) {
       }
     });
   }
-  const urlProfile = import.meta.env.VITE_URL_PROFILEUSER + idUser;
+  const urlProfile =
+    import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(idUser);
   function ShowProfileUser() {
     console.log(idUser);
     console.log(urlProfile);
