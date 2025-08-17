@@ -390,6 +390,14 @@ export default function FormMisure(prop) {
           Mostra utente
         </button>
         {isClicked ? <ShowProfile dataUser={dataUser}></ShowProfile> : null}
+        <button
+          className="btn btn-dark"
+          onClick={() => {
+            ShowProfileUser(); // richiama la funzione che fetcha i dati
+          }}
+        >
+          Clicca per vedere le misure aggiornate
+        </button>
       </div>
     </>
   );
