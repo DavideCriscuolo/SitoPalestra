@@ -1,70 +1,48 @@
-/\*
-Progetto Web App Palestra - Riassunto Funzionalità e Architettura
+# Progetto Palestra Web App
 
-1️⃣ Front-end:
+Il progetto Palestra Web App è un'applicazione web dinamica e interattiva che consente agli utenti di registrarsi, accedere a schede personalizzate e gestire le proprie misure.
 
-- Home page con informazioni palestra
-- Navbar con link a login, registrazione e altre pagine
-- Pagine dedicate: UserPage, AdminPage
-- DefaultLayout include Header e Footer e un Outlet per le rotte
+## Tecnologie utilizzate
 
-2️⃣ Autenticazione:
+- React: framework JavaScript per la creazione di interfacce utente
+- React Router: librerie per la gestione delle rotte e della navigazione
+- API: interfacce di programmazione per l'accesso a dati e servizi esterni
+- JavaScript: linguaggio di programmazione per la creazione di logica di business e gestione dei dati
+- HTML: linguaggio di markup per la creazione di strutture di pagina
+- CSS: linguaggio di stile per la creazione di layout e design
+- Backend: sviluppato utilizzando Node.js e Express.js
+- Database: MySQL con tabelle per la gestione dei dati
 
-- Registrazione utenti con ruolo di default "user"
-- Possibilità di creare admin manualmente nel DB con ruolo "admin"
-- Password hashate con bcrypt
-- Login genera JWT contenente: { id, email, role }
-- Token salvato in localStorage al login
+## Librerie utilizzate
 
-3️⃣ Protezione delle rotte lato client:
+- cors: librerie per la gestione delle richieste HTTP e la configurazione delle politiche di sicurezza
+- dotenv: librerie per la gestione delle variabili di ambiente e la configurazione delle impostazioni del progetto
+- bcrypt: librerie per la crittografia delle password e la gestione della sicurezza degli utenti
+- jwt: librerie per la gestione dei token di autenticazione e la verifica dell'identità degli utenti
+- crypto: librerie per la generazione di token univoci e la gestione della sicurezza delle comunicazioni
+- sendgrid: librerie per l'invio di email e la gestione delle comunicazioni con gli utenti
+- mysql2: librerie per la gestione del database MySQL e la configurazione delle impostazioni di connessione
 
-- AdminRoute controlla il token e il ruolo decodificando il JWT
-  - Non loggato → redirect a /login_admin
-  - Loggato ma non admin → redirect a /
-  - Admin → accesso consentito
-- Stessa logica applicabile per rotte protette utente (UserRoute)
-- Decodifica ruolo lato client:
-  - token.split(".")[1] → payload Base64
-  - JSON.parse(atob(payload)) → oggetto contenente role
-  - Permette di sapere se l’utente è admin o user e mostrare contenuti specifici
+## Struttura del progetto
 
-4️⃣ Gestione richieste HTTP protette (AJAX/Axios):
+Il progetto è strutturato in modo modulare, con separazione delle funzionalità in componenti e pagine diverse. La struttura del progetto è la seguente:
 
-- Token JWT inviato negli header Authorization: `Bearer <token>`
-- Endpoint protetti lato server con middleware verifyToken
-- Controllo ruolo lato server:
-  - Ruolo corretto → dati restituiti
-  - Ruolo sbagliato → 403
-  - Token mancante o invalido → 401
+- Components: cartella che contiene i componenti React utilizzati nell'applicazione
+- Pages: cartella che contiene le pagine dell'applicazione
+- API: cartella che contiene le API utilizzate per l'accesso a dati e servizi esterni
+- Utils: cartella che contiene funzioni di utilità per la gestione dei dati e la logica di business
+- Backend: cartella che contiene il codice del backend, compreso il database e le API
 
-5️⃣ Backend:
+## Funzionalità
 
-- Server principale in server.js:
-  - Libreria CORS per gestire CORS policy
-  - dotenv per leggere variabili d'ambiente
-  - Middleware per verifica token e ruolo admin/user
-- Cartella /controllers:
-  - Logica delle route
-  - Query SQL al database
-  - Gestione errori per tutte le query
-- Cartella /routes:
-  - Definizione delle rotte vere e proprie
-- connection.js:
-  - Connessione al database
-  - Esportata per essere utilizzata nei controller
-- Middleware personalizzati:
-  - verifyToken → controlla token e decodifica ruolo
-  - AdminRoute → permette accesso solo se ruolo admin
-  - UserRoute → permette accesso solo se ruolo user
+L'applicazione offre le seguenti funzionalità:
 
-6️⃣ Flusso completo:
+- Registrazione: gli utenti possono registrarsi e creare un account
+- Accesso a schede personalizzate: gli utenti possono accedere a schede personalizzate per gestire le proprie misure
+- Gestione delle misure: gli utenti possono gestire le proprie misure e visualizzare i dati in formato tabellare
+- Dashboard per l'admin: l'amministratore può accedere a un dashboard per inserire dati come misure e schede personalizzate
+- Reset della password: gli utenti possono richiedere il reset della password tramite un'email inviata da SendGrid
 
-- Login → server genera token con ruolo → client salva token → decodifica token lato client per ruolo → AdminRoute/UserRoute protegge pagine → richieste HTTP inviano token per autorizzazione → server verifica token e ruolo prima di restituire dati
+## Sviluppo
 
-💡 Conclusione:
-
-- Il sistema gestisce utenti e admin separatamente tramite il ruolo nel JWT
-- Rotte protette lato client e lato server
-- Richieste AJAX protette inviano token nel header Authorization
-- Sicurezza principale lato server: verifica token e ruolo prima di restituire dati
-  \*/
+Il progetto è stato sviluppato utilizzando tecnologie moderne e strumenti di sviluppo come Visual Studio Code e GitHub. Il codice sorgente è stato scritto in JavaScript e HTML, e la gestione dei dati è stata implementata utilizzando API e librerie di gestione dei dati.
