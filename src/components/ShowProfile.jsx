@@ -83,14 +83,14 @@ export default function ShowProfile(prop) {
                   )}
                 </div>
                 <div className="py-2">
-                  <Link
+                  <a
                     className="btn "
-                    to={import.meta.env.VITE_URL_SCHEDA + dataUser.scheda}
+                    href={import.meta.env.VITE_URL_SCHEDA + dataUser.scheda}
                     target="_blank"
                     rel="noopener noreferrer" //evita l accesso alla finestra padre
                   >
                     Vai alla scheda
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
