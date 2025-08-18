@@ -182,26 +182,18 @@ export default function FormMisure(prop) {
           Iscritto
         </label>
         <select
-          className="form-select form-select-lg"
-          name="selectUser"
-          id="selectUser"
+          className="form-select"
+          value={idUser}
+          onChange={(e) => handleSelect(e.target.value)}
         >
           <option value="">-- Seleziona un utente --</option>
-          {prop.users.map((user) => {
-            const fullName = `${user.nome} ${user.cognome}`;
-            return (
-              <option
-                key={user.id}
-                onClick={() => {
-                  console.log(user.id);
-                  handleSelect(user.id);
-                }}
-              >
-                {fullName}
-              </option>
-            );
-          })}
+          {prop.users.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.nome} {user.cognome}
+            </option>
+          ))}
         </select>
+
         <div className="mb-3">
           <div className="my-3">
             <input

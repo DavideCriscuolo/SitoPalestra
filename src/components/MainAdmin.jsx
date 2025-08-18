@@ -58,7 +58,7 @@ export default function MainAdmin() {
                   <div className="selectUser">
                     <div className="mb-3">
                       <FormMisure
-                        users={dataUser}
+                        users={Array.isArray(dataUser) ? dataUser : []}
                         requestData={requestData}
                       ></FormMisure>
                     </div>
