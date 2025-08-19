@@ -10,32 +10,32 @@ export default function ShowProfile(prop) {
   const anno = data.getFullYear();
   const fullName = dataUser.nome + " " + dataUser.cognome;
   console.log(dataUser.id_iscritto);
-  const [userProfile, setUserProfile] = useState();
-  const urlProfile =
-    import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(dataUser.id);
-  function ShowProfileUser() {
-    console.log(urlProfile);
+  const [userProfile, setUserProfile] = useState(null);
+  useEffect(() => {
+    if (!dataUser.id) return;
+
+    const urlProfile =
+      import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(dataUser.id);
+
     fetch(urlProfile)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setUserProfile(data);
-      });
-  }
-  useEffect(() => {
-    ShowProfileUser();
+      .then((data) => setUserProfile(data))
+      .catch((err) => console.error("Errore fetch profilo:", err));
   }, [dataUser.id]);
+
+  // Funzione per aprire la scheda PDF
   function viewScheda() {
     const token = localStorage.getItem("token");
 
-    if (!dataUser.id_iscritto) {
+    const idIscritto =
+      userProfile?.id_iscritto || dataUser?.id_iscritto || dataUser?.id;
+
+    if (!idIscritto) {
       console.error("ID iscritto non definito");
       return;
     }
 
-    const urlFetch = `${import.meta.env.VITE_URL_GET_SCHEDA}${
-      userProfile.id_iscritto
-    }`;
+    const urlFetch = `${import.meta.env.VITE_URL_GET_SCHEDA}${idIscritto}`;
     console.log("URL scheda:", urlFetch);
 
     fetch(urlFetch, {
@@ -48,10 +48,9 @@ export default function ShowProfile(prop) {
       .then((blob) => {
         const url = URL.createObjectURL(blob);
         window.open(url, "_blank");
-        // eventualmente rilascia l'oggetto URL dopo qualche secondo
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        setTimeout(() => URL.revokeObjectURL(url), 10000); // pulizia oggetto URL
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Errore download scheda:", err));
   }
 
   return (
