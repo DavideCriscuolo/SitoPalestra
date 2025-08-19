@@ -72,6 +72,27 @@ export default function MainUser() {
   const giorno = data.getDate();
   const mese = data.getMonth() + 1;
   const anno = data.getFullYear();
+  const viewScheda = async () => {
+    if (!dataUser?.id)
+      return alert("Seleziona un utente prima di aprire la scheda");
+
+    const token = localStorage.getItem("token");
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_URL_SCHEDA}${dataUser.id_iscritto}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!res.ok) throw new Error(`Errore ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch (err) {
+      console.error("Errore download scheda:", err.message);
+    }
+  };
   return (
     <main className="user_main">
       <div className="container mt-4">
@@ -146,16 +167,7 @@ export default function MainUser() {
                       <p className="text-center">Non ci sono misure</p>
                     )}
                   </div>
-                  <div className="py-2">
-                    <a
-                      className="btn "
-                      href={import.meta.env.VITE_URL_SCHEDA + dataUser.scheda}
-                      target="_blank"
-                      rel="noopener noreferrer" //evita l accesso alla finestra padre
-                    >
-                      Vai alla scheda
-                    </a>
-                  </div>
+                  <div className="py-2"></div>
                 </div>
               </div>
               <div className="text-center">
@@ -164,6 +176,9 @@ export default function MainUser() {
                   Logut
                 </NavLink>
               </div>
+              <button className="btn btn-dark" onClick={viewScheda}>
+                Apri scheda
+              </button>
             </div>
           </div>
         )}

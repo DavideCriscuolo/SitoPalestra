@@ -70,6 +70,10 @@ export default function MainAdmin() {
           </div>
         )}
       </div>
+      <NavLink className="btn btn-secondary" to="/">
+        {" "}
+        Logut
+      </NavLink>
     </main>
   );
 }

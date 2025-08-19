@@ -162,6 +162,10 @@ export default function FormMisure({ users, requestData }) {
       console.error("Errore delete:", err);
     }
   };
+  const data = new Date(profileUser.data);
+  const giorno = data.getDate();
+  const mese = data.getMonth() + 1;
+  const anno = data.getFullYear();
 
   return (
     <>
@@ -248,7 +252,9 @@ export default function FormMisure({ users, requestData }) {
               Polpaccio Sinistro: {profileUser.polpaccioSinistro} cm
             </li>
             <li className="list-group-item">Plica: {profileUser.plica} %</li>
-            <li className="list-group-item">Data: {profileUser.data}</li>
+            <li className="list-group-item">
+              <span>Data di inserimento: </span> {giorno}-{mese}-{anno}
+            </li>
           </ul>
           <button className="btn btn-dark" onClick={viewScheda}>
             Apri scheda
