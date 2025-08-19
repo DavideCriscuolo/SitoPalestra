@@ -7,7 +7,7 @@ export default function FormMisure(prop) {
   const [operationUpload, setOperationUpload] = useState(false);
   const [operationDelete, setOperationDelete] = useState(false);
   const [operationUpdate, setOperationUpdate] = useState(false);
-
+  const [profileUser, setProfileUser] = useState([]);
   const [formData, setFormData] = useState({
     spalle: "",
     vita: "",
@@ -24,10 +24,12 @@ export default function FormMisure(prop) {
     data: "",
   });
   const [idUser, setIdUser] = useState();
+
   function handleSelect(id) {
     setIdUser(id);
     console.log(idUser);
   }
+
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -55,30 +57,6 @@ export default function FormMisure(prop) {
         console.error("Errore");
       });
   }
-  // function sendInsertMisure(e) {
-  //   e.preventDefault();
-  //   console.log(formData);
-  //   const urlSend = import.meta.env.VITE_URL_INSERT + idUser;
-
-  //   fetch(urlSend, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(formData),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log("fatto", data);
-  //       setoperationSucces(true);
-  //       setTimeout(() => {
-  //         setoperationSucces(false);
-  //       }, 3000);
-  //     })
-  //     .catch((err) => {
-  //       console.error("Errore");
-  //     });
-  // }  //funzione per l insermiento
 
   const handleFile = (e) => {
     setFile(e.target.files[0]);
@@ -113,6 +91,18 @@ export default function FormMisure(prop) {
       .catch((err) => {
         console.error(err);
         alert("Errore upload");
+      });
+  }
+
+  function handleShowProfile(e) {
+    e.preventDefault();
+    const url =
+      import.meta.env.VITE_URL_GET_PROFILE + encodeURIComponent(idUser);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setProfileUser(data);
       });
   }
 
@@ -357,6 +347,8 @@ export default function FormMisure(prop) {
           </button>{" "}
         </div>
       </form>
+      <button onClick={handleShowProfile}> mostra utente </button>
+      <ShowProfile dataUser={profileUser}></ShowProfile>
     </>
   );
 }

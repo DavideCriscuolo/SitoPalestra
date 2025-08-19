@@ -1,35 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
-
 export default function ShowProfile(prop) {
-  const [dataUser, setDataUser] = useState({});
-  const urlProfile =
-    import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(prop.idUser);
-  console.log("ID utente:", prop.idUser);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(urlProfile);
-      const data = await response.json();
-      setDataUser(data);
-    };
-    fetchData();
-  }, [prop.idUser]);
-
-  const data = useMemo(() => {
-    if (dataUser.data) {
-      const date = new Date(dataUser.data);
-      return {
-        giorno: date.getDate(),
-        mese: date.getMonth() + 1,
-        anno: date.getFullYear(),
-      };
-    }
-    return {};
-  }, [dataUser.data]);
-
-  const fullName = useMemo(() => {
-    return `${dataUser.nome} ${dataUser.cognome}`;
-  }, [dataUser.nome, dataUser.cognome]);
-
+  const dataUser = prop.dataUser;
   const viewScheda = () => {
     const token = localStorage.getItem("token");
 
@@ -103,10 +73,10 @@ export default function ShowProfile(prop) {
                     <li className="list-group-item">
                       <span>Plica: </span> {dataUser.plica} %
                     </li>
-                    <li className="list-group-item">
+                    {/* <li className="list-group-item">
                       <span>Data di inserimento: </span> {data.giorno}-
                       {data.mese}-{data.anno}
-                    </li>
+                    </li> */}
                   </ul>
                 ) : (
                   <p className="text-center">Non ci sono misure</p>

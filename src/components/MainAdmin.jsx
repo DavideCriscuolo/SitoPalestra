@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Jumbo from "./JumboC";
 import LoaderC from "./LoaderC";
 import FormMisure from "./FormMisure";
-import ShowProfile from "./ShowProfile";
 
 export default function MainAdmin() {
   // Logica per ricevere  tutti i dati dall endpoint tramite una chiamata ajax fatta con axios
@@ -70,12 +69,7 @@ export default function MainAdmin() {
             </div>
           </div>
         )}
-        <div className="my-3">
-          <ShowProfile
-            idUser={selectedUser?.id}
-            key={selectedUser?.id}
-          ></ShowProfile>
-        </div>
+        <div className="my-3"></div>
       </div>
     </main>
   );
