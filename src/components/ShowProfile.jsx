@@ -8,7 +8,7 @@ export default function ShowProfile(prop) {
   const mese = data.getMonth() + 1;
   const anno = data.getFullYear();
   const fullName = dataUser.nome + " " + dataUser.cognome;
-  console.log(dataUser.id);
+  console.log(dataUser.id_iscritto);
   function viewScheda() {
     const token = localStorage.getItem("token");
     console.log(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id}`);
