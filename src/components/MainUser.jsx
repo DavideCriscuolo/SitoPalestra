@@ -167,7 +167,6 @@ export default function MainUser() {
                       <p className="text-center">Non ci sono misure</p>
                     )}
                   </div>
-                  <div className="py-2"></div>
                 </div>
               </div>
               <div className="text-center">
