@@ -94,21 +94,25 @@ export default function FormMisure(prop) {
     const formData = new FormData();
     formData.append("scheda", file);
 
-    const url =
-      import.meta.env.VITE_URL_UPLOAD_SCHEDA + encodeURIComponent(idUser);
+    // Prendi il token salvato al login
+    const token = localStorage.getItem("token");
 
-    fetch(url, {
+    fetch(`${import.meta.env.VITE_URL_UPLOAD_SCHEDA}${idUser}`, {
       method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`, // Header necessario per il JWT
+      },
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("fatto", data);
+        console.log(data);
+        alert("Scheda caricata!");
         setOperationUpload(true);
         setTimeout(() => setOperationUpload(false), 3000);
       })
       .catch((err) => {
-        console.error("Errore upload", err.message);
+        console.error(err);
         alert("Errore upload");
       });
   }
