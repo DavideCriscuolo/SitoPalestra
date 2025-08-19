@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import ShowProfile from "./ShowProfile";
 
-export default function FormMisure(prop) {
+export default function FormMisure({ users, requestData }) {
   const [file, setFile] = useState(null);
-
   const [operationUpload, setOperationUpload] = useState(false);
   const [operationDelete, setOperationDelete] = useState(false);
   const [operationUpdate, setOperationUpdate] = useState(false);
@@ -20,18 +18,95 @@ export default function FormMisure(prop) {
     polpaccioDestro: "",
     polpaccioSinistro: "",
     plica: "",
-    id_iscritto: "",
     data: "",
   });
-  const [idUser, setIdUser] = useState();
+  const [idUser, setIdUser] = useState("");
+
+  // Quando selezioni un utente aggiorna profilo e form
+  useEffect(() => {
+    if (idUser) fetchProfileUser();
+  }, [idUser]);
+
+  const handleSelect = (id) => setIdUser(id);
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const fetchProfileUser = () => {
+    if (!idUser) return;
+    fetch(import.meta.env.VITE_URL_GET_PROFILE + encodeURIComponent(idUser))
+      .then((res) => res.json())
+      .then((data) => {
+        setProfileUser(data);
+        setFormData({
+          spalle: data.spalle || "",
+          vita: data.vita || "",
+          petto: data.petto || "",
+          gambaSinistra: data.gambaSinistra || "",
+          gambaDestra: data.gambaDestra || "",
+          peso: data.peso || "",
+          bicipiteDestro: data.bicipiteDestro || "",
+          bicipiteSinistro: data.bicipiteSinistro || "",
+          polpaccioDestro: data.polpaccioDestro || "",
+          polpaccioSinistro: data.polpaccioSinistro || "",
+          plica: data.plica || "",
+          data: data.data || "",
+        });
+      })
+      .catch((err) => console.error("Errore fetch profilo:", err));
+  };
+
+  const sendUpdateMisure = (e) => {
+    e.preventDefault();
+    if (!idUser)
+      return alert("Seleziona un utente prima di aggiornare le misure");
+
+    fetch(import.meta.env.VITE_URL_UPDATE + encodeURIComponent(idUser), {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setOperationUpdate(true);
+        setTimeout(() => setOperationUpdate(false), 3000);
+        fetchProfileUser();
+      })
+      .catch((err) => console.error("Errore update:", err));
+  };
+
+  const handleFile = (e) => setFile(e.target.files[0]);
+
+  const uploadScheda = (e) => {
+    e.preventDefault();
+    if (!idUser)
+      return alert("Seleziona un utente prima di caricare la scheda");
+    if (!file) return alert("Seleziona un file");
+
+    const token = localStorage.getItem("token");
+    const form = new FormData();
+    form.append("scheda", file);
+
+    fetch(`${import.meta.env.VITE_URL_UPLOAD_SCHEDA}${idUser}`, {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setOperationUpload(true);
+        setTimeout(() => setOperationUpload(false), 3000);
+        alert("Scheda caricata!");
+      })
+      .catch((err) => console.error("Errore upload:", err));
+  };
 
   const viewScheda = () => {
+    if (!profileUser?.id)
+      return alert("Seleziona un utente prima di aprire la scheda");
+
     const token = localStorage.getItem("token");
-
-    const urlFetch = `${import.meta.env.VITE_URL_GET_SCHEDA}${profileUser.id}`;
-    console.log("URL scheda:", urlFetch);
-
-    fetch(urlFetch, {
+    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${profileUser.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
@@ -41,405 +116,126 @@ export default function FormMisure(prop) {
       .then((blob) => {
         const url = URL.createObjectURL(blob);
         window.open(url, "_blank");
-        setTimeout(() => URL.revokeObjectURL(url), 10000); // pulizia oggetto URL
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
       })
       .catch((err) => console.error("Errore download scheda:", err));
   };
 
-  function handleSelect(id) {
-    setIdUser(id);
-    console.log(idUser);
-  }
-
-  function handleChange(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-
-  const urlSend = import.meta.env.VITE_URL_UPDATE + encodeURIComponent(idUser);
-  function sendUpdateMisure(e) {
+  const handleDelete = (e) => {
     e.preventDefault();
+    if (!idUser) return alert("Seleziona un utente da eliminare");
 
-    fetch(urlSend, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("fatto", data);
-        setOperationUpdate(true);
-        setTimeout(() => {
-          setOperationUpdate(false);
-        }, 3000);
-      })
-      .catch((err) => {
-        console.error("Errore", err.message);
-      });
-  }
-
-  const handleFile = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  // Funzione per inviare il file
-  function uploadScheda(e) {
-    e.preventDefault();
-
-    if (!file) return alert("Seleziona un file");
-
-    const formData = new FormData();
-    formData.append("scheda", file);
-
-    // Prendi il token salvato al login
-    const token = localStorage.getItem("token");
-
-    fetch(`${import.meta.env.VITE_URL_UPLOAD_SCHEDA}${idUser}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`, // Header necessario per il JWT
-      },
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        alert("Scheda caricata!");
-        setOperationUpload(true);
-        setTimeout(() => setOperationUpload(false), 3000);
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Errore upload");
-      });
-  }
-
-  function handleShowProfile(e) {
-    e.preventDefault();
-    const url =
-      import.meta.env.VITE_URL_GET_PROFILE + encodeURIComponent(idUser);
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setProfileUser(data);
-      });
-  }
-
-  function handleDelete(e) {
-    e.preventDefault();
-    const urlDelete =
-      import.meta.env.VITE_URL_DELETE + encodeURIComponent(idUser);
-    fetch(urlDelete, {
+    fetch(import.meta.env.VITE_URL_DELETE + encodeURIComponent(idUser), {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idUser }),
-    }).then((res) => {
-      if (res.ok) {
-        setOperationDelete(true);
-        setTimeout(() => {
-          setOperationDelete(false);
-        }, 3000);
-        prop.requestData();
-        setIdUser("");
-      } else {
-        res.json().then((data) => {
-          console.log(data);
-        });
-      }
-    });
-  }
+    })
+      .then((res) => {
+        if (res.ok) {
+          setOperationDelete(true);
+          setTimeout(() => setOperationDelete(false), 3000);
+          requestData();
+          setIdUser("");
+          setProfileUser({});
+        } else {
+          res.json().then((data) => console.error("Errore delete:", data));
+        }
+      })
+      .catch((err) => console.error("Errore delete:", err));
+  };
 
   return (
     <>
-      <form onSubmit={sendUpdateMisure} id="formAdminMisure" action="">
+      <form onSubmit={sendUpdateMisure} className="mb-4">
         {operationDelete && (
-          <div className="alert alert-success" role="alert">
+          <div className="alert alert-success">
             Utente eliminato con successo
           </div>
         )}
         {operationUpload && (
-          <div className="alert alert-success" role="alert">
+          <div className="alert alert-success">
             Scheda caricata con successo
           </div>
         )}
         {operationUpdate && (
-          <div className="alert alert-success" role="alert">
+          <div className="alert alert-success">
             Misure aggiornate con successo
           </div>
         )}
-        <label htmlFor="" className="form-label">
-          Iscritto
-        </label>
+
+        <label className="form-label">Iscritto</label>
         <select
-          className="form-select"
+          className="form-select mb-3"
           value={idUser}
           onChange={(e) => handleSelect(e.target.value)}
         >
           <option value="">-- Seleziona un utente --</option>
-          {prop.users.map((user) => (
+          {users.map((user) => (
             <option key={user.id} value={user.id}>
               {user.nome} {user.cognome}
             </option>
           ))}
         </select>
 
-        <div className="mb-3">
-          <div className="my-3">
+        {Object.keys(formData).map((key) => (
+          <div className="my-2" key={key}>
             <input
-              type="number"
+              type={key === "data" ? "date" : "number"}
               className="form-control"
-              name="spalle"
-              id="spalle"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Spalle"
-              value={formData.spalle}
+              name={key}
+              placeholder={`Inserisci ${key}`}
+              value={formData[key]}
               onChange={handleChange}
             />
           </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="petto"
-              id="petto"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Petto"
-              value={formData.petto}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="vita"
-              id="vita"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura vita"
-              value={formData.vita}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="gambaSinistra"
-              id="inputMisura4"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
-              value={formData.gambaSinistra}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="gambaDestra"
-              id="inputMisura4"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
-              value={formData.gambaDestra}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="peso"
-              id="inputMisura4"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
-              value={formData.peso}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="bicipiteDestro"
-              id="bicipiteDestro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
-              value={formData.bicipiteDestro}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="bicipiteSinistro"
-              id="bicipiteSinistro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Bicipite Sinistro"
-              value={formData.bicipiteSinistro}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="polpaccioDestro"
-              id="polpaccioDestro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Polpaccio Destro"
-              value={formData.polpaccioDestro}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="polpaccioSinistro"
-              id="polpaccioSinistro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Polpaccio Sinistro"
-              value={formData.polpaccioSinistro}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <input
-              type="number"
-              className="form-control"
-              name="plica"
-              id="plica"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Plica"
-              value={formData.plica}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="my-3">
-            <label htmlFor="" className="form-label">
-              Data
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              name="data"
-              id="data"
-              aria-describedby="helpId"
-              value={formData.data}
-              onChange={handleChange}
-            />
-          </div>
+        ))}
 
-          <div className="d-flex flex-wrap gap-3">
-            <div>
-              <button className="btn btn-dark " type="submit">
-                Invia
-              </button>
-            </div>
-          </div>
-        </div>
+        <button className="btn btn-dark mt-2" type="submit">
+          Aggiorna misure
+        </button>
       </form>
-      <form onSubmit={uploadScheda} id="formAdminScheda" action="">
+
+      <form onSubmit={uploadScheda} className="mb-4">
         <div className="mb-3">
-          <label htmlFor="" className="form-label">
-            Seleziona file
-          </label>
-          <input
-            type="file"
-            className="form-control"
-            name="scheda"
-            id="scheda"
-            placeholder=""
-            aria-describedby="fileHelpId"
-            onChange={handleFile}
-          />
+          <label className="form-label">Seleziona file</label>
+          <input type="file" className="form-control" onChange={handleFile} />
         </div>
-        <div className="d-flex flex-wrap gap-3">
-          <button className="btn btn-dark" type="submit">
-            Invia Scheda
-          </button>
-          <button onClick={handleDelete} className="btn btn-danger">
-            Elimina iscritto
-          </button>{" "}
-        </div>
+        <button className="btn btn-dark me-2" type="submit">
+          Invia Scheda
+        </button>
+        <button className="btn btn-danger" onClick={handleDelete}>
+          Elimina iscritto
+        </button>
       </form>
-      <button onClick={handleShowProfile}> mostra utente </button>
-      <div className="container mt-4">
-        <div className="card border-0 w-100 h-100 my-3">
-          <div className="cardtop  d-flex justify-content-center my-3"></div>
-          <div className="card-body  m-3">
-            <div id="titleCard" className="title_card text-center"></div>
-            <div className="row  row-cols-1">
-              <div id="colMisure" className="col border-0 border  my-4">
-                <div></div>
-                <div>
-                  {profileUser.spalle &&
-                  profileUser.petto &&
-                  profileUser.vita &&
-                  profileUser.gambaSinistra &&
-                  profileUser.gambaDestra &&
-                  profileUser.polpaccioDestro &&
-                  profileUser.polpaccioSinistro &&
-                  profileUser.plica &&
-                  profileUser.data ? (
-                    <ul id="ListMisure" className="list-group py-3">
-                      <li className="list-group-item">
-                        <span>Peso: </span>
-                        {profileUser.peso} Kg
-                      </li>
-                      <li className="list-group-item">
-                        <span>Spalle: </span>
-                        {profileUser.spalle} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Petto: </span> {profileUser.petto} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Vita: </span> {profileUser.vita} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Gamba Sinistra: </span>{" "}
-                        {profileUser.gambaSinistra} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Gamba Destra: </span> {profileUser.gambaDestra} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Polapccio Destro: </span>{" "}
-                        {profileUser.polpaccioDestro} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Polapccio Sinistro: </span>{" "}
-                        {profileUser.polpaccioSinistro} cm
-                      </li>
-                      <li className="list-group-item">
-                        <span>Plica: </span> {profileUser.plica} %
-                      </li>
-                      {/* <li className="list-group-item">
-                      <span>Data di inserimento: </span> {data.giorno}-
-                      {data.mese}-{data.anno}
-                    </li> */}
-                    </ul>
-                  ) : (
-                    <p className="text-center">Non ci sono misure</p>
-                  )}
-                </div>
-                <div className="py-2">
-                  <button onClick={viewScheda} className="btn ">
-                    Vai alla scheda
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="text-center"></div>
-          </div>
+
+      {profileUser.id && (
+        <div className="card p-3">
+          <h5 className="mb-3">Misure utente</h5>
+          <ul className="list-group mb-3">
+            <li className="list-group-item">Peso: {profileUser.peso} Kg</li>
+            <li className="list-group-item">Spalle: {profileUser.spalle} cm</li>
+            <li className="list-group-item">Petto: {profileUser.petto} cm</li>
+            <li className="list-group-item">Vita: {profileUser.vita} cm</li>
+            <li className="list-group-item">
+              Gamba Sinistra: {profileUser.gambaSinistra} cm
+            </li>
+            <li className="list-group-item">
+              Gamba Destra: {profileUser.gambaDestra} cm
+            </li>
+            <li className="list-group-item">
+              Polpaccio Destro: {profileUser.polpaccioDestro} cm
+            </li>
+            <li className="list-group-item">
+              Polpaccio Sinistro: {profileUser.polpaccioSinistro} cm
+            </li>
+            <li className="list-group-item">Plica: {profileUser.plica} %</li>
+            <li className="list-group-item">Data: {profileUser.data}</li>
+          </ul>
+          <button className="btn btn-primary" onClick={viewScheda}>
+            Apri scheda
+          </button>
         </div>
-      </div>
+      )}
     </>
   );
 }
