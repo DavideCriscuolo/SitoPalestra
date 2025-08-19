@@ -48,7 +48,7 @@ export default function MainAdmin() {
               <img
                 className=" w-25  rounded-circle "
                 src="img/Frame2.png"
-                alt=""
+                alt="img admin"
               />
             </div>
             <div className="card-body m-3">
