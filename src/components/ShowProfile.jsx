@@ -14,7 +14,7 @@ export default function ShowProfile(prop) {
     console.log(
       `${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id_iscritto}`
     );
-    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id}`, {
+    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id_iscritto}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
