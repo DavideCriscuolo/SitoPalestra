@@ -366,7 +366,7 @@ export default function FormMisure({ users, requestData }) {
         </div>
 
         <button className="btn btn-dark mt-2" type="submit">
-          Aggiorna misure
+          Aggiorna le misure
         </button>
       </form>
 
