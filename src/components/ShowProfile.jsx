@@ -13,7 +13,7 @@ export default function ShowProfile(prop) {
     const token = localStorage.getItem("token");
 
     fetch(
-      import.meta.env.VITE_URL_GET_SCHEDA$ + encodeURIComponent(dataUser.id),
+      import.meta.env.VITE_URL_GET_SCHEDA + encodeURIComponent(dataUser.id),
       {
         headers: { Authorization: `Bearer ${token}` },
       }
