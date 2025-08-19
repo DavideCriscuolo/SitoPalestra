@@ -11,7 +11,7 @@ export default function MainAdmin() {
   const token = localStorage.getItem("token");
   const url = import.meta.env.VITE_URL_REQUEST_DATA_ADMIN;
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isClicked, setIsClicked] = useState(false);
   const [dataUser, setDataUser] = useState([]);
 
   function requestData() {
@@ -68,6 +68,9 @@ export default function MainAdmin() {
             </div>
           </div>
         )}
+        <div className="my-3">
+          {isClicked ? <ShowProfile idUser={dataUser.id}></ShowProfile> : null}
+        </div>
       </div>
     </main>
   );

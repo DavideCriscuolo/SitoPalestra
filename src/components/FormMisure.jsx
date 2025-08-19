@@ -7,8 +7,7 @@ export default function FormMisure(prop) {
   const [operationUpload, setOperationUpload] = useState(false);
   const [operationDelete, setOperationDelete] = useState(false);
   const [operationUpdate, setOperationUpdate] = useState(false);
-  const [dataUser, setDataUser] = useState([]);
-  const [isClicked, setIsClicked] = useState(false);
+
   const [formData, setFormData] = useState({
     spalle: "",
     vita: "",
@@ -142,21 +141,7 @@ export default function FormMisure(prop) {
       }
     });
   }
-  const urlProfile =
-    import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(idUser);
-  function ShowProfileUser() {
-    console.log(idUser);
-    console.log(urlProfile);
-    fetch(urlProfile)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setDataUser(data);
-      });
-  }
-  useEffect(() => {
-    ShowProfileUser();
-  }, [idUser]);
+
   return (
     <>
       <form onSubmit={sendUpdateMisure} id="formAdminMisure" action="">
@@ -372,26 +357,6 @@ export default function FormMisure(prop) {
           </button>{" "}
         </div>
       </form>
-      <div className="my-3">
-        <button
-          className="btn btn-dark"
-          onClick={() => {
-            setIsClicked(true);
-            ShowProfileUser();
-          }}
-        >
-          Mostra utente
-        </button>
-        {isClicked ? <ShowProfile dataUser={dataUser}></ShowProfile> : null}
-        <button
-          className="btn btn-dark"
-          onClick={() => {
-            ShowProfileUser(); // richiama la funzione che fetcha i dati
-          }}
-        >
-          Clicca per vedere le misure aggiornate
-        </button>
-      </div>
     </>
   );
 }
