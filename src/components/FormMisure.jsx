@@ -37,7 +37,7 @@ export default function FormMisure({ users, requestData }) {
 
     try {
       const res = await fetch(
-        import.meta.env.VITE_URL_GET_PROFILE + encodeURIComponent(idUser)
+        import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(idUser)
       );
 
       if (!res.ok) throw new Error(`Errore ${res.status}`);
@@ -186,7 +186,7 @@ export default function FormMisure({ users, requestData }) {
         <select
           className="form-select mb-3"
           value={idUser}
-          onChange={(e) => handleSelect(e.target.value)}
+          onChange={(e) => setIdUser(Number(e.target.value))} // converte in numero
         >
           <option value="">-- Seleziona un utente --</option>
           {users.map((user) => (
