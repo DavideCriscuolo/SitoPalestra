@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import LoaderC from "./LoaderC";
 import { Link, NavLink } from "react-router-dom";
 export default function ShowProfile(prop) {
@@ -9,6 +10,21 @@ export default function ShowProfile(prop) {
   const anno = data.getFullYear();
   const fullName = dataUser.nome + " " + dataUser.cognome;
   console.log(dataUser.id_iscritto);
+  const [userProfile, setUserProfile] = useState();
+  const urlProfile =
+    import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(dataUser.id);
+  function ShowProfileUser() {
+    console.log(urlProfile);
+    fetch(urlProfile)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setUserProfile(data);
+      });
+  }
+  useEffect(() => {
+    ShowProfileUser();
+  }, [dataUser.id]);
   function viewScheda() {
     const token = localStorage.getItem("token");
 
@@ -18,7 +34,7 @@ export default function ShowProfile(prop) {
     }
 
     const urlFetch = `${import.meta.env.VITE_URL_GET_SCHEDA}${
-      dataUser.id_iscritto
+      userProfile.id_iscritto
     }`;
     console.log("URL scheda:", urlFetch);
 
