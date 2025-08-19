@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import LoaderC from "./LoaderC";
-import { Link, NavLink } from "react-router-dom";
+
 export default function ShowProfile(prop) {
   const [dataUser, setDataUser] = useState(prop.idUser);
   const urlProfile =
     import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(prop.idUser);
-  function ShowProfileUser() {
+  function ProfileUser() {
     console.log(urlProfile);
     fetch(urlProfile)
       .then((res) => res.json())
@@ -16,7 +15,7 @@ export default function ShowProfile(prop) {
       .catch((err) => console.error("Errore fetch profilo:", err));
   }
   useEffect(() => {
-    ShowProfileUser();
+    ProfileUser();
   }, [prop.idUser]);
 
   console.log(dataUser);
