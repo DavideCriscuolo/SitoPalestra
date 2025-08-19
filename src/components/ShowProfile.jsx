@@ -12,17 +12,16 @@ export default function ShowProfile(prop) {
   function viewScheda() {
     const token = localStorage.getItem("token");
 
-    fetch(
-      import.meta.env.VITE_URL_GET_SCHEDA + encodeURIComponent(dataUser.id),
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
-      .then((res) => res.blob())
+    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`Errore ${res.status}`);
+        return res.blob();
+      })
       .then((blob) => {
         const url = URL.createObjectURL(blob);
         window.open(url, "_blank");
-        setTimeout(() => URL.revokeObjectURL(url), 10000); // 10 secondi
       })
       .catch((err) => console.error(err));
   }
