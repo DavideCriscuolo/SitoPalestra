@@ -69,7 +69,7 @@ export default function MainAdmin() {
           </div>
         )}
         <div className="my-3">
-          {isClicked ? <ShowProfile idUser={dataUser.id}></ShowProfile> : null}
+          <ShowProfile idUser={dataUser.id}></ShowProfile>
         </div>
       </div>
     </main>
