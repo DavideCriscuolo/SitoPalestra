@@ -187,11 +187,12 @@ export default function FormMisure(prop) {
           onChange={(e) => handleSelect(e.target.value)}
         >
           <option value="">-- Seleziona un utente --</option>
-          {prop.users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.nome} {user.cognome}
-            </option>
-          ))}
+          {Array.isArray(prop.users) &&
+            prop.users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.nome} {user.cognome}
+              </option>
+            ))}
         </select>
 
         <div className="mb-3">
