@@ -66,11 +66,11 @@ export default function MainAdmin() {
                   </div>
                 </div>
               </div>
+              <NavLink className="btn btn-secondary" to="/">
+                {" "}
+                Logut
+              </NavLink>
             </div>
-            <NavLink className="btn btn-secondary" to="/">
-              {" "}
-              Logut
-            </NavLink>
           </div>
         )}
       </div>
