@@ -250,7 +250,7 @@ export default function FormMisure({ users, requestData }) {
             <li className="list-group-item">Plica: {profileUser.plica} %</li>
             <li className="list-group-item">Data: {profileUser.data}</li>
           </ul>
-          <button className="btn btn-primary" onClick={viewScheda}>
+          <button className="btn btn-dark" onClick={viewScheda}>
             Apri scheda
           </button>
         </div>
