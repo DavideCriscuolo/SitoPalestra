@@ -22,7 +22,7 @@ export default function FormMisure({ users, requestData }) {
   });
   const [idUser, setIdUser] = useState("");
 
-  // Quando selezioni un utente aggiorna profilo e form
+  // Aggiorna profilo e form quando cambia idUser
   useEffect(() => {
     if (idUser) fetchProfileUser();
   }, [idUser]);
@@ -32,54 +32,64 @@ export default function FormMisure({ users, requestData }) {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const fetchProfileUser = () => {
+  const fetchProfileUser = async () => {
     if (!idUser) return;
-    fetch(import.meta.env.VITE_URL_GET_PROFILE + encodeURIComponent(idUser))
-      .then((res) => res.text()) // invece di .json() per debug
 
-      .then((data) => {
-        console.log("Dati profilo:", data);
-        setProfileUser(data);
-        setFormData({
-          spalle: data.spalle || "",
-          vita: data.vita || "",
-          petto: data.petto || "",
-          gambaSinistra: data.gambaSinistra || "",
-          gambaDestra: data.gambaDestra || "",
-          peso: data.peso || "",
-          bicipiteDestro: data.bicipiteDestro || "",
-          bicipiteSinistro: data.bicipiteSinistro || "",
-          polpaccioDestro: data.polpaccioDestro || "",
-          polpaccioSinistro: data.polpaccioSinistro || "",
-          plica: data.plica || "",
-          data: data.data || "",
-        });
-      })
-      .catch((err) => console.error("Errore fetch profilo:", err));
+    try {
+      const res = await fetch(
+        import.meta.env.VITE_URL_GET_PROFILE + encodeURIComponent(idUser)
+      );
+
+      if (!res.ok) throw new Error(`Errore ${res.status}`);
+
+      const data = await res.json(); // Assicurati che il backend ritorni JSON valido
+      setProfileUser(data);
+      setFormData({
+        spalle: data.spalle || "",
+        vita: data.vita || "",
+        petto: data.petto || "",
+        gambaSinistra: data.gambaSinistra || "",
+        gambaDestra: data.gambaDestra || "",
+        peso: data.peso || "",
+        bicipiteDestro: data.bicipiteDestro || "",
+        bicipiteSinistro: data.bicipiteSinistro || "",
+        polpaccioDestro: data.polpaccioDestro || "",
+        polpaccioSinistro: data.polpaccioSinistro || "",
+        plica: data.plica || "",
+        data: data.data || "",
+      });
+    } catch (err) {
+      console.error("Errore fetch profilo:", err);
+      alert("Impossibile caricare il profilo, controlla il backend");
+    }
   };
 
-  const sendUpdateMisure = (e) => {
+  const sendUpdateMisure = async (e) => {
     e.preventDefault();
     if (!idUser)
       return alert("Seleziona un utente prima di aggiornare le misure");
 
-    fetch(import.meta.env.VITE_URL_UPDATE + encodeURIComponent(idUser), {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setOperationUpdate(true);
-        setTimeout(() => setOperationUpdate(false), 3000);
-        fetchProfileUser();
-      })
-      .catch((err) => console.error("Errore update:", err));
+    try {
+      const res = await fetch(
+        import.meta.env.VITE_URL_UPDATE + encodeURIComponent(idUser),
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (!res.ok) throw new Error(`Errore ${res.status}`);
+      setOperationUpdate(true);
+      setTimeout(() => setOperationUpdate(false), 3000);
+      fetchProfileUser(); // aggiorna i dati dopo update
+    } catch (err) {
+      console.error("Errore update:", err);
+    }
   };
 
   const handleFile = (e) => setFile(e.target.files[0]);
 
-  const uploadScheda = (e) => {
+  const uploadScheda = async (e) => {
     e.preventDefault();
     if (!idUser)
       return alert("Seleziona un utente prima di caricare la scheda");
@@ -89,61 +99,68 @@ export default function FormMisure({ users, requestData }) {
     const form = new FormData();
     form.append("scheda", file);
 
-    fetch(`${import.meta.env.VITE_URL_UPLOAD_SCHEDA}${idUser}`, {
-      method: "PUT",
-      headers: { Authorization: `Bearer ${token}` },
-      body: form,
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setOperationUpload(true);
-        setTimeout(() => setOperationUpload(false), 3000);
-        alert("Scheda caricata!");
-      })
-      .catch((err) => console.error("Errore upload:", err));
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_URL_UPLOAD_SCHEDA}${idUser}`,
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}` },
+          body: form,
+        }
+      );
+      if (!res.ok) throw new Error(`Errore ${res.status}`);
+      setOperationUpload(true);
+      setTimeout(() => setOperationUpload(false), 3000);
+      alert("Scheda caricata!");
+    } catch (err) {
+      console.error("Errore upload:", err);
+    }
   };
 
-  const viewScheda = () => {
+  const viewScheda = async () => {
     if (!profileUser?.id)
       return alert("Seleziona un utente prima di aprire la scheda");
 
     const token = localStorage.getItem("token");
-    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${profileUser.id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Errore ${res.status}`);
-        return res.blob();
-      })
-      .then((blob) => {
-        const url = URL.createObjectURL(blob);
-        window.open(url, "_blank");
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
-      })
-      .catch((err) => console.error("Errore download scheda:", err));
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_URL_GET_SCHEDA}${profileUser.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!res.ok) throw new Error(`Errore ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch (err) {
+      console.error("Errore download scheda:", err);
+    }
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
     if (!idUser) return alert("Seleziona un utente da eliminare");
 
-    fetch(import.meta.env.VITE_URL_DELETE + encodeURIComponent(idUser), {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idUser }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          setOperationDelete(true);
-          setTimeout(() => setOperationDelete(false), 3000);
-          requestData();
-          setIdUser("");
-          setProfileUser({});
-        } else {
-          res.json().then((data) => console.error("Errore delete:", data));
+    try {
+      const res = await fetch(
+        import.meta.env.VITE_URL_DELETE + encodeURIComponent(idUser),
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ idUser }),
         }
-      })
-      .catch((err) => console.error("Errore delete:", err));
+      );
+      if (!res.ok) throw new Error(`Errore ${res.status}`);
+      setOperationDelete(true);
+      setTimeout(() => setOperationDelete(false), 3000);
+      requestData();
+      setIdUser("");
+      setProfileUser({});
+    } catch (err) {
+      console.error("Errore delete:", err);
+    }
   };
 
   return (
