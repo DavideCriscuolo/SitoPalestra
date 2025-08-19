@@ -7,7 +7,7 @@ export default function FormMisure(prop) {
   const [operationUpload, setOperationUpload] = useState(false);
   const [operationDelete, setOperationDelete] = useState(false);
   const [operationUpdate, setOperationUpdate] = useState(false);
-  const [profileUser, setProfileUser] = useState([]);
+  const [profileUser, setProfileUser] = useState({});
   const [formData, setFormData] = useState({
     spalle: "",
     vita: "",
@@ -24,6 +24,27 @@ export default function FormMisure(prop) {
     data: "",
   });
   const [idUser, setIdUser] = useState();
+
+  const viewScheda = () => {
+    const token = localStorage.getItem("token");
+
+    const urlFetch = `${import.meta.env.VITE_URL_GET_SCHEDA}${profileUser.id}`;
+    console.log("URL scheda:", urlFetch);
+
+    fetch(urlFetch, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`Errore ${res.status}`);
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank");
+        setTimeout(() => URL.revokeObjectURL(url), 10000); // pulizia oggetto URL
+      })
+      .catch((err) => console.error("Errore download scheda:", err));
+  };
 
   function handleSelect(id) {
     setIdUser(id);
@@ -54,7 +75,7 @@ export default function FormMisure(prop) {
         }, 3000);
       })
       .catch((err) => {
-        console.error("Errore");
+        console.error("Errore", err.message);
       });
   }
 
@@ -348,7 +369,77 @@ export default function FormMisure(prop) {
         </div>
       </form>
       <button onClick={handleShowProfile}> mostra utente </button>
-      <ShowProfile dataUser={profileUser}></ShowProfile>
+      <div className="container mt-4">
+        <div className="card border-0 w-100 h-100 my-3">
+          <div className="cardtop  d-flex justify-content-center my-3"></div>
+          <div className="card-body  m-3">
+            <div id="titleCard" className="title_card text-center"></div>
+            <div className="row  row-cols-1">
+              <div id="colMisure" className="col border-0 border  my-4">
+                <div></div>
+                <div>
+                  {profileUser.spalle &&
+                  profileUser.petto &&
+                  profileUser.vita &&
+                  profileUser.gambaSinistra &&
+                  profileUser.gambaDestra &&
+                  profileUser.polpaccioDestro &&
+                  profileUser.polpaccioSinistro &&
+                  profileUser.plica &&
+                  profileUser.data ? (
+                    <ul id="ListMisure" className="list-group py-3">
+                      <li className="list-group-item">
+                        <span>Peso: </span>
+                        {profileUser.peso} Kg
+                      </li>
+                      <li className="list-group-item">
+                        <span>Spalle: </span>
+                        {profileUser.spalle} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Petto: </span> {profileUser.petto} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Vita: </span> {profileUser.vita} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Gamba Sinistra: </span>{" "}
+                        {profileUser.gambaSinistra} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Gamba Destra: </span> {profileUser.gambaDestra} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Polapccio Destro: </span>{" "}
+                        {profileUser.polpaccioDestro} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Polapccio Sinistro: </span>{" "}
+                        {profileUser.polpaccioSinistro} cm
+                      </li>
+                      <li className="list-group-item">
+                        <span>Plica: </span> {profileUser.plica} %
+                      </li>
+                      {/* <li className="list-group-item">
+                      <span>Data di inserimento: </span> {data.giorno}-
+                      {data.mese}-{data.anno}
+                    </li> */}
+                    </ul>
+                  ) : (
+                    <p className="text-center">Non ci sono misure</p>
+                  )}
+                </div>
+                <div className="py-2">
+                  <button onClick={viewScheda} className="btn ">
+                    Vai alla scheda
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="text-center"></div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

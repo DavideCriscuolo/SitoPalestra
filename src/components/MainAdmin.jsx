@@ -69,7 +69,6 @@ export default function MainAdmin() {
             </div>
           </div>
         )}
-        <div className="my-3"></div>
       </div>
     </main>
   );
