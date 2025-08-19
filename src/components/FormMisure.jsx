@@ -35,8 +35,10 @@ export default function FormMisure({ users, requestData }) {
   const fetchProfileUser = () => {
     if (!idUser) return;
     fetch(import.meta.env.VITE_URL_GET_PROFILE + encodeURIComponent(idUser))
-      .then((res) => res.json())
+      .then((res) => res.text()) // invece di .json() per debug
+
       .then((data) => {
+        console.log("Dati profilo:", data);
         setProfileUser(data);
         setFormData({
           spalle: data.spalle || "",
