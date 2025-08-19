@@ -28,7 +28,7 @@ const services = [
   },
   {
     id: 4,
-    img: "/img/Consulenza.jpg",
+    img: "/img/Consulenza.webp",
     title: "CONSULENZA",
     desc: "Consigli personalizzati sul piano di allenamento più adatto alle tue esigenze e ai tuoi obiettivi.",
     infoMessage:
