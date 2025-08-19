@@ -135,7 +135,7 @@ export default function FormMisure({ users, requestData }) {
       window.open(url, "_blank");
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     } catch (err) {
-      console.error("Errore download scheda:", err);
+      console.error("Errore download scheda:", err.message);
     }
   };
 
