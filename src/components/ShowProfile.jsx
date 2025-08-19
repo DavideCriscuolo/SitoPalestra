@@ -1,33 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 export default function ShowProfile(prop) {
-  const [dataUser, setDataUser] = useState(prop.idUser);
+  const [dataUser, setDataUser] = useState({});
   const urlProfile =
     import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(prop.idUser);
-  function ProfileUser() {
-    console.log(urlProfile);
-    fetch(urlProfile)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setDataUser(data);
-      })
-      .catch((err) => console.error("Errore fetch profilo:", err));
-  }
+
   useEffect(() => {
-    ProfileUser();
+    const fetchData = async () => {
+      const response = await fetch(urlProfile);
+      const data = await response.json();
+      setDataUser(data);
+    };
+    fetchData();
   }, [prop.idUser]);
 
-  console.log(dataUser);
-  const data = new Date(dataUser.data);
-  const giorno = data.getDate();
-  const mese = data.getMonth() + 1;
-  const anno = data.getFullYear();
-  const fullName = dataUser.nome + " " + dataUser.cognome;
-  console.log(dataUser.id_iscritto);
+  const data = useMemo(() => {
+    if (dataUser.data) {
+      const date = new Date(dataUser.data);
+      return {
+        giorno: date.getDate(),
+        mese: date.getMonth() + 1,
+        anno: date.getFullYear(),
+      };
+    }
+    return {};
+  }, [dataUser.data]);
 
-  // Funzione per aprire la scheda PDF
-  function viewScheda() {
+  const fullName = useMemo(() => {
+    return `${dataUser.nome} ${dataUser.cognome}`;
+  }, [dataUser.nome, dataUser.cognome]);
+
+  const viewScheda = () => {
     const token = localStorage.getItem("token");
 
     const urlFetch = `${import.meta.env.VITE_URL_GET_SCHEDA}${
@@ -48,8 +51,7 @@ export default function ShowProfile(prop) {
         setTimeout(() => URL.revokeObjectURL(url), 10000); // pulizia oggetto URL
       })
       .catch((err) => console.error("Errore download scheda:", err));
-  }
-
+  };
   return (
     <div className="container mt-4">
       <div className="card border-0 w-100 h-100 my-3">
@@ -112,7 +114,8 @@ export default function ShowProfile(prop) {
                       <span>Plica: </span> {dataUser.plica} %
                     </li>
                     <li className="list-group-item">
-                      <span>Data di inserimento: </span> {giorno}-{mese}-{anno}
+                      <span>Data di inserimento: </span> {data.giorno}-
+                      {data.mese}-{data.anno}
                     </li>
                   </ul>
                 ) : (

@@ -69,7 +69,7 @@ export default function MainAdmin() {
           </div>
         )}
         <div className="my-3">
-          <ShowProfile idUser={dataUser.id}></ShowProfile>
+          <ShowProfile idUser={dataUser.id} userData={dataUser}></ShowProfile>
         </div>
       </div>
     </main>
