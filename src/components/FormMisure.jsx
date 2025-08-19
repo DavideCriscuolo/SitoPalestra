@@ -203,7 +203,7 @@ export default function FormMisure({ users, requestData }) {
         <div className="mb-3">
           {" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="spalle"> Misura Spalle</label>{" "}
             <input
               type="number"
               className="form-control"
@@ -216,7 +216,7 @@ export default function FormMisure({ users, requestData }) {
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="petto"> Misura Petto</label>{" "}
             <input
               type="number"
               className="form-control"
@@ -229,7 +229,7 @@ export default function FormMisure({ users, requestData }) {
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="vita"> Misura Vita</label>{" "}
             <input
               type="number"
               className="form-control"
@@ -242,7 +242,7 @@ export default function FormMisure({ users, requestData }) {
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="gambaSinistra"> Misura Gamba Sinistra</label>{" "}
             <input
               type="number"
               className="form-control"
@@ -255,46 +255,46 @@ export default function FormMisure({ users, requestData }) {
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="gambaDestra"> Misura Gamba Destra</label>{" "}
             <input
               type="number"
               className="form-control"
               name="gambaDestra"
               id="inputMisura4"
               aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
+              placeholder="Inserisci Misura Gamba Lato Destra"
               value={formData.gambaDestra}
               onChange={handleChange}
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="peso">Peso</label>{" "}
             <input
               type="number"
               className="form-control"
               name="peso"
               id="inputMisura4"
               aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
+              placeholder="Inserisci Peso"
               value={formData.peso}
               onChange={handleChange}
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="bicipiteDestro"> Misura Bicipite Destro</label>{" "}
             <input
               type="number"
               className="form-control"
               name="bicipiteDestro"
               id="bicipiteDestro"
               aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
+              placeholder="Inserisci Misura Bicipite Destro"
               value={formData.bicipiteDestro}
               onChange={handleChange}
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="bicipiteSinistro">Misura Bicipite Sinistro</label>{" "}
             <input
               type="number"
               className="form-control"
@@ -307,7 +307,7 @@ export default function FormMisure({ users, requestData }) {
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="polpaccioDestro">Misura Polpaccio Destro</label>{" "}
             <input
               type="number"
               className="form-control"
@@ -320,7 +320,9 @@ export default function FormMisure({ users, requestData }) {
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="polpaccioSinistro">
+              Misura Polpaccio Sinistro"
+            </label>{" "}
             <input
               type="number"
               className="form-control"
@@ -333,7 +335,7 @@ export default function FormMisure({ users, requestData }) {
             />{" "}
           </div>{" "}
           <div className="my-3">
-            {" "}
+            <label htmlFor="plica">Percentuale Plica</label>{" "}
             <input
               type="number"
               className="form-control"
@@ -347,7 +349,7 @@ export default function FormMisure({ users, requestData }) {
           </div>{" "}
           <div className="my-3">
             {" "}
-            <label htmlFor="" className="form-label">
+            <label htmlFor="data" className="form-label">
               {" "}
               Data{" "}
             </label>{" "}
