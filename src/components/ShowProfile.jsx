@@ -9,21 +9,16 @@ export default function ShowProfile(prop) {
   const anno = data.getFullYear();
   const fullName = dataUser.nome + " " + dataUser.cognome;
   function viewScheda() {
-    const url = import.meta.env.VITE_URL_SCHEDA + dataUser.scheda;
     const token = localStorage.getItem("token");
 
-    fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Errore nel caricamento della scheda");
-        return res.blob();
-      })
+      .then((res) => res.blob())
       .then((blob) => {
-        const fileURL = URL.createObjectURL(blob);
-        window.open(fileURL); // apre il PDF in una nuova finestra
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank");
+        setTimeout(() => URL.revokeObjectURL(url), 10000); // 10 secondi
       })
       .catch((err) => console.error(err));
   }
@@ -103,12 +98,7 @@ export default function ShowProfile(prop) {
                   )}
                 </div>
                 <div className="py-2">
-                  <button
-                    onClick={viewScheda}
-                    className="btn "
-                    target="_blank"
-                    rel="noopener noreferrer" //evita l accesso alla finestra padre
-                  >
+                  <button onClick={viewScheda} className="btn ">
                     Vai alla scheda
                   </button>
                 </div>
