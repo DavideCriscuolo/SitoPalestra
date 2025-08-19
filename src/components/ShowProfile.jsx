@@ -60,17 +60,7 @@ export default function ShowProfile(prop) {
           <div id="titleCard" className="title_card text-center"></div>
           <div className="row  row-cols-1">
             <div id="colMisure" className="col border-0 border  my-4">
-              <div>
-                {fullName !== "undefined undefined" ? (
-                  <h2 className="text-center py-2">
-                    Ultimi dati inseriti per {fullName}
-                  </h2>
-                ) : (
-                  <h2 className="text-center py-2">
-                    Seleziona un utente sopra
-                  </h2>
-                )}
-              </div>
+              <div></div>
               <div>
                 {dataUser.spalle &&
                 dataUser.petto &&
