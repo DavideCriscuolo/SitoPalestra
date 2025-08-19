@@ -12,7 +12,7 @@ const services = [
   },
   {
     id: 2,
-    img: "/img/mensile.jpg",
+    img: "/img/mensile.webp",
     title: "MENSILE",
     desc: "Piano mensile, ti permette di accedere a scheda personalizzata, sala pesi, sala corsi, spogliatoio.",
     infoMessage:
