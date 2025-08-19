@@ -99,20 +99,13 @@ export default function FormMisure(prop) {
       method: "PUT",
       body: formData,
     })
-      .then(async (res) => {
-        const contentType = res.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          const data = await res.json();
-          console.log("fatto", data);
-          setOperationUpload(true);
-          setTimeout(() => {
-            setOperationUpload(false);
-          }, 3000);
-        } else {
-          const text = await res.text();
-          console.log("Risposta non JSON:", text);
-          alert("Errore: il server non ha restituito JSON");
-        }
+      .then((res) => res.json()) // 👈 adesso sappiamo che il backend restituisce JSON
+      .then((data) => {
+        console.log("fatto", data);
+        setOperationUpload(true);
+        setTimeout(() => {
+          setOperationUpload(false);
+        }, 3000);
       })
       .catch((err) => {
         console.error("Errore upload", err);
@@ -187,12 +180,11 @@ export default function FormMisure(prop) {
           onChange={(e) => handleSelect(e.target.value)}
         >
           <option value="">-- Seleziona un utente --</option>
-          {Array.isArray(prop.users) &&
-            prop.users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.nome} {user.cognome}
-              </option>
-            ))}
+          {prop.users.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.nome} {user.cognome}
+            </option>
+          ))}
         </select>
 
         <div className="mb-3">
