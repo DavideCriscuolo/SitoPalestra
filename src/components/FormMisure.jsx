@@ -124,7 +124,7 @@ export default function FormMisure({ users, requestData }) {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_URL_GET_SCHEDA}${profileUser.id}`,
+        `${import.meta.env.VITE_URL_SCHEDA}${profileUser.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
