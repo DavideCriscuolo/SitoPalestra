@@ -4,7 +4,7 @@ export default function ShowProfile(prop) {
   const [dataUser, setDataUser] = useState({});
   const urlProfile =
     import.meta.env.VITE_URL_PROFILEUSER + encodeURIComponent(prop.idUser);
-
+  console.log("ID utente:", prop.idUser);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(urlProfile);
