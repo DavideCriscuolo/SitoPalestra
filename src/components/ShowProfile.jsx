@@ -8,12 +8,16 @@ export default function ShowProfile(prop) {
   const mese = data.getMonth() + 1;
   const anno = data.getFullYear();
   const fullName = dataUser.nome + " " + dataUser.cognome;
+  console.log(dataUser.id);
   function viewScheda() {
     const token = localStorage.getItem("token");
 
-    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    fetch(
+      import.meta.env.VITE_URL_GET_SCHEDA$ + encodeURIComponent(dataUser.id),
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
       .then((res) => res.blob())
       .then((blob) => {
         const url = URL.createObjectURL(blob);
