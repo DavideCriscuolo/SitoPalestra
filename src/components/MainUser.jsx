@@ -173,7 +173,7 @@ export default function MainUser() {
               <div className="text-center">
                 <NavLink className="btn btn-secondary" to="/">
                   {" "}
-                  Logut
+                  Logout
                 </NavLink>
               </div>
               <button className="btn btn-dark" onClick={viewScheda}>
