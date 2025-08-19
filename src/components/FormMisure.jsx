@@ -200,18 +200,168 @@ export default function FormMisure({ users, requestData }) {
           ))}
         </select>
 
-        {Object.keys(formData).map((key) => (
-          <div className="my-2" key={key}>
+        <div className="mb-3">
+          {" "}
+          <div className="my-3">
+            {" "}
             <input
-              type={key === "data" ? "date" : "number"}
+              type="number"
               className="form-control"
-              name={key}
-              placeholder={`Inserisci ${key}`}
-              value={formData[key]}
+              name="spalle"
+              id="spalle"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Spalle"
+              value={formData.spalle}
               onChange={handleChange}
-            />
-          </div>
-        ))}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="petto"
+              id="petto"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Petto"
+              value={formData.petto}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="vita"
+              id="vita"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura vita"
+              value={formData.vita}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="gambaSinistra"
+              id="inputMisura4"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Gamba Lato Sinistro"
+              value={formData.gambaSinistra}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="gambaDestra"
+              id="inputMisura4"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Gamba Lato Sinistro"
+              value={formData.gambaDestra}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="peso"
+              id="inputMisura4"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Gamba Lato Sinistro"
+              value={formData.peso}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="bicipiteDestro"
+              id="bicipiteDestro"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Gamba Lato Sinistro"
+              value={formData.bicipiteDestro}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="bicipiteSinistro"
+              id="bicipiteSinistro"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Bicipite Sinistro"
+              value={formData.bicipiteSinistro}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="polpaccioDestro"
+              id="polpaccioDestro"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Polpaccio Destro"
+              value={formData.polpaccioDestro}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="polpaccioSinistro"
+              id="polpaccioSinistro"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Polpaccio Sinistro"
+              value={formData.polpaccioSinistro}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <input
+              type="number"
+              className="form-control"
+              name="plica"
+              id="plica"
+              aria-describedby="helpId"
+              placeholder="Inserisci Misura Plica"
+              value={formData.plica}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+          <div className="my-3">
+            {" "}
+            <label htmlFor="" className="form-label">
+              {" "}
+              Data{" "}
+            </label>{" "}
+            <input
+              type="date"
+              className="form-control"
+              name="data"
+              id="data"
+              aria-describedby="helpId"
+              value={formData.data}
+              onChange={handleChange}
+            />{" "}
+          </div>{" "}
+        </div>
 
         <button className="btn btn-dark mt-2" type="submit">
           Aggiorna misure
