@@ -46,3 +46,10 @@ L'applicazione offre le seguenti funzionalità:
 ## Sviluppo
 
 Il progetto è stato sviluppato utilizzando tecnologie moderne e strumenti di sviluppo come Visual Studio Code e GitHub. Il codice sorgente è stato scritto in JavaScript e HTML, e la gestione dei dati è stata implementata utilizzando API e librerie di gestione dei dati.
+
+## Per vedere la pagina utente
+
+Accedere con
+
+- Email: prova@gmail.com
+- Password : 123
