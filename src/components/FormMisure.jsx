@@ -108,7 +108,7 @@ export default function FormMisure(prop) {
         setTimeout(() => setOperationUpload(false), 3000);
       })
       .catch((err) => {
-        console.error("Errore upload", err);
+        console.error("Errore upload", err.message);
         alert("Errore upload");
       });
   }
