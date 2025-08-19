@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import Jumbo from "./JumboC";
 import LoaderC from "./LoaderC";
 import FormMisure from "./FormMisure";
+import ShowProfile from "./ShowProfile";
 
 export default function MainAdmin() {
   // Logica per ricevere  tutti i dati dall endpoint tramite una chiamata ajax fatta con axios
   const token = localStorage.getItem("token");
   const url = import.meta.env.VITE_URL_REQUEST_DATA_ADMIN;
   const [isLoading, setIsLoading] = useState(true);
-  const [isClicked, setIsClicked] = useState(false);
   const [dataUser, setDataUser] = useState([]);
 
   function requestData() {
