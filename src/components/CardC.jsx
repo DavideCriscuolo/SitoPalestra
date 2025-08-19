@@ -4,7 +4,7 @@ import { useState } from "react";
 const services = [
   {
     id: 1,
-    img: "/img/personal.png",
+    img: "/img/personal.webp",
     title: "PERSONAL",
     desc: "Lezione private personalizzate con assistenza continua e monitoraggio completo.",
     infoMessage:
@@ -20,7 +20,7 @@ const services = [
   },
   {
     id: 3,
-    img: "/img/full-shot-woman-doing-burpees-indoors.jpg",
+    img: "/img/full-shot-woman-doing-burpees-indoors.webp",
     title: "GIORNALIERO",
     desc: "Singolo ingresso in giornata con piena disponibilità da parte della struttura e staff.",
     infoMessage:
