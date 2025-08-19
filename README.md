@@ -29,9 +29,6 @@ Il progetto è strutturato in modo modulare, con separazione delle funzionalità
 
 - Components: cartella che contiene i componenti React utilizzati nell'applicazione
 - Pages: cartella che contiene le pagine dell'applicazione
-- API: cartella che contiene le API utilizzate per l'accesso a dati e servizi esterni
-- Utils: cartella che contiene funzioni di utilità per la gestione dei dati e la logica di business
-- Backend: cartella che contiene il codice del backend, compreso il database e le API
 
 ## Funzionalità
 
