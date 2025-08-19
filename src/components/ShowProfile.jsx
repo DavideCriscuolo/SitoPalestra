@@ -11,7 +11,9 @@ export default function ShowProfile(prop) {
   console.log(dataUser.id_iscritto);
   function viewScheda() {
     const token = localStorage.getItem("token");
-    console.log(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id}`);
+    console.log(
+      `${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id_iscritto}`
+    );
     fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
