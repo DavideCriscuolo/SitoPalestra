@@ -13,6 +13,7 @@ export default function MainAdmin() {
   const url = import.meta.env.VITE_URL_REQUEST_DATA_ADMIN;
   const [isLoading, setIsLoading] = useState(true);
   const [dataUser, setDataUser] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   function requestData() {
     axios
@@ -60,6 +61,7 @@ export default function MainAdmin() {
                       <FormMisure
                         users={dataUser}
                         requestData={requestData}
+                        onSelectUser={(user) => setSelectedUser(user)}
                       ></FormMisure>
                     </div>
                   </div>
@@ -69,7 +71,10 @@ export default function MainAdmin() {
           </div>
         )}
         <div className="my-3">
-          <ShowProfile idUser={dataUser.id} key={dataUser.id}></ShowProfile>
+          <ShowProfile
+            idUser={selectedUser?.id}
+            key={selectedUser?.id}
+          ></ShowProfile>
         </div>
       </div>
     </main>
