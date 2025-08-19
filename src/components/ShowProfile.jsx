@@ -11,10 +11,18 @@ export default function ShowProfile(prop) {
   console.log(dataUser.id_iscritto);
   function viewScheda() {
     const token = localStorage.getItem("token");
-    console.log(
-      `${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id_iscritto}`
-    );
-    fetch(`${import.meta.env.VITE_URL_GET_SCHEDA}${dataUser.id_iscritto}`, {
+
+    if (!dataUser.id_iscritto) {
+      console.error("ID iscritto non definito");
+      return;
+    }
+
+    const urlFetch = `${import.meta.env.VITE_URL_GET_SCHEDA}${
+      dataUser.id_iscritto
+    }`;
+    console.log("URL scheda:", urlFetch);
+
+    fetch(urlFetch, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
@@ -24,6 +32,8 @@ export default function ShowProfile(prop) {
       .then((blob) => {
         const url = URL.createObjectURL(blob);
         window.open(url, "_blank");
+        // eventualmente rilascia l'oggetto URL dopo qualche secondo
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
       })
       .catch((err) => console.error(err));
   }
