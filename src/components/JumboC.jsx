@@ -2,13 +2,14 @@ import "./../css/Jumbo.scss";
 
 export default function Jumbo() {
   return (
-    <div class=" mb-4 rounded-3">
-      <div class="container-fluid containerVideo position-relative top-0 start-0  d-inline-flex flex-column justify-content-end p-2 ">
+    <div className=" mb-4 rounded-3">
+      <div className="container-fluid containerVideo position-relative top-0 start-0  d-inline-flex flex-column justify-content-end p-2 ">
         <video
           className="video rounded-3  position-absolute top-0 p-1  start-0 w-100 "
           autoPlay
           muted
           loop
+          playsinline
           src="./img/Video_jumbo.mp4"
         ></video>
         <div className="p-1">
