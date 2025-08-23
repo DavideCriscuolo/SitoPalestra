@@ -9,7 +9,7 @@ export default function Jumbo() {
           autoPlay
           muted
           loop
-          playsinline
+          playsInline
           src="./img/Video_jumbo.mp4"
         ></video>
         <div className="p-1">
