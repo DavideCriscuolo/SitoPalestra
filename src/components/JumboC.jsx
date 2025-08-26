@@ -2,7 +2,7 @@ import "./../css/Jumbo.scss";
 import { useState } from "react";
 import { useEffect } from "react";
 export default function Jumbo() {
-  const [videoSrc, setVideoSrc] = useState("/img/jumbo-720p.mp4");
+  const [videoSrc, setVideoSrc] = useState("/img/jumbo-altro-720p.mp4");
 
   useEffect(() => {
     if (window.innerWidth <= 768) {
