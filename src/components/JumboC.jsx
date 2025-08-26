@@ -19,7 +19,6 @@ export default function Jumbo() {
           loop
           playsInline
           poster="/bg_jumbo.webp"
-          preload="metadata"
         >
           <source src={videoSrc} type="video/mp4" />
         </video>
