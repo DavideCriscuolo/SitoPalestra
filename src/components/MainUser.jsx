@@ -170,7 +170,7 @@ export default function MainUser() {
                 </div>
               </div>
               <div className="text-center">
-                <NavLink className="btn btn-secondary" to="/">
+                <NavLink className="btn btn-secondary m-2" to="/">
                   {" "}
                   Logout
                 </NavLink>
