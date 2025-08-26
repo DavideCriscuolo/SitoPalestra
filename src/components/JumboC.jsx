@@ -6,7 +6,7 @@ export default function Jumbo() {
 
   useEffect(() => {
     if (window.innerWidth <= 768) {
-      setVideoSrc("/img/jumbo-480p.mp4");
+      setVideoSrc("/img/jumbo-480p-light.mp4");
     }
   }, []);
   return (
