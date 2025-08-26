@@ -1,6 +1,14 @@
 import "./../css/Jumbo.scss";
-
+import { useState } from "react";
+import { useEffect } from "react";
 export default function Jumbo() {
+  const [videoSrc, setVideoSrc] = useState("/img/jumbo-720p.mp4");
+
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      setVideoSrc("/img/jumbo-480p.mp4");
+    }
+  }, []);
   return (
     <div className=" mb-4 rounded-3">
       <div className="container-fluid containerVideo position-relative top-0 start-0  d-inline-flex flex-column justify-content-end p-2 ">
@@ -10,8 +18,11 @@ export default function Jumbo() {
           muted
           loop
           playsInline
-          src="./img/Video_jumbo.mp4"
-        ></video>
+          poster="/bg_jumbo.webp"
+          preload="metadata"
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
         <div className="p-1">
           <div>
             {" "}
