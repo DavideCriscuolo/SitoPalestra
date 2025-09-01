@@ -48,7 +48,7 @@ export default function MainUser() {
         })
         .then((data) => {
           setIsLoading(false);
-          console.log("Dati utente:", data);
+          //console.log("Dati utente:", data);
           setDataUser(data);
         })
         .catch((err) => {
