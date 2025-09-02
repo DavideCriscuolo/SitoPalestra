@@ -10,6 +10,7 @@ export default function MainUser() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
+  const [scheda, setScheda] = useState(null);
 
   // Prendi email da location.state
   const email = location.state?.email || localStorage.getItem("email");
@@ -73,9 +74,6 @@ export default function MainUser() {
   const mese = data.getMonth() + 1;
   const anno = data.getFullYear();
   const viewScheda = async () => {
-    if (!dataUser?.id)
-      return alert("Seleziona un utente prima di aprire la scheda");
-
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
@@ -90,12 +88,21 @@ export default function MainUser() {
       window.open(url, "_blank");
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     } catch (err) {
+      setScheda(false);
       console.error("Errore download scheda:", err.message);
     }
   };
   return (
     <main className="user_main">
       <div className="container mt-4">
+        {scheda ===
+          false(
+            <div>
+              <div className="alert alert-danger" role="alert">
+                Scheda non presente
+              </div>
+            </div>
+          )}
         {isLoading ? (
           <LoaderC />
         ) : (

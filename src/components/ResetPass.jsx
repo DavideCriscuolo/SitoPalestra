@@ -42,7 +42,7 @@ export default function ResetPass() {
               onChange={(e) => setNewPassword(e.target.value)}
               value={newPassword}
             />
-            <button className="btn btn-success" type="submit">
+            <button className="btn btn-secondary my-2" type="submit">
               Invia
             </button>
           </form>
