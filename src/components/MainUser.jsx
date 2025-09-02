@@ -10,7 +10,7 @@ export default function MainUser() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  const [scheda, setScheda] = useState(null);
+  const [scheda, setScheda] = useState(false);
 
   // Prendi email da location.state
   const email = location.state?.email || localStorage.getItem("email");
@@ -87,14 +87,21 @@ export default function MainUser() {
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank");
       setTimeout(() => URL.revokeObjectURL(url), 10000);
+      setScheda(true);
     } catch (err) {
-      setScheda(false);
       console.error("Errore download scheda:", err.message);
     }
   };
   return (
     <main className="user_main">
       <div className="container mt-4">
+        {scheda === false && (
+          <div>
+            <div class="alert alert-danger" role="alert">
+              <h4 class="alert-heading">Scheda non presente</h4>
+            </div>
+          </div>
+        )}
         {isLoading ? (
           <LoaderC />
         ) : (
