@@ -63,11 +63,6 @@ export default function MainUser() {
     requestData();
   }, [email, navigate, url]);
 
-  // Se i dati utente non ci sono ancora mostra caricamento
-  if (!dataUser) {
-    return <p>Caricamento dati utente...</p>;
-  }
-
   // Converti la data in giorno, mese, anno (assumendo dataUser.data è stringa data valida)
   const data = new Date(dataUser.data);
   const giorno = data.getDate();
@@ -82,12 +77,14 @@ export default function MainUser() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      if (!res.ok) throw new Error(`Errore ${res.status}`);
+      if (!res.ok) {
+        setScheda(false);
+        throw new Error(`Errore ${res.status}`);
+      }
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank");
       setTimeout(() => URL.revokeObjectURL(url), 10000);
-      setScheda(false);
     } catch (err) {
       console.error("Errore download scheda:", err.message);
     }
