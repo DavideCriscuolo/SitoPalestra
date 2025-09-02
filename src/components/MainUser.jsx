@@ -63,6 +63,11 @@ export default function MainUser() {
     requestData();
   }, [email, navigate, url]);
 
+  // Se i dati utente non ci sono ancora mostra caricamento
+  if (!dataUser) {
+    return <p>Caricamento dati utente...</p>;
+  }
+
   // Converti la data in giorno, mese, anno (assumendo dataUser.data è stringa data valida)
   const data = new Date(dataUser.data);
   const giorno = data.getDate();
@@ -90,7 +95,7 @@ export default function MainUser() {
   return (
     <main className="user_main">
       <div className="container mt-4">
-        {scheda === false && (
+        {!scheda && (
           <div>
             <div class="alert alert-danger" role="alert">
               <h4 class="alert-heading">Scheda non presente</h4>
