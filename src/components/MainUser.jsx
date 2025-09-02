@@ -10,7 +10,7 @@ export default function MainUser() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  const [scheda, setScheda] = useState(null);
+  const [scheda, setScheda] = useState(true);
 
   // Prendi email da location.state
   const email = location.state?.email || localStorage.getItem("email");
