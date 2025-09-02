@@ -95,14 +95,6 @@ export default function MainUser() {
   return (
     <main className="user_main">
       <div className="container mt-4">
-        {scheda ===
-          false(
-            <div>
-              <div className="alert alert-danger" role="alert">
-                Scheda non presente
-              </div>
-            </div>
-          )}
         {isLoading ? (
           <LoaderC />
         ) : (
