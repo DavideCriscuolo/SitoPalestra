@@ -77,22 +77,20 @@ export default function MainUser() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      if (!res.ok) {
-        setScheda(false);
-        throw new Error(`Errore ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`Errore ${res.status}`);
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank");
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     } catch (err) {
+      setScheda(false);
       console.error("Errore download scheda:", err.message);
     }
   };
   return (
     <main className="user_main">
       <div className="container mt-4">
-        {!scheda && (
+        {scheda === false && (
           <div>
             <div class="alert alert-danger" role="alert">
               <h4 class="alert-heading">Scheda non presente</h4>
