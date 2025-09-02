@@ -95,7 +95,7 @@ export default function MainUser() {
   return (
     <main className="user_main">
       <div className="container mt-4">
-        {scheda === false && (
+        {!scheda && (
           <div>
             <div class="alert alert-danger" role="alert">
               <h4 class="alert-heading">Scheda non presente</h4>
