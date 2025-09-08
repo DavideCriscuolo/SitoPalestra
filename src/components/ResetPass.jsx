@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function ResetPass() {
   const [newPassword, setNewPassword] = useState("");
+  const [sucess, setSuccess] = useState(false);
   const { token } = useParams();
   console.log(token);
 
@@ -19,6 +20,7 @@ export default function ResetPass() {
       .then((res) => res.json())
       .then((data) => {
         console.log("Password cambiata", data);
+        setSuccess(true);
       })
       .catch((err) => {
         console.error("Errore", err);
@@ -29,6 +31,11 @@ export default function ResetPass() {
   return (
     <>
       <main>
+        {sucess && (
+          <div className="alert alert-success" role="alert">
+            Password cambiata con successo puoi tornare al login
+          </div>
+        )}
         <div className="container">
           <form
             onSubmit={handleSubmit}
