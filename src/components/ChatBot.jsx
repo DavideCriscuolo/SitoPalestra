@@ -63,7 +63,7 @@ Quando rispondi:
     }
   }
   return (
-    <div className="container d-flex justify-content-center">
+    <div className="container d-flex justify-content-center py-2">
       <div className={`chatbot-container show`}>
         <div className="card chatbot-card">
           <div className="card-body">
