@@ -96,7 +96,6 @@ export default function MainUser() {
   return (
     <main className="user_main">
       <div className="container mt-4">
-        <ChatBot />
         {!scheda && (
           <div>
             <div class="alert alert-danger" role="alert">
@@ -189,6 +188,7 @@ export default function MainUser() {
             </div>
           </div>
         )}
+        <ChatBot />
       </div>
     </main>
   );
