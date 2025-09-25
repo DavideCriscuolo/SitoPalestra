@@ -64,15 +64,6 @@ Quando rispondi:
   }
   return (
     <div>
-      <div className="d-flex justify-content-end align-items-center">
-        <img
-          style={{ width: "100px" }}
-          onClick={() => setShow((prev) => !prev)}
-          src="/img/Frame2.png"
-          alt=""
-          className="rounded rounded-5"
-        />
-      </div>
       <div className={`chatbot-container ${show ? "show" : "hide"}`}>
         <div className="card chatbot-card">
           <div className="card-body">
@@ -98,6 +89,15 @@ Quando rispondi:
             </form>
           </div>
         </div>
+      </div>
+      <div className="d-flex justify-content-end align-items-center">
+        <img
+          style={{ width: "100px" }}
+          onClick={() => setShow((prev) => !prev)}
+          src="/img/Frame2.png"
+          alt=""
+          className="rounded rounded-5"
+        />
       </div>
     </div>
   );
