@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./../css/MainUser.scss";
 import { NavLink } from "react-router-dom";
 import LoaderC from "./LoaderC";
+import ChatBot from "./ChatBot";
 export default function MainUser() {
   const [dataUser, setDataUser] = useState(null);
   const navigate = useNavigate();
@@ -95,6 +96,7 @@ export default function MainUser() {
   return (
     <main className="user_main">
       <div className="container mt-4">
+        <ChatBot />
         {!scheda && (
           <div>
             <div class="alert alert-danger" role="alert">

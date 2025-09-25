@@ -2,7 +2,7 @@ import React from "react";
 import "./../css/MainHome.scss";
 import Jumbo from "./JumboC";
 import CardC from "./CardC";
-
+import ChatBot from "./ChatBot";
 export default function MainHome() {
   return (
     <main>

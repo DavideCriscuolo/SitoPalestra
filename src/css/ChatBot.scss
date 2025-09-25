@@ -1,0 +1,100 @@
+// Stili per il toggle del chatbot
+.chatbot-toggle {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Container per la transizione fade
+.chatbot-container {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform-origin: top right;
+
+  &.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+  }
+
+  &.hide {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    visibility: hidden;
+  }
+}
+
+// Stili per la card del chatbot
+.chatbot-card {
+  margin-top: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: none;
+  max-width: 400px;
+  margin-left: auto;
+
+  .card-body {
+    padding: 20px;
+
+    h1 {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+
+      .form-control {
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+
+        &:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+      }
+
+      .btn {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &:hover:not(:disabled) {
+          background: linear-gradient(45deg, #f3540f, #c1440f);
+          transform: translateY(-1px);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    p {
+      margin-bottom: 10px;
+      line-height: 1.5;
+      color: #555;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .card {
+    max-width: 90vw;
+    margin-right: 5vw;
+  }
+}
