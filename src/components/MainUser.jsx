@@ -188,7 +188,7 @@ export default function MainUser() {
             </div>
           </div>
         )}
-        <ChatBot />
+        <ChatBot></ChatBot>
       </div>
     </main>
   );

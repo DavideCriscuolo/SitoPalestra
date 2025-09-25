@@ -63,8 +63,8 @@ Quando rispondi:
     }
   }
   return (
-    <div>
-      <div className={`chatbot-container ${show ? "show" : "hide"}`}>
+    <div className="container d-flex justify-content-center">
+      <div className={`chatbot-container show`}>
         <div className="card chatbot-card">
           <div className="card-body">
             <h1>PalasportMax Ai</h1>
@@ -89,15 +89,6 @@ Quando rispondi:
             </form>
           </div>
         </div>
-      </div>
-      <div className="d-flex justify-content-end align-items-center">
-        <img
-          style={{ width: "100px" }}
-          onClick={() => setShow((prev) => !prev)}
-          src="/img/Frame2.png"
-          alt=""
-          className="rounded rounded-5"
-        />
       </div>
     </div>
   );
