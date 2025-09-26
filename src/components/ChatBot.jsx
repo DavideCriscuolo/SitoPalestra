@@ -64,7 +64,7 @@ Quando rispondi:
   }
   return (
     <div className="container d-flex justify-content-center py-2">
-      <div className={`chatbot-container show`}>
+      <div className={`chatbot-container show w-100`}>
         <div className="card chatbot-card">
           <div className="card-body">
             <h1>PalasportMax Ai</h1>

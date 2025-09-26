@@ -176,15 +176,19 @@ export default function MainUser() {
                   </div>
                 </div>
               </div>
-              <div className="text-center">
-                <NavLink className="btn btn-secondary m-2" to="/">
-                  {" "}
-                  Logout
-                </NavLink>
+              <div className="d-flex justify-content-between">
+                <div>
+                  <NavLink className="btn btn-secondary m-2" to="/">
+                    {" "}
+                    Logout
+                  </NavLink>
+                </div>
+                <div>
+                  <button className="btn btn-dark" onClick={viewScheda}>
+                    Apri scheda
+                  </button>
+                </div>
               </div>
-              <button className="btn btn-dark" onClick={viewScheda}>
-                Apri scheda
-              </button>
             </div>
           </div>
         )}
