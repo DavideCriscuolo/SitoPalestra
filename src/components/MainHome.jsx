@@ -64,7 +64,6 @@ export default function MainHome() {
             </div>
           </div>
         </section>
-        <GymBroAi></GymBroAi>
       </div>
     </main>
   );
