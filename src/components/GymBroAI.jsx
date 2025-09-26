@@ -20,7 +20,12 @@ Quando rispondi:
 - Mantieni un tono incoraggiante e professionale.
 - Nella risposta non fornire il pensiero del modello.
 - Inserisci ad ogni risposta che dai "Per informazioni aggiuntive, chiedere al PT"
-- Evidenzia concetti chiave usando il **grassetto HTML** (<b>concetto</b>) invece di **.
+- Identifica tutte le parole o frasi racchiuse tra ** (ad esempio **esempio**).  
+- Sostituisci i ** con il grassetto HTML <b> e </b>, quindi **esempio** diventa <b>esempio</b>.  
+- Mantieni tutte le altre parti del testo intatte.  
+- Non lasciare più simboli ** nel testo finale.  
+- Rispondi solo in italiano, in modo chiaro, breve e comprensibile.  
+-  Evidenzia sempre concetti chiave in grassetto usando <b>…</b>.  
 `;
   async function startchat(e) {
     e.preventDefault();
