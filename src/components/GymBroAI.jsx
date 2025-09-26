@@ -72,11 +72,16 @@ Quando rispondi:
             <h1>PalasportMax Ai</h1>
             {error ? <p style={{ color: "red" }}>{error}</p> : <p>{answer}</p>}
             {!answer && !loading && (
-              <p className="text-center">
-                💪 Ciao! Sono GymBro AI, il tuo compagno digitale per
-                allenamenti e fitness. Sempre pronto a darti consigli,
-                motivazione e risposte su misura per i tuoi obiettivi!
-              </p>
+              <div>
+                <p className="text-center fst-italic">
+                  💪 Ciao! Sono GymBro AI, il tuo compagno digitale per
+                  allenamenti e fitness.
+                </p>
+                <p className="text-center">
+                  Sempre pronto a darti consigli, motivazione e risposte su
+                  misura per i tuoi obiettivi!
+                </p>
+              </div>
             )}
             <form action="" onSubmit={startchat}>
               <input
