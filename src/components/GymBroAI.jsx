@@ -38,7 +38,7 @@ Quando rispondi:
         paragraph.trim().match(/^\d+\.\s/)
       ) {
         return (
-          <li key={index} className="mb-2">
+          <li key={index} className="mb-2 list-unstyled">
             {paragraph.replace(/^[-*•]\s/, "").replace(/^\d+\.\s/, "")}
           </li>
         );
@@ -89,9 +89,11 @@ Quando rispondi:
         chatCompletion.choices?.[0]?.message?.content ||
         "Nessuna risposta trovata";
       console.log(message);
-
-      message = message.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
-
+      // Rimuovi <think> e **
+      message = message
+        .replace(/<think>[\s\S]*?<\/think>/gi, "")
+        .replace(/\*\*(.*?)\*\*/g, "$1") // Rimuove ** e mantiene il contenuto
+        .trim();
       setAnswer(message);
     } catch (err) {
       console.error(err);
