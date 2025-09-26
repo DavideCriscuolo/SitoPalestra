@@ -2,6 +2,7 @@ import React from "react";
 import "./../css/MainHome.scss";
 import Jumbo from "./JumboC";
 import CardC from "./CardC";
+import GymBroAi from "./GymBroAI";
 
 export default function MainHome() {
   return (
