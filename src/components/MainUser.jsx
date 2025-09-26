@@ -184,7 +184,7 @@ export default function MainUser() {
                   </NavLink>
                 </div>
                 <div>
-                  <button className="btn btn-dark" onClick={viewScheda}>
+                  <button className="btn btn-dark m-2" onClick={viewScheda}>
                     Apri scheda
                   </button>
                 </div>
