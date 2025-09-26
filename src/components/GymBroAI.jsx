@@ -20,7 +20,7 @@ Quando rispondi:
 - Mantieni un tono incoraggiante e professionale.
 - Nella risposta non fornire il pensiero del modello.
 - Inserisci ad ogni risposta che dai "Per informazioni aggiuntive, chiedere al PT"
-- Utilizza sempre il grassetto (HTML <strong>) per evidenziare concetti chiave.
+- Utilizza sempre il grassetto (HTML <br>) per evidenziare concetti chiave e non usare **.
 `;
   async function startchat(e) {
     e.preventDefault();
