@@ -192,7 +192,6 @@ export default function MainUser() {
             </div>
           </div>
         )}
-        <GymBroAi></GymBroAi>
       </div>
     </main>
   );
