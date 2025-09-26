@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { InferenceClient } from "@huggingface/inference";
-import "./../css/ChatBot.scss";
-export default function ChatBot() {
+import "./../css/GymBro.scss";
+export default function Gymbro() {
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,7 @@ Quando rispondi:
 - Se necessario, dividi la risposta in punti o sezioni per maggiore chiarezza.
 - Mantieni un tono incoraggiante e professionale.
 - Nella risposta non fornire il pensiero del modello.
+- Inserisci ad ogni risposta che dai "Per informazioni aggiuntive, chiedere al PT"
 `;
   async function startchat(e) {
     e.preventDefault();
@@ -71,8 +72,9 @@ Quando rispondi:
             {error ? <p style={{ color: "red" }}>{error}</p> : <p>{answer}</p>}
             {!answer && !loading && (
               <p className="text-center">
-                Ciao sono il PalasportMax Ai ChatBot pronto per rispondere ad
-                ogni tua domanda su fitness e allenamenti!
+                💪 Ciao! Sono GymBro AI, il tuo compagno digitale per
+                allenamenti e fitness. Sempre pronto a darti consigli,
+                motivazione e risposte su misura per i tuoi obiettivi!
               </p>
             )}
             <form action="" onSubmit={startchat}>

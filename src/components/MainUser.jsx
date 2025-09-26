@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./../css/MainUser.scss";
 import { NavLink } from "react-router-dom";
 import LoaderC from "./LoaderC";
-import ChatBot from "./ChatBot";
+import GymBroAi from "./GymBroAI";
 export default function MainUser() {
   const [dataUser, setDataUser] = useState(null);
   const navigate = useNavigate();
@@ -192,7 +192,7 @@ export default function MainUser() {
             </div>
           </div>
         )}
-        <ChatBot></ChatBot>
+        <GymBroAi></GymBroAi>
       </div>
     </main>
   );
