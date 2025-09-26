@@ -69,7 +69,7 @@ Quando rispondi:
       <div className={`chatbot-container show w-100`}>
         <div className="card chatbot-card">
           <div className="card-body">
-            <h1>PalasportMax Ai</h1>
+            <h1>GymBro Ai</h1>
             {error ? <p style={{ color: "red" }}>{error}</p> : <p>{answer}</p>}
             {!answer && !loading && (
               <div>
