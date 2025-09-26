@@ -84,7 +84,7 @@ Quando rispondi:
               </div>
             )}
             <form action="" onSubmit={startchat}>
-              <input
+              <textarea
                 className="form-control"
                 type="text"
                 value={question}
