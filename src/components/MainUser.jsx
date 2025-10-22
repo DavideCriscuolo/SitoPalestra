@@ -15,14 +15,14 @@ export default function MainUser() {
 
   // Prendi email da location.state
   const email = location.state?.email || localStorage.getItem("email");
-  console.log(email);
+  //console.log(email);
 
   const url = import.meta.env.VITE_URL_USER + encodeURIComponent(email);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    console.log("token nella pagina user", token);
+    //console.log("token nella pagina user", token);
     // Se non c’è token, vai alla login
     if (!token) {
       console.log("token inesistente");
