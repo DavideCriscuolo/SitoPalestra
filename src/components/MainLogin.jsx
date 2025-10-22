@@ -44,10 +44,10 @@ export default function MainLogin() {
       if (!res.ok) {
         setLoginFallito(true);
         console.log("Login fallito");
-        console.log(data);
+        //console.log(data);
         return;
       }
-      console.log("Risposta login:", data);
+      // console.log("Risposta login:", data);
 
       if (!data.token) {
         alert("Login fallito: token non ricevuto");
@@ -55,11 +55,11 @@ export default function MainLogin() {
       }
 
       localStorage.setItem("token", data.token);
-      console.log(data.token);
+      //console.log(data.token);
       localStorage.setItem("email", email);
-      const payload = JSON.parse(atob(data.token.split(".")[1]));
-      const ruolo = payload.role; // "admin" o "user"
-      console.log("Ruolo attuale:", ruolo);
+      // const payload = JSON.parse(atob(data.token.split(".")[1]));
+      //const ruolo = payload.role; // "admin" o "user"
+      //console.log("Ruolo attuale:", ruolo);
       navigate("/user", { replace: true });
     } catch (error) {
       console.error("Errore nella richiesta:", error);
