@@ -57,8 +57,12 @@ export default function MainLogin() {
       console.error("Errore nella richiesta:", error);
     }
   }
-  const [emailReset, setEmailReset] = useState(false);
+  const [emailReset, setEmailReset] = useState(null);
   function sendEmailReset(e) {
+    if (!email) {
+      setEmailReset(false);
+    }
+
     e.preventDefault();
     const url = import.meta.env.VITE_URL_REQUEST_RESET;
     fetch(url, {
@@ -77,10 +81,14 @@ export default function MainLogin() {
     <>
       <main className="main_login">
         <div className="container  d-flex justify-content-center flex-column ">
-          {emailReset && (
+          {emailReset ? (
             <div className="alert alert-success" role="alert">
               Email di reset inviata, controlla la tua casella di posta e negli
               spam
+            </div>
+          ) : (
+            <div className="alert alert-danger" role="alert">
+              Email mancate
             </div>
           )}
           {loginFallito && (
