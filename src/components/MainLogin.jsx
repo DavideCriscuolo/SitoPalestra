@@ -67,20 +67,39 @@ export default function MainLogin() {
   }
   const [emailReset, setEmailReset] = useState(false);
 
-  function sendEmailReset(e) {
+  async function sendEmailReset(e) {
     e.preventDefault();
+
+    if (email === "") {
+      setEmailManca(true);
+      return; // esce subito
+    }
+
     const url = import.meta.env.VITE_URL_REQUEST_RESET;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    });
-    setEmailReset(true);
-    setTimeout(() => {
-      setEmailReset(false);
-    }, 3000);
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        // Se la risposta non è 200
+        console.error("Errore nel fetch");
+        return;
+      }
+
+      // Se il fetch è andato a buon fine
+      setEmailReset(true);
+
+      // Dopo 3 secondi resetta lo stato
+      setTimeout(() => {
+        setEmailReset(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Errore nella richiesta:", error);
+    }
   }
   return (
     <>
