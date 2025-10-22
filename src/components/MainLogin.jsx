@@ -7,7 +7,8 @@ export default function MainLogin() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // per navigare dopo il login
   const [loginFallito, setLoginFallito] = useState(false);
-
+  const [emailManca, setEmailManca] = useState(false);
+  const [passManca, setPassManca] = useState(false);
   function handleChange(e) {
     setEmail(e.target.value);
     sessionStorage.setItem("email", e.target.value); // opzionale: memorizzi anche in sessione
@@ -18,6 +19,13 @@ export default function MainLogin() {
   }
 
   async function validate(e) {
+    if (email == "") {
+      setEmailManca(true);
+    }
+    if (password == "") {
+      setPassManca(true);
+    }
+
     e.preventDefault();
 
     const url = import.meta.env.VITE_URL_LOGIN;
@@ -57,12 +65,9 @@ export default function MainLogin() {
       console.error("Errore nella richiesta:", error);
     }
   }
-  const [emailReset, setEmailReset] = useState(null);
-  function sendEmailReset(e) {
-    if (!email) {
-      setEmailReset(false);
-    }
+  const [emailReset, setEmailReset] = useState(false);
 
+  function sendEmailReset(e) {
     e.preventDefault();
     const url = import.meta.env.VITE_URL_REQUEST_RESET;
     fetch(url, {
@@ -81,14 +86,20 @@ export default function MainLogin() {
     <>
       <main className="main_login">
         <div className="container  d-flex justify-content-center flex-column ">
-          {emailReset ? (
+          {emailManca && (
+            <div className="alert alert-danger" role="alert">
+              Email Macante
+            </div>
+          )}{" "}
+          {passManca && (
+            <div className="alert alert-danger" role="alert">
+              Password Macante
+            </div>
+          )}
+          {emailReset && (
             <div className="alert alert-success" role="alert">
               Email di reset inviata, controlla la tua casella di posta e negli
               spam
-            </div>
-          ) : (
-            <div className="alert alert-danger" role="alert">
-              Email mancate
             </div>
           )}
           {loginFallito && (
@@ -141,16 +152,24 @@ export default function MainLogin() {
                 Area Personal Trainer
               </NavLink>{" "}
             </div>
-            <div>
-              {" "}
-              <button
-                className="btn my-3  btn-secondary"
-                onClick={sendEmailReset}
-                type="click"
-              >
-                Password Dimenticata?
-              </button>{" "}
-            </div>
+          </div>
+          <div>
+            {" "}
+            {!emailReset && (
+              <div className="">
+                <span>
+                  Se hai dimenticato la password, inserisci sopra la tua email e
+                  clicca qui!
+                </span>
+              </div>
+            )}
+            <button
+              className="btn my-3  btn-secondary"
+              onClick={sendEmailReset}
+              type="click"
+            >
+              Password Dimenticata?
+            </button>{" "}
           </div>
         </div>
       </main>
