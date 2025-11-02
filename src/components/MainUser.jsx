@@ -131,6 +131,8 @@ export default function MainUser() {
                     dataUser.polpaccioDestro &&
                     dataUser.polpaccioSinistro &&
                     dataUser.plica &&
+                    dataUser.bicipiteDestro &&
+                    dataUser.bicipiteSinistro &&
                     dataUser.data ? (
                       <ul id="ListMisure" className="list-group py-3">
                         <li className="list-group-item">
@@ -143,6 +145,14 @@ export default function MainUser() {
                         </li>
                         <li className="list-group-item">
                           <span>Petto: </span> {dataUser.petto} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Bicipite Destro: </span>{" "}
+                          {dataUser.bicipiteDestro} cm
+                        </li>
+                        <li className="list-group-item">
+                          <span>Bicipite Sinistro: </span>{" "}
+                          {dataUser.bicipiteSinistro} cm
                         </li>
                         <li className="list-group-item">
                           <span>Vita: </span> {dataUser.vita} cm
