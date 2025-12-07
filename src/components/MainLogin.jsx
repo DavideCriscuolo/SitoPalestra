@@ -104,7 +104,7 @@ export default function MainLogin() {
   return (
     <>
       <main className="main_login">
-        <div className="container  d-flex justify-content-center flex-column ">
+        {/* <div className="container  d-flex justify-content-center flex-column ">
           {emailManca && (
             <div className="alert alert-danger" role="alert">
               Email Macante
@@ -190,6 +190,10 @@ export default function MainLogin() {
               Password Dimenticata?
             </button>{" "}
           </div>
+        </div> */}
+
+        <div className="container">
+          <h2 className="text-center">In Manutenzione</h2>
         </div>
       </main>
     </>
