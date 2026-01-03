@@ -1,12 +1,12 @@
 export default function LoaderC() {
   return (
-    <div class="d-flex justify-content-center align-items-center">
+    <div className="d-flex justify-content-center align-items-center">
       <div
-        class="spinner-border"
+        className="spinner-border"
         role="status"
         style={{ width: "5rem", height: "5rem" }}
       >
-        <span class="visually-hidden">Loading...</span>
+        <span className="visually-hidden">Loading...</span>
       </div>
     </div>
   );

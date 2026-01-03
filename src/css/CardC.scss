@@ -1,17 +1,246 @@
-.card {
-  .card-img-top {
-    width: 100%;
-  }
-  .cardBodyHome {
-    height: 0;
-    opacity: 0;
-    overflow: hidden;
-    padding: 0;
-    transition: all 0.5s ease-in-out;
+// Variabili
+$primary-color: #ff4d00;
+$secondary-color: #1a1a1a;
+$text-color: #333;
+$white: #ffffff;
+$light-bg: #f8f9fa;
+$border-radius: 15px;
+$transition: all 0.4s ease;
+
+.service-card {
+  background: $white;
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: $transition;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(255, 77, 0, 0.2);
   }
 
-  .cardBodyHome.enter {
-    height: 250px;
-    opacity: 1;
+  // Wrapper immagine
+  .card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.7) 100%
+      );
+      display: flex;
+      align-items: flex-end;
+      padding: 25px;
+      transition: $transition;
+    }
+
+    .card-title {
+      color: $white;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin: 0;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+
+    &:hover .card-image {
+      transform: scale(1.1);
+    }
+
+    &:hover .card-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 77, 0, 0.4) 0%,
+        rgba(255, 77, 0, 0.8) 100%
+      );
+    }
+  }
+
+  // Contenuto card
+  .card-content {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .btn-discover {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, $primary-color 0%, #ff8a00 100%);
+      color: $white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: $transition;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 5px 15px rgba(255, 77, 0, 0.3);
+
+      .btn-icon {
+        font-size: 12px;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover {
+        background: linear-gradient(135deg, #ff6a00 0%, #ffa500 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 77, 0, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &[aria-expanded="true"] .btn-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    .card-details {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.5s ease, margin-top 0.5s ease;
+      margin-top: 0;
+
+      &.active {
+        max-height: 400px;
+        opacity: 1;
+        margin-top: 25px;
+      }
+
+      .card-description {
+        font-size: 16px;
+        line-height: 1.7;
+        color: $text-color;
+        margin-bottom: 20px;
+        padding: 20px;
+        background: $light-bg;
+        border-radius: 8px;
+        border-left: 4px solid $primary-color;
+      }
+
+      .btn-contact {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 25px;
+        background: #25d366;
+        color: $white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 700;
+        transition: $transition;
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+
+        .whatsapp-icon {
+          font-size: 20px;
+        }
+
+        &:hover {
+          background: #20ba5a;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+          color: $white;
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}
+
+// Media Queries
+@media screen and (max-width: 576px) {
+  .service-card {
+    .card-image-wrapper {
+      height: 250px;
+
+      .card-title {
+        font-size: 24px;
+      }
+
+      .card-overlay {
+        padding: 20px;
+      }
+    }
+
+    .card-content {
+      padding: 20px;
+
+      .btn-discover {
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .card-details {
+        &.active {
+          max-height: 350px;
+          margin-top: 20px;
+        }
+
+        .card-description {
+          font-size: 14px;
+          padding: 15px;
+        }
+
+        .btn-contact {
+          width: 100%;
+          justify-content: center;
+          font-size: 14px;
+          padding: 12px 20px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .service-card {
+    .card-image-wrapper {
+      height: 280px;
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .service-card {
+    .card-image-wrapper {
+      height: 320px;
+
+      .card-title {
+        font-size: 30px;
+      }
+    }
   }
 }

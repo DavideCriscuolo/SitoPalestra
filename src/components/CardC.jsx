@@ -1,12 +1,12 @@
 import "./../css/CardC.scss";
-
 import { useState } from "react";
+
 const services = [
   {
     id: 1,
     img: "/img/personal.webp",
     title: "PERSONAL",
-    desc: "Lezione private personalizzate con assistenza continua e monitoraggio completo.",
+    desc: "Lezioni private personalizzate con assistenza continua e monitoraggio completo.",
     infoMessage:
       "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Vorrei%20sapere%20di%20piu%20sulle%20lezioni%20private%20con%20un%20personal%20trainer.",
   },
@@ -37,57 +37,55 @@ const services = [
 ];
 
 export default function CardC() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(null);
+
+  const handleToggle = (id) => {
+    setIsVisible(isVisible === id ? null : id);
+  };
 
   return (
     <>
       {services.map((service) => (
         <div key={service.id} className="col">
-          <div className="card">
-            <h4 className="card-title text-center fs_size_card_title m-0 p-1">
-              {service.title}
-            </h4>
-            <img
-              className="card-img-top rounded-0 "
-              src={service.img}
-              alt="Title"
-              onClick={() => {
-                setIsVisible(service.id);
-              }}
-              onDoubleClick={() => {
-                setIsVisible(false);
-              }}
-            />
-            <div className="d-flex justify-content-center align-items-center">
-              <div className="m-0-auto py-3 px-1 text-center">
-                <button
-                  className="btn btn-sm"
-                  onClick={() => {
-                    setIsVisible(service.id);
-                  }}
-                  onDoubleClick={() => {
-                    setIsVisible(false);
-                  }}
-                >
-                  Scopri di piu`
-                </button>
+          <div className="service-card">
+            <div className="card-image-wrapper">
+              <img
+                className="card-image"
+                src={service.img}
+                alt={service.title}
+              />
+              <div className="card-overlay">
+                <h4 className="card-title">{service.title}</h4>
               </div>
             </div>
 
-            <div
-              className={`card-body cardBodyHome ${
-                isVisible === service.id && "enter"
-              }`}
-            >
-              <div className="card_content p-3">
-                <p className="card-text fs_size_card_desc">{service.desc}</p>
+            <div className="card-content">
+              <button
+                className="btn-discover"
+                onClick={() => handleToggle(service.id)}
+                aria-expanded={isVisible === service.id}
+              >
+                {isVisible === service.id ? "Chiudi" : "Scopri di più"}
+                <span className="btn-icon">
+                  {isVisible === service.id ? "▲" : "▼"}
+                </span>
+              </button>
+
+              <div
+                className={`card-details ${
+                  isVisible === service.id ? "active" : ""
+                }`}
+              >
+                <p className="card-description">{service.desc}</p>
                 <a
-                  className="btn btn-md bt_bg_color"
+                  className="btn-contact"
                   href={service.infoMessage}
                   role="button"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  Contattaci
+                  <span className="whatsapp-icon">💬</span>
+                  Contattaci su WhatsApp
                 </a>
               </div>
             </div>

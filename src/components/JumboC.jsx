@@ -1,6 +1,6 @@
 import "./../css/Jumbo.scss";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+
 export default function Jumbo() {
   const [videoSrc, setVideoSrc] = useState("/img/jumbo-altro-720p.mp4");
 
@@ -9,11 +9,12 @@ export default function Jumbo() {
       setVideoSrc("/img/jumbo-480p-light.mp4");
     }
   }, []);
+
   return (
-    <div className=" mb-4 rounded-3">
-      <div className="container-fluid containerVideo position-relative top-0 start-0  d-inline-flex flex-column justify-content-end p-2 ">
+    <div className="jumbo-wrapper">
+      <div className="jumbo-container">
         <video
-          className="video rounded-3  position-absolute top-0 p-1  start-0 w-100 "
+          className="jumbo-video"
           autoPlay
           muted
           loop
@@ -22,15 +23,13 @@ export default function Jumbo() {
         >
           <source src={videoSrc} type="video/mp4" />
         </video>
-        <div className="p-1">
-          <div>
-            {" "}
-            <h1 className="text-white fw-bold m-0 p-xl-1">PALASPORTMAX</h1>{" "}
-          </div>
-          <div>
-            <p className="text-white lh-sm  m-0 py-1 p-xl-2">
+        <div className="jumbo-overlay"></div>
+        <div className="jumbo-content">
+          <div className="content-inner">
+            <h1 className="jumbo-title">PALASPORTMAX</h1>
+            <p className="jumbo-subtitle">
               Costruisci la tua forza. Supera i tuoi limiti. Diventa la tua
-              versione migliore.{" "}
+              versione migliore.
             </p>
           </div>
         </div>

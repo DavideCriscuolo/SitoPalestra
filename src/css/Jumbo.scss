@@ -1,85 +1,298 @@
-.video {
+// Variabili
+$primary-color: #ff4d00;
+$white: #ffffff;
+$overlay-dark: rgba(0, 0, 0, 0.5);
+$overlay-gradient: linear-gradient(
+  to bottom,
+  rgba(0, 0, 0, 0.3) 0%,
+  rgba(0, 0, 0, 0.7) 100%
+);
+
+.jumbo-wrapper {
+  margin-bottom: 40px;
+}
+
+.jumbo-container {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  h1 {
-    text-shadow: rgba(9, 9, 9) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
-      rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
-      rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    font-size: 30px;
-  }
-}
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 
-@media screen and (max-width: 576px) {
-  .containerVideo {
-    height: 400px;
-    h1 {
-      font-size: 30px;
-    }
+  // Video background
+  .jumbo-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    z-index: 1;
   }
-}
-@media screen and (min-width: 577px) {
-  .containerVideo {
-    height: 500px;
-    h1 {
-      font-size: 40px;
-    }
-  }
-}
-@media screen and (min-width: 768px) {
-  .containerVideo {
-    height: 500px;
-    h1 {
-      font-size: 40px;
-    }
-    p {
-      font-size: 20px;
-    }
-  }
-}
-@media screen and (min-width: 992px) {
-  .containerVideo {
-    height: 500px;
-    h1 {
-      font-size: 70px;
-    }
-    p {
-      font-size: 20px;
-    }
-  }
-}
-@media screen and (min-width: 1200px) {
-  .containerVideo {
-    h1 {
-      font-size: 70px;
-    }
-    p {
-      font-size: 20px;
-    }
-  }
-}
-@media screen and (min-width: 1400px) {
-  .containerVideo {
-    height: 500px;
 
-    h1 {
+  // Overlay scuro
+  .jumbo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $overlay-gradient;
+    z-index: 2;
+  }
+
+  // Contenuto
+  .jumbo-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 40px;
+    z-index: 3;
+
+    .content-inner {
+      width: 100%;
+      max-width: 1200px;
+      text-align: left;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .jumbo-title {
+      color: $white;
       font-size: 88px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
     }
-    p {
+
+    .jumbo-subtitle {
+      color: $white;
       font-size: 22px;
+      font-weight: 400;
+      line-height: 1.6;
+      margin: 0 0 30px 0;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      max-width: 700px;
+    }
+
+    .jumbo-cta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .btn-primary,
+      .btn-secondary {
+        padding: 15px 35px;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, $primary-color 0%, #ff8a00 100%);
+        color: $white;
+        box-shadow: 0 5px 20px rgba(255, 77, 0, 0.4);
+
+        &:hover {
+          background: linear-gradient(135deg, #ff6a00 0%, #ffa500 100%);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 30px rgba(255, 77, 0, 0.6);
+        }
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: $white;
+        border: 3px solid $white;
+        box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+
+        &:hover {
+          background: $white;
+          color: $primary-color;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4);
+        }
+      }
     }
   }
 }
+
+// Animazione
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Media Queries
+@media screen and (max-width: 576px) {
+  .jumbo-container {
+    height: 400px;
+    border-radius: 15px;
+
+    .jumbo-content {
+      padding: 20px;
+
+      .jumbo-title {
+        font-size: 36px;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+      }
+
+      .jumbo-subtitle {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      .jumbo-cta {
+        flex-direction: column;
+        gap: 15px;
+
+        .btn-primary,
+        .btn-secondary {
+          width: 100%;
+          text-align: center;
+          padding: 12px 25px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 577px) and (max-width: 767px) {
+  .jumbo-container {
+    height: 450px;
+
+    .jumbo-content {
+      padding: 30px;
+
+      .jumbo-title {
+        font-size: 48px;
+      }
+
+      .jumbo-subtitle {
+        font-size: 18px;
+      }
+
+      .jumbo-cta {
+        .btn-primary,
+        .btn-secondary {
+          padding: 13px 30px;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .jumbo-container {
+    height: 500px;
+
+    .jumbo-content {
+      .jumbo-title {
+        font-size: 56px;
+      }
+
+      .jumbo-subtitle {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .jumbo-container {
+    height: 550px;
+
+    .jumbo-content {
+      .jumbo-title {
+        font-size: 70px;
+      }
+
+      .jumbo-subtitle {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1399px) {
+  .jumbo-container {
+    height: 600px;
+
+    .jumbo-content {
+      .jumbo-title {
+        font-size: 76px;
+      }
+
+      .jumbo-subtitle {
+        font-size: 21px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1799px) {
+  .jumbo-container {
+    height: 650px;
+
+    .jumbo-content {
+      .jumbo-title {
+        font-size: 88px;
+      }
+
+      .jumbo-subtitle {
+        font-size: 22px;
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 1800px) {
-  .containerVideo {
+  .jumbo-container {
     height: 800px;
 
-    h1 {
-      font-size: 88px;
-    }
-    p {
-      font-size: 22px;
+    .jumbo-content {
+      padding: 60px;
+
+      .jumbo-title {
+        font-size: 100px;
+        letter-spacing: 5px;
+      }
+
+      .jumbo-subtitle {
+        font-size: 24px;
+      }
+
+      .jumbo-cta {
+        gap: 25px;
+
+        .btn-primary,
+        .btn-secondary {
+          padding: 18px 40px;
+          font-size: 18px;
+        }
+      }
     }
   }
 }
