@@ -1,52 +1,93 @@
 import "./../css/Header.scss";
-import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faXmark, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { MEMBER_AREA_ENABLED, whatsappLink } from "../data/site";
+
+const links = [
+  { to: "/#Chi_siamo", label: "Chi siamo" },
+  { to: "/#service", label: "Servizi" },
+  { to: "/#contact", label: "Orari e contatti" },
+];
 
 export default function Header() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <header>
-      <nav className="navbar navbar-expand-md navbar-light bg_nav">
-        <div className="container">
-          <NavLink className="navbar-brand" to="/">
-            <img src="/img/Frame2.png" alt="Logo" />
-          </NavLink>
-          <div className="justify-content-center">
-            <h1 className="fs-4 m-0 fw-semibold">PALASPORTMAX</h1>
-          </div>
-          <button
-            className="navbar-toggler d-lg-none"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapsibleNavId"
-            aria-controls="collapsibleNavId"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div
-            className="collapse navbar-collapse justify-content-center"
-            id="collapsibleNavId"
-          >
-            <ul className="navbar-nav ">
-              <li className="nav-item">
-                <HashLink to="/#Chi_siamo" className="nav-link">
-                  Chi siamo
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+      <a className="skip-link" href="#main-content">
+        Vai al contenuto
+      </a>
+      <nav className="container site-nav" aria-label="Navigazione principale">
+        <NavLink className="brand" to="/">
+          <img src="/img/logo-96.png" alt="" width="40" height="40" />
+          <span>Palasportmax</span>
+        </NavLink>
+
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-controls="main-menu"
+          aria-expanded={open}
+          aria-label={open ? "Chiudi menu" : "Apri menu"}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <FontAwesomeIcon icon={open ? faXmark : faBars} />
+        </button>
+
+        <div id="main-menu" className={`nav-menu ${open ? "is-open" : ""}`}>
+          <ul>
+            {links.map((link) => (
+              <li key={link.to}>
+                <HashLink smooth to={link.to} className="nav-link-ui">
+                  {link.label}
                 </HashLink>
               </li>
-              <li className="nav-item">
-                <HashLink to="/#service" className="nav-link">
-                  I Nostri Servizi
-                </HashLink>
-              </li>
-              <li className="nav-item">
-                <NavLink id="linkAccedi" className="nav-link" to={"/login"}>
-                  Accedi
-                </NavLink>
-              </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
+          {MEMBER_AREA_ENABLED ? (
+            <NavLink to="/login" className="btn-ui btn-ui--primary nav-cta">
+              <FontAwesomeIcon icon={faUser} aria-hidden="true" />
+              Area iscritti
+            </NavLink>
+          ) : (
+            <a
+              href={whatsappLink("Ciao! Vorrei informazioni sulla palestra.")}
+              className="btn-ui btn-ui--primary nav-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" />
+              Scrivici
+            </a>
+          )}
         </div>
       </nav>
     </header>

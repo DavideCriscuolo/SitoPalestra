@@ -167,252 +167,151 @@ export default function FormMisure({ users, requestData }) {
   const mese = data.getMonth() + 1;
   const anno = data.getFullYear();
 
+  const fields = [
+    { name: "peso", label: "Peso", unit: "kg" },
+    { name: "spalle", label: "Spalle", unit: "cm" },
+    { name: "petto", label: "Petto", unit: "cm" },
+    { name: "vita", label: "Vita", unit: "cm" },
+    { name: "bicipiteDestro", label: "Bicipite destro", unit: "cm" },
+    { name: "bicipiteSinistro", label: "Bicipite sinistro", unit: "cm" },
+    { name: "gambaDestra", label: "Gamba destra", unit: "cm" },
+    { name: "gambaSinistra", label: "Gamba sinistra", unit: "cm" },
+    { name: "polpaccioDestro", label: "Polpaccio destro", unit: "cm" },
+    { name: "polpaccioSinistro", label: "Polpaccio sinistro", unit: "cm" },
+    { name: "plica", label: "Plica", unit: "%" },
+  ];
+
   return (
-    <>
-      <form onSubmit={sendUpdateMisure} className="mb-4">
+    <div className="row g-4">
+      <div className="col-12" aria-live="polite">
         {operationDelete && (
-          <div className="alert alert-success">
-            Utente eliminato con successo
-          </div>
+          <div className="alert alert-success m-0">Utente eliminato con successo</div>
         )}
         {operationUpload && (
-          <div className="alert alert-success">
-            Scheda caricata con successo
-          </div>
+          <div className="alert alert-success m-0">Scheda caricata con successo</div>
         )}
         {operationUpdate && (
-          <div className="alert alert-success">
-            Misure aggiornate con successo
-          </div>
+          <div className="alert alert-success m-0">Misure aggiornate con successo</div>
         )}
+      </div>
 
-        <label className="form-label">Iscritto</label>
-        <select
-          className="form-select mb-3"
-          value={idUser}
-          onChange={(e) => setIdUser(Number(e.target.value))} // converte in numero
-        >
-          <option value="">-- Seleziona un utente --</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.nome} {user.cognome}
-            </option>
-          ))}
-        </select>
+      <div className="col-lg-8">
+        <form onSubmit={sendUpdateMisure} className="surface">
+          <h2 className="dash-title mb-4">Misure</h2>
+          <div className="field">
+            <label htmlFor="iscritto">Iscritto</label>
+            <select
+              id="iscritto"
+              className="form-select"
+              value={idUser}
+              onChange={(e) => setIdUser(Number(e.target.value))}
+            >
+              <option value="">Seleziona un iscritto</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.nome} {user.cognome}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="mb-3">
-          {" "}
-          <div className="my-3">
-            <label htmlFor="spalle"> Misura Spalle</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="spalle"
-              id="spalle"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Spalle"
-              value={formData.spalle}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="petto"> Misura Petto</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="petto"
-              id="petto"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Petto"
-              value={formData.petto}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="vita"> Misura Vita</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="vita"
-              id="vita"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura vita"
-              value={formData.vita}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="gambaSinistra"> Misura Gamba Sinistra</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="gambaSinistra"
-              id="inputMisura4"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Sinistro"
-              value={formData.gambaSinistra}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="gambaDestra"> Misura Gamba Destra</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="gambaDestra"
-              id="inputMisura4"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Gamba Lato Destra"
-              value={formData.gambaDestra}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="peso">Peso</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="peso"
-              id="inputMisura4"
-              aria-describedby="helpId"
-              placeholder="Inserisci Peso"
-              value={formData.peso}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="bicipiteDestro"> Misura Bicipite Destro</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="bicipiteDestro"
-              id="bicipiteDestro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Bicipite Destro"
-              value={formData.bicipiteDestro}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="bicipiteSinistro">Misura Bicipite Sinistro</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="bicipiteSinistro"
-              id="bicipiteSinistro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Bicipite Sinistro"
-              value={formData.bicipiteSinistro}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="polpaccioDestro">Misura Polpaccio Destro</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="polpaccioDestro"
-              id="polpaccioDestro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Polpaccio Destro"
-              value={formData.polpaccioDestro}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="polpaccioSinistro">
-              Misura Polpaccio Sinistro"
-            </label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="polpaccioSinistro"
-              id="polpaccioSinistro"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Polpaccio Sinistro"
-              value={formData.polpaccioSinistro}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            <label htmlFor="plica">Percentuale Plica</label>{" "}
-            <input
-              type="number"
-              className="form-control"
-              name="plica"
-              id="plica"
-              aria-describedby="helpId"
-              placeholder="Inserisci Misura Plica"
-              value={formData.plica}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-          <div className="my-3">
-            {" "}
-            <label htmlFor="data" className="form-label">
-              {" "}
-              Data{" "}
-            </label>{" "}
-            <input
-              type="date"
-              className="form-control"
-              name="data"
-              id="data"
-              aria-describedby="helpId"
-              value={formData.data}
-              onChange={handleChange}
-            />{" "}
-          </div>{" "}
-        </div>
+          <div className="row g-3 mt-1">
+            {fields.map((f) => (
+              <div className="col-6 col-md-4" key={f.name}>
+                <label htmlFor={f.name} className="field-label">
+                  {f.label} <span className="text-secondary">({f.unit})</span>
+                </label>
+                <input
+                  type="number"
+                  step="0.1"
+                  inputMode="decimal"
+                  className="form-control"
+                  name={f.name}
+                  id={f.name}
+                  value={formData[f.name]}
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
+            <div className="col-6 col-md-4">
+              <label htmlFor="data" className="field-label">
+                Data
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                name="data"
+                id="data"
+                value={formData.data}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
 
-        <button className="btn btn-dark mt-2" type="submit">
-          Aggiorna le misure
-        </button>
-      </form>
+          <button className="btn-ui btn-ui--primary mt-4" type="submit">
+            Aggiorna le misure
+          </button>
+        </form>
+      </div>
 
-      <form onSubmit={uploadScheda} className="mb-4">
-        <div className="mb-3">
-          <label className="form-label">Seleziona file</label>
-          <input type="file" className="form-control" onChange={handleFile} />
-        </div>
-        <button className="btn btn-dark me-2" type="submit">
-          Invia Scheda
-        </button>
-        <button className="btn btn-danger" onClick={handleDelete}>
-          Elimina iscritto
-        </button>
-      </form>
+      <div className="col-lg-4 d-flex flex-column gap-4">
+        <form onSubmit={uploadScheda} className="surface">
+          <h2 className="dash-title mb-4">Scheda</h2>
+          <div className="field">
+            <label htmlFor="scheda-file">File della scheda</label>
+            <input
+              id="scheda-file"
+              type="file"
+              className="form-control"
+              onChange={handleFile}
+            />
+          </div>
+          <div className="d-flex flex-wrap gap-2">
+            <button className="btn-ui btn-ui--primary" type="submit">
+              Invia scheda
+            </button>
+            {profileUser.id && (
+              <button className="btn-ui btn-ui--ghost" type="button" onClick={viewScheda}>
+                Apri scheda
+              </button>
+            )}
+          </div>
+        </form>
 
-      {profileUser.id && (
-        <div className="card p-3">
-          <h5 className="mb-3">Misure utente</h5>
-          <ul className="list-group mb-3">
-            <li className="list-group-item">Peso: {profileUser.peso} Kg</li>
-            <li className="list-group-item">Spalle: {profileUser.spalle} cm</li>
-            <li className="list-group-item">Petto: {profileUser.petto} cm</li>
-            <li className="list-group-item">Vita: {profileUser.vita} cm</li>
-            <li className="list-group-item">
-              Gamba Sinistra: {profileUser.gambaSinistra} cm
-            </li>
-            <li className="list-group-item">
-              Gamba Destra: {profileUser.gambaDestra} cm
-            </li>
-            <li className="list-group-item">
-              Polpaccio Destro: {profileUser.polpaccioDestro} cm
-            </li>
-            <li className="list-group-item">
-              Polpaccio Sinistro: {profileUser.polpaccioSinistro} cm
-            </li>
-            <li className="list-group-item">Plica: {profileUser.plica} %</li>
-            <li className="list-group-item">
-              <span>Data di inserimento: </span> {giorno}-{mese}-{anno}
-            </li>
-          </ul>
-          <button className="btn btn-dark" onClick={viewScheda}>
-            Apri scheda
+        <div className="surface">
+          <h2 className="dash-title mb-2">Zona pericolosa</h2>
+          <p className="text-secondary">
+            Elimina l'iscritto selezionato e tutti i suoi dati.
+          </p>
+          <button className="btn-ui btn-ui--danger" type="button" onClick={handleDelete}>
+            Elimina iscritto
           </button>
         </div>
+      </div>
+
+      {profileUser.id && (
+        <div className="col-12">
+          <section className="surface">
+            <h2 className="dash-title mb-4">
+              Misure attuali{" "}
+              <small className="text-secondary fs-6 fw-normal">
+                {giorno}/{mese}/{anno}
+              </small>
+            </h2>
+            <dl className="stat-grid">
+              {fields.map((f) => (
+                <div className="stat" key={f.name}>
+                  <dt>{f.label}</dt>
+                  <dd>
+                    {profileUser[f.name]}
+                    <small>{f.unit}</small>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        </div>
       )}
-    </>
+    </div>
   );
 }

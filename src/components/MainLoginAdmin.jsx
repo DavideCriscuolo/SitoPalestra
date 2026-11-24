@@ -58,49 +58,50 @@ export default function MainLoginAdmin() {
     }
   }
   return (
-    <>
-      <main className="main_login">
-        <div className="container  d-flex justify-content-center flex-column ">
+    <main id="main-content" className="main_login page">
+      <div className="container auth">
+        <div className="surface auth-card">
+          <p className="eyebrow">Staff</p>
+          <h1>Area personal trainer</h1>
+          <p className="auth-sub">Accedi per gestire schede e misure degli iscritti.</p>
           {loginFallito && (
             <div className="alert alert-danger" role="alert">
-              Password o email errati
+              Email o password errati
             </div>
           )}
-          <form onSubmit={validate} className="mb-3">
-            <label htmlFor="" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              id="email"
-              aria-describedby="emailHelpId"
-              placeholder="abc@mail.com"
-              onChange={handleChange}
-              value={email}
-            />
-            <label htmlFor="" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              id="password"
-              aria-describedby="emailHelpId"
-              placeholder="password"
-              onChange={handlePassword}
-              value={password}
-            />
-
-            <button type="submit" className="btn btn-secondary my-3">
-              {" "}
+          <form onSubmit={validate}>
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                id="email"
+                autoComplete="username"
+                required
+                onChange={handleChange}
+                value={email}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                id="password"
+                autoComplete="current-password"
+                required
+                onChange={handlePassword}
+                value={password}
+              />
+            </div>
+            <button type="submit" className="btn-ui btn-ui--primary btn-ui--block mt-2">
               Accedi
             </button>
           </form>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }

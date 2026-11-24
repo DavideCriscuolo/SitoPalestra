@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { InferenceClient } from "@huggingface/inference";
 import "./../css/GymBro.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRobot, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export default function Gymbro() {
   const [answer, setAnswer] = useState("");
@@ -38,7 +40,7 @@ Quando rispondi:
         paragraph.trim().match(/^\d+\.\s/)
       ) {
         return (
-          <li key={index} className="mb-2 list-unstyled">
+          <li key={index}>
             {paragraph.replace(/^[-*•]\s/, "").replace(/^\d+\.\s/, "")}
           </li>
         );
@@ -47,15 +49,15 @@ Quando rispondi:
       // Se sembra un titolo (termina con : e è corto)
       if (paragraph.trim().endsWith(":") && paragraph.length < 80) {
         return (
-          <h6 key={index} className="fw-bold  mt-3 mb-2">
+          <h3 key={index}>
             {paragraph}
-          </h6>
+          </h3>
         );
       }
 
       // Paragrafo normale
       return (
-        <p key={index} className="mb-3">
+        <p key={index}>
           {paragraph}
         </p>
       );
@@ -104,51 +106,59 @@ Quando rispondi:
   }
 
   return (
-    <div className="container d-flex justify-content-center py-2">
-      <div className={`chatbot-container show w-100`}>
-        <div className="card chatbot-card">
-          <div className="card-body">
-            <h1>GymBro Ai</h1>
-
-            {/* Visualizzazione migliorata della risposta */}
-            {error ? (
-              <div className="alert alert-danger" role="alert">
-                {error}
-              </div>
-            ) : answer ? (
-              <div className="answer-container bg-light rounded p-3 mb-3">
-                <div className="answer-content">{formatAnswer(answer)}</div>
-              </div>
-            ) : null}
-
-            {!answer && !loading && (
-              <div>
-                <p className="text-center fst-italic">
-                  💪 Ciao! Sono GymBro AI, il tuo compagno digitale per
-                  allenamenti e fitness.
-                </p>
-                <p className="text-center">
-                  Sempre pronto a darti consigli, motivazione e risposte su
-                  misura per i tuoi obiettivi!
-                </p>
-              </div>
-            )}
-
-            <form action="" onSubmit={startchat}>
-              <textarea
-                className="form-control"
-                type="text"
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Fai la tua domanda..."
-              />
-              <button type="submit" className="btn" disabled={loading}>
-                {loading ? "Sto pensando..." : "Chiedi"}
-              </button>
-            </form>
-          </div>
+    <section className="gymbro surface" aria-labelledby="gymbro-title">
+      <div className="gymbro-head">
+        <span className="gymbro-avatar" aria-hidden="true">
+          <FontAwesomeIcon icon={faRobot} />
+        </span>
+        <div>
+          <h2 id="gymbro-title">GymBro AI</h2>
+          <p>Il tuo compagno digitale per allenamento e nutrizione.</p>
         </div>
       </div>
-    </div>
+
+      <div className="gymbro-body" aria-live="polite">
+        {error ? (
+          <div className="alert alert-danger m-0" role="alert">
+            {error}
+          </div>
+        ) : loading ? (
+          <div className="gymbro-thinking">
+            <span /><span /><span />
+            <span className="visually-hidden">GymBro sta pensando</span>
+          </div>
+        ) : answer ? (
+          <div className="gymbro-answer">{formatAnswer(answer)}</div>
+        ) : (
+          <p className="gymbro-empty">
+            Chiedimi un esercizio, un consiglio sulla scheda o come
+            organizzare la settimana. Sono qui per motivarti!
+          </p>
+        )}
+      </div>
+
+      <form className="gymbro-form" onSubmit={startchat}>
+        <label htmlFor="gymbro-question" className="visually-hidden">
+          La tua domanda
+        </label>
+        <textarea
+          id="gymbro-question"
+          className="form-control"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Es. Come posso migliorare lo squat?"
+          rows={2}
+          required
+        />
+        <button
+          type="submit"
+          className="btn-ui btn-ui--primary"
+          disabled={loading}
+        >
+          <FontAwesomeIcon icon={faPaperPlane} aria-hidden="true" />
+          {loading ? "Sto pensando…" : "Chiedi"}
+        </button>
+      </form>
+    </section>
   );
 }

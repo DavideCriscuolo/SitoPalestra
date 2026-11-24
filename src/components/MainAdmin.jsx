@@ -1,3 +1,4 @@
+import "./../css/MainUser.scss";
 import axios from "axios"; // per fare richieste  http al server
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -38,40 +39,29 @@ export default function MainAdmin() {
   useEffect(requestData, []);
 
   return (
-    <main className="user_main">
-      <div className="container mt-4">
+    <main id="main-content" className="user_main page">
+      <div className="container">
         {isLoading ? (
-          <LoaderC />
+          <LoaderC label="Caricamento iscritti…" />
         ) : (
-          <div className="card w-100 h-100 my-3">
-            <div className="cardtop d-flex justify-content-center my-3">
-              <img
-                className=" w-25  rounded-circle "
-                src="img/Frame2.png"
-                alt="img admin"
-              />
-            </div>
-            <div className="card-body m-3">
-              <h1 className="text-center">Pagina Admin</h1>
-              <div className="row">
-                <div className="col border my-4">
-                  <div className="selectUser">
-                    <div className="mb-3">
-                      <FormMisure
-                        users={dataUser}
-                        requestData={requestData}
-                        onSelectUser={(user) => setSelectedUser(user)}
-                      ></FormMisure>
-                    </div>
-                  </div>
-                </div>
+          <>
+            <div className="dash-head">
+              <div>
+                <p className="eyebrow">Area personal trainer</p>
+                <h1 className="section-title">
+                  Gestione <span>iscritti</span>
+                </h1>
               </div>
-              <NavLink className="btn btn-secondary" to="/">
-                {" "}
-                Logout
+              <NavLink className="btn-ui btn-ui--ghost" to="/">
+                Esci
               </NavLink>
             </div>
-          </div>
+            <FormMisure
+              users={dataUser}
+              requestData={requestData}
+              onSelectUser={(user) => setSelectedUser(user)}
+            ></FormMisure>
+          </>
         )}
       </div>
     </main>

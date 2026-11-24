@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
 
 export default function MainLogin() {
   const [email, setEmail] = useState("");
@@ -103,7 +105,7 @@ export default function MainLogin() {
   }
   return (
     <>
-      <main className="main_login">
+      <main id="main-content" className="main_login page">
         {/* <div className="container  d-flex justify-content-center flex-column ">
           {emailManca && (
             <div className="alert alert-danger" role="alert">
@@ -192,8 +194,20 @@ export default function MainLogin() {
           </div>
         </div> */}
 
-        <div className="container">
-          <h2 className="text-center">In Manutenzione</h2>
+        <div className="container auth">
+          <div className="surface auth-card text-center">
+            <span className="status-icon" aria-hidden="true">
+              <FontAwesomeIcon icon={faScrewdriverWrench} />
+            </span>
+            <h1>Area iscritti</h1>
+            <p className="auth-sub">
+              Stiamo facendo manutenzione all'area riservata. Torna a trovarci
+              tra poco: le tue schede e le tue misure sono al sicuro.
+            </p>
+            <NavLink to="/" className="btn-ui btn-ui--primary btn-ui--block">
+              Torna alla home
+            </NavLink>
+          </div>
         </div>
       </main>
     </>

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /login_admin
+Disallow: /user
+
+Sitemap: https://sito-palestra-lilac.vercel.app/sitemap.xml

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { useState } from "react";
 
 export default function ResetPass() {
@@ -29,32 +29,36 @@ export default function ResetPass() {
   }
 
   return (
-    <>
-      <main>
-        {sucess && (
-          <div className="alert alert-success" role="alert">
-            Password cambiata con successo puoi tornare al login
-          </div>
-        )}
-        <div className="container">
-          <form
-            onSubmit={handleSubmit}
-            className="d-flex flex-column"
-            action=""
-          >
-            <label htmlFor="">Ineserisci Nuova Password</label>
-            <input
-              type="password"
-              className="form-control"
-              onChange={(e) => setNewPassword(e.target.value)}
-              value={newPassword}
-            />
-            <button className="btn btn-secondary my-2" type="submit">
-              Invia
+    <main id="main-content" className="page">
+      <div className="container auth">
+        <div className="surface auth-card">
+          <h1>Nuova password</h1>
+          <p className="auth-sub">Scegli una nuova password per il tuo account.</p>
+          {sucess && (
+            <div className="alert alert-success" role="alert">
+              Password cambiata con successo.{" "}
+              <NavLink to="/login">Torna al login</NavLink>
+            </div>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="field">
+              <label htmlFor="newPassword">Nuova password</label>
+              <input
+                type="password"
+                id="newPassword"
+                className="form-control"
+                autoComplete="new-password"
+                required
+                onChange={(e) => setNewPassword(e.target.value)}
+                value={newPassword}
+              />
+            </div>
+            <button className="btn-ui btn-ui--primary btn-ui--block" type="submit">
+              Salva password
             </button>
           </form>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }

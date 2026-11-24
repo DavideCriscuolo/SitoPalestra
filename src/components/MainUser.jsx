@@ -6,6 +6,8 @@ import "./../css/MainUser.scss";
 import { NavLink } from "react-router-dom";
 import LoaderC from "./LoaderC";
 import GymBroAi from "./GymBroAI";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileLines, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 export default function MainUser() {
   const [dataUser, setDataUser] = useState(null);
   const navigate = useNavigate();
@@ -66,7 +68,11 @@ export default function MainUser() {
 
   // Se i dati utente non ci sono ancora mostra caricamento
   if (!dataUser) {
-    return <p>Caricamento dati utente...</p>;
+    return (
+      <main id="main-content" className="page">
+        <LoaderC label="Caricamento dati utente…" />
+      </main>
+    );
   }
 
   // Converti la data in giorno, mese, anno (assumendo dataUser.data è stringa data valida)
@@ -93,114 +99,94 @@ export default function MainUser() {
       console.error("Errore download scheda:", err.message);
     }
   };
+  const hasMisure =
+    dataUser.spalle &&
+    dataUser.petto &&
+    dataUser.vita &&
+    dataUser.gambaSinistra &&
+    dataUser.gambaDestra &&
+    dataUser.polpaccioDestro &&
+    dataUser.polpaccioSinistro &&
+    dataUser.plica &&
+    dataUser.bicipiteDestro &&
+    dataUser.bicipiteSinistro &&
+    dataUser.data;
+
+  const misure = [
+    { label: "Peso", value: dataUser.peso, unit: "kg" },
+    { label: "Spalle", value: dataUser.spalle, unit: "cm" },
+    { label: "Petto", value: dataUser.petto, unit: "cm" },
+    { label: "Vita", value: dataUser.vita, unit: "cm" },
+    { label: "Bicipite dx", value: dataUser.bicipiteDestro, unit: "cm" },
+    { label: "Bicipite sx", value: dataUser.bicipiteSinistro, unit: "cm" },
+    { label: "Gamba dx", value: dataUser.gambaDestra, unit: "cm" },
+    { label: "Gamba sx", value: dataUser.gambaSinistra, unit: "cm" },
+    { label: "Polpaccio dx", value: dataUser.polpaccioDestro, unit: "cm" },
+    { label: "Polpaccio sx", value: dataUser.polpaccioSinistro, unit: "cm" },
+    { label: "Plica", value: dataUser.plica, unit: "%" },
+  ];
+
   return (
-    <main className="user_main">
-      <div className="container mt-4">
-        {!scheda && (
-          <div>
-            <div class="alert alert-danger" role="alert">
-              <h4 class="alert-heading">Scheda non presente</h4>
-            </div>
-          </div>
-        )}
+    <main id="main-content" className="user_main page">
+      <div className="container">
         {isLoading ? (
           <LoaderC />
         ) : (
-          <div className="card w-100 h-100 my-3">
-            <div className="cardtop d-flex justify-content-center my-3">
+          <>
+            <div className="dash-head">
               <div>
-                <h2>
-                  Ciao {dataUser.nome} {dataUser.cognome}
-                </h2>
+                <p className="eyebrow">Area iscritti</p>
+                <h1 className="section-title">
+                  Ciao <span>{dataUser.nome}</span>
+                </h1>
+              </div>
+              <div className="dash-actions">
+                <button className="btn-ui btn-ui--primary" onClick={viewScheda}>
+                  <FontAwesomeIcon icon={faFileLines} aria-hidden="true" />
+                  Apri scheda
+                </button>
+                <NavLink className="btn-ui btn-ui--ghost" to="/">
+                  <FontAwesomeIcon icon={faRightFromBracket} aria-hidden="true" />
+                  Esci
+                </NavLink>
               </div>
             </div>
-            <div className="card-body m-3">
-              <div id="titleCard" className="title_card text-center"></div>
-              <div className="row row-cols-1">
-                <div id="colMisure" className="col border  my-4">
-                  <div>
-                    {" "}
-                    <h2 className="text-center py-2">Misure</h2>{" "}
-                  </div>
-                  <div>
-                    {dataUser.spalle &&
-                    dataUser.petto &&
-                    dataUser.vita &&
-                    dataUser.gambaSinistra &&
-                    dataUser.gambaDestra &&
-                    dataUser.polpaccioDestro &&
-                    dataUser.polpaccioSinistro &&
-                    dataUser.plica &&
-                    dataUser.bicipiteDestro &&
-                    dataUser.bicipiteSinistro &&
-                    dataUser.data ? (
-                      <ul id="ListMisure" className="list-group py-3">
-                        <li className="list-group-item">
-                          <span>Peso: </span>
-                          {dataUser.peso} Kg
-                        </li>
-                        <li className="list-group-item">
-                          <span>Spalle: </span>
-                          {dataUser.spalle} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Petto: </span> {dataUser.petto} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Bicipite Destro: </span>{" "}
-                          {dataUser.bicipiteDestro} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Bicipite Sinistro: </span>{" "}
-                          {dataUser.bicipiteSinistro} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Vita: </span> {dataUser.vita} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Gamba Sinistra: </span> {dataUser.gambaSinistra}{" "}
-                          cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Gamba Destra: </span> {dataUser.gambaDestra} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Polapccio Destro: </span>{" "}
-                          {dataUser.polpaccioDestro} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Polapccio Sinistro: </span>{" "}
-                          {dataUser.polpaccioSinistro} cm
-                        </li>
-                        <li className="list-group-item">
-                          <span>Plica: </span> {dataUser.plica} %
-                        </li>
-                        <li className="list-group-item">
-                          <span>Data di inserimento: </span> {giorno}-{mese}-
-                          {anno}
-                        </li>
-                      </ul>
-                    ) : (
-                      <p className="text-center">Non ci sono misure</p>
-                    )}
-                  </div>
-                </div>
+
+            {!scheda && (
+              <div className="alert alert-danger" role="alert">
+                Non è ancora presente una scheda per te. Chiedi al tuo personal
+                trainer.
               </div>
-              <div className="d-flex justify-content-between">
-                <div>
-                  <NavLink className="btn btn-secondary m-2" to="/">
-                    {" "}
-                    Logout
-                  </NavLink>
-                </div>
-                <div>
-                  <button className="btn btn-dark m-2" onClick={viewScheda}>
-                    Apri scheda
-                  </button>
-                </div>
+            )}
+
+            <section className="surface mb-4" aria-labelledby="misure-title">
+              <div className="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-4">
+                <h2 id="misure-title" className="dash-title">Le tue misure</h2>
+                {hasMisure && (
+                  <span className="text-secondary">
+                    Aggiornate il {giorno}/{mese}/{anno}
+                  </span>
+                )}
               </div>
-            </div>
-          </div>
+              {hasMisure ? (
+                <dl className="stat-grid">
+                  {misure.map((m) => (
+                    <div className="stat" key={m.label}>
+                      <dt>{m.label}</dt>
+                      <dd>
+                        {m.value}
+                        <small>{m.unit}</small>
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : (
+                <p className="text-secondary m-0">
+                  Non ci sono ancora misure registrate.
+                </p>
+              )}
+            </section>
+          </>
         )}
         <GymBroAi></GymBroAi>
       </div>

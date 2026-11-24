@@ -1,89 +1,132 @@
-// Stili per il toggle del chatbot
-.chatbot-toggle {
-  cursor: pointer;
-  transition: transform 0.2s ease;
+.gymbro {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
 
-  &:hover {
-    transform: scale(1.05);
+.gymbro-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  h2 {
+    font-size: 1.9rem;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-muted);
   }
 }
 
-// Container per la transizione fade
-.chatbot-container {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform-origin: top right;
+.gymbro-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 1.4rem;
+}
 
-  &.show {
+.gymbro-body {
+  min-height: 96px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 1.25rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.gymbro-empty {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.gymbro-answer {
+  h3 {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem;
+  }
+
+  p {
+    margin-bottom: 0.75rem;
+  }
+
+  li {
+    list-style: none;
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      background: var(--color-primary);
+      transform: rotate(45deg);
+    }
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.gymbro-thinking {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.5rem 0;
+
+  span:not(.visually-hidden) {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    animation: pulse 1s ease-in-out infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+}
+
+.gymbro-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+
+  textarea {
+    flex: 1;
+    min-height: 56px;
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    visibility: visible;
-  }
-
-  &.hide {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-    visibility: hidden;
-  }
-}
-
-// Stili per la card del chatbot
-.chatbot-card {
-  margin-top: 10px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: none;
-
-  .card-body {
-    padding: 20px;
-
-    h1 {
-      font-size: 1.5rem;
-      color: #333;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 15px;
-
-      .form-control {
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        padding: 10px;
-
-        &:focus {
-          border-color: #f3540f;
-          box-shadow: 0 0 0 0.2rem #e94b089a;
-        }
-      }
-
-      .btn {
-        background: linear-gradient(45deg, #f3540f, #c1440f);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 10px 15px;
-        font-weight: 500;
-        transition: all 0.2s ease;
-
-        &:hover:not(:disabled) {
-          background: linear-gradient(45deg, #f3540f, #a2380a);
-        }
-
-        &:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-      }
-    }
-
-    p {
-      margin-bottom: 10px;
-      line-height: 1.5;
-      color: #555;
-    }
+    transform: scale(1);
   }
 }

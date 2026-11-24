@@ -1,11 +1,11 @@
+import JumboC from "../components/JumboC";
 import MainHome from "../components/MainHome";
-import HeaderC from "../components/HeaderC";
-import Footer from "../components/FooterC";
 
 export default function Home() {
   return (
-    <div>
+    <>
+      <JumboC></JumboC>
       <MainHome></MainHome>
-    </div>
+    </>
   );
 }

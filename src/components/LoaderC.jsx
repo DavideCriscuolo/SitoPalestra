@@ -1,13 +1,8 @@
-export default function LoaderC() {
+export default function LoaderC({ label = "Caricamento…" }) {
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <div
-        className="spinner-border"
-        role="status"
-        style={{ width: "5rem", height: "5rem" }}
-      >
-        <span className="visually-hidden">Loading...</span>
-      </div>
+    <div className="loader" role="status" aria-live="polite">
+      <span className="loader-ring" aria-hidden="true" />
+      <span>{label}</span>
     </div>
   );
 }

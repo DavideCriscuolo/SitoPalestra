@@ -1,300 +1,293 @@
-// Variabili colore
-$primary-color: #ff4d00;
-$secondary-color: #1a1a1a;
-$text-color: #333;
-$light-bg: #f8f9fa;
-$white: #ffffff;
-$gradient-start: #ff4d00;
-$gradient-end: #ff8a00;
-
 .main-home {
-  min-height: 500px;
-  background-color: $white;
+  overflow-x: clip;
+}
 
-  // Sezione Chi Siamo
-  .who-we-are-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, $light-bg 0%, $white 100%);
-    border-radius: 20px;
-    margin-bottom: 60px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+// ---------- Chi siamo ----------
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
 
-    .section-header {
-      text-align: center;
-      margin-bottom: 40px;
+.feature {
+  background: var(--color-surface);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  transition: background-color var(--dur-base) var(--ease-out);
 
-      .section-title {
-        font-size: 48px;
-        font-weight: 800;
-        color: $secondary-color;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 20px;
-        position: relative;
-        display: inline-block;
-      }
-
-      .title-underline {
-        width: 100px;
-        height: 5px;
-        background: linear-gradient(90deg, $gradient-start, $gradient-end);
-        margin: 0 auto;
-        border-radius: 10px;
-        animation: expandLine 0.8s ease-out;
-      }
-    }
-
-    .section-content {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 20px;
-
-      .section-text {
-        font-size: 20px;
-        line-height: 1.8;
-        color: $text-color;
-        margin-bottom: 20px;
-        text-align: center;
-        font-weight: 400;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
+  &:hover {
+    background: var(--color-surface-2);
   }
 
-  // Sezione Servizi
-  .services-section {
-    padding: 80px 0;
-    margin-bottom: 60px;
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 60px;
-
-      .section-title {
-        font-size: 48px;
-        font-weight: 800;
-        color: $secondary-color;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 20px;
-      }
-
-      .title-underline {
-        width: 100px;
-        height: 5px;
-        background: linear-gradient(90deg, $gradient-start, $gradient-end);
-        margin: 0 auto;
-        border-radius: 10px;
-      }
-    }
-
-    .services-grid {
-      margin-top: 40px;
-    }
+  h3 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    margin: 1.25rem 0 0.5rem;
   }
 
-  // Sezione Contatti
-  .contact-section {
-    padding: 80px 25px 100px;
-    background: linear-gradient(135deg, $secondary-color 0%, #2d2d2d 100%);
-    border-radius: 20px;
-    margin-bottom: 40px;
+  p {
+    color: var(--color-muted);
+    margin: 0;
+  }
+}
 
-    .section-header {
-      text-align: center;
-      margin-bottom: 60px;
+.feature-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 90, 31, 0.12);
+  color: var(--color-primary);
+  font-size: 1.35rem;
+}
 
-      .section-title {
-        font-size: 48px;
-        font-weight: 800;
-        color: $white;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 20px;
-      }
+// ---------- Servizi ----------
+.services {
+  background: var(--color-surface);
+  border-block: 1px solid var(--color-border);
+}
 
-      .title-underline {
-        width: 100px;
-        height: 5px;
-        background: linear-gradient(90deg, $gradient-start, $gradient-end);
-        margin: 0 auto;
-        border-radius: 10px;
-      }
-    }
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 3rem;
+  align-items: end;
+  margin-bottom: 3rem;
 
-    .contact-content {
-      .schedule-card,
-      .address-card {
-        background: $white;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-        height: 100%;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+  .lead-text {
+    margin-bottom: 1.25rem;
+  }
+}
 
-        &:hover {
-          transform: translateY(-10px);
-          box-shadow: 0 20px 60px rgba(255, 77, 0, 0.3);
-        }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+}
 
-        .card-subtitle {
-          font-size: 28px;
-          font-weight: 700;
-          color: $secondary-color;
-          margin-bottom: 30px;
-          display: flex;
-          align-items: center;
-          gap: 15px;
+// ---------- Contatti ----------
+.contact-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
 
-          .icon {
-            font-size: 32px;
-          }
-        }
+  svg {
+    color: var(--color-primary);
+    font-size: 1.25rem;
+  }
+}
 
-        .schedule-list {
-          .schedule-item {
-            padding: 20px 0;
-            border-bottom: 2px solid $light-bg;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+.schedule {
+  margin: 0;
+}
 
-            &:last-child {
-              border-bottom: none;
-            }
+.schedule-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px dashed var(--color-border);
 
-            .schedule-days {
-              font-weight: 700;
-              font-size: 18px;
-              color: $secondary-color;
-            }
-
-            .schedule-hours {
-              font-size: 16px;
-              color: $primary-color;
-              font-weight: 600;
-            }
-          }
-        }
-
-        .address-text {
-          font-size: 18px;
-          line-height: 1.8;
-          color: $text-color;
-          margin-bottom: 30px;
-
-          strong {
-            color: $primary-color;
-            font-weight: 700;
-          }
-        }
-
-        .map-container {
-          border-radius: 10px;
-          overflow: hidden;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-
-          iframe {
-            border: none;
-            display: block;
-          }
-        }
-      }
-    }
+  &:last-child {
+    border-bottom: 0;
   }
 
-  // Stili bottoni
-  .btn {
-    transition: all 0.3s ease;
+  dt {
+    font-weight: 600;
+  }
 
-    &:hover {
-      background-color: $primary-color;
-      color: $white;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(255, 77, 0, 0.4);
-    }
+  dd {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+}
 
-    &:first-child:active {
-      background-color: $primary-color;
-      color: $white;
-      border: none;
+.address {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+}
+
+.map-container {
+  flex: 1;
+  min-height: 320px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    border: 0;
+  }
+}
+
+// ---------- Responsive ----------
+@media (max-width: 1199px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .section-head {
+    grid-template-columns: 1fr;
+  }
+  .feature-grid,
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  .schedule-row {
+    flex-direction: column;
+    gap: 0.35rem;
+    dd {
+      align-items: flex-start;
     }
   }
 }
 
-// Animazioni
-@keyframes expandLine {
-  from {
-    width: 0;
+// ---------- Mobile ----------
+@media (max-width: 767px) {
+  .section-head {
+    margin-bottom: 2rem;
   }
-  to {
-    width: 100px;
-  }
-}
 
-// Media Queries
-@media screen and (max-width: 577px) {
-  .main-home {
-    .who-we-are-section,
-    .services-section,
-    .contact-section {
-      padding: 40px 25px 7px;
+  // Servizi: carosello orizzontale con snap, la card successiva resta visibile
+  .services-grid {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin-inline: calc(var(--bs-gutter-x, 1.5rem) * -0.5);
+    padding: 0.25rem calc(var(--bs-gutter-x, 1.5rem) * 0.5) 1rem;
+    scrollbar-width: none;
 
-      .section-header .section-title {
-        font-size: 32px;
-      }
+    &::-webkit-scrollbar {
+      display: none;
     }
 
-    .who-we-are-section {
-      .section-content .section-text {
-        font-size: 18px;
-      }
-    }
-
-    .contact-section {
-      .contact-content {
-        .schedule-card,
-        .address-card {
-          padding: 25px;
-
-          .card-subtitle {
-            font-size: 22px;
-          }
-
-          .schedule-list .schedule-item {
-            .schedule-days {
-              font-size: 16px;
-            }
-
-            .schedule-hours {
-              font-size: 14px;
-            }
-          }
-
-          .address-text {
-            font-size: 16px;
-          }
-        }
-      }
+    .service-card {
+      flex: 0 0 82%;
+      scroll-snap-align: start;
+      scroll-margin-left: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
     }
   }
-}
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .main-home {
-    .section-header .section-title {
-      font-size: 42px;
+  .service-card:hover {
+    transform: none;
+  }
+
+  .feature {
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    align-items: start;
+
+    .feature-icon {
+      grid-row: span 2;
+      width: 44px;
+      height: 44px;
+      font-size: 1.1rem;
     }
+
+    h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1.35rem;
+    }
+  }
+
+  .contact-title {
+    font-size: 1.5rem;
+  }
+
+  .map-container,
+  .map-container iframe {
+    min-height: 260px;
   }
 }
 
-@media screen and (min-width: 1200px) {
-  .main-home {
-    .section-header .section-title {
-      font-size: 52px;
-    }
+// ---------- Orario: oggi ----------
+.schedule-row.is-today {
+  dt {
+    color: var(--color-fg);
+  }
+}
+
+.today-tag {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+// ---------- Mappa su richiesta ----------
+.map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: repeating-linear-gradient(
+      45deg,
+      transparent 0 14px,
+      rgba(255, 255, 255, 0.025) 14px 28px
+    ),
+    var(--color-surface-2);
+
+  .map-placeholder-icon {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+  }
+
+  p {
+    margin: 0;
+    max-width: 36ch;
+    font-size: 0.9rem;
+    color: var(--color-muted);
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function MainRegistrazione() {
   const [email, setEmail] = useState("");
@@ -44,78 +44,87 @@ export default function MainRegistrazione() {
   }
 
   return (
-    <>
-      <main className="main_login">
-        <div className="container  d-flex justify-content-center flex-column">
+    <main id="main-content" className="main_login page">
+      <div className="container auth">
+        <div className="surface auth-card">
+          <h1>Registrati</h1>
+          <p className="auth-sub">
+            Crea il tuo account per accedere a scheda e misure.
+          </p>
           {registerSuccess && (
             <div className="alert alert-success" role="alert">
-              Registrazione avvenuta con successo!
+              Registrazione avvenuta con successo!{" "}
               <span className="fw-bold">
-                {" "}
-                Sarai reindirizzato al login automaticamente
+                Sarai reindirizzato al login automaticamente.
               </span>
             </div>
           )}
-          <form onSubmit={register} className="mb-3">
-            <label htmlFor="" className="form-label">
-              Nome
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="nome"
-              id="nome"
-              aria-describedby="emailHelpId"
-              placeholder="Nome"
-              onChange={(e) => setNome(e.target.value)}
-              value={nome}
-            />
-            <label htmlFor="" className="form-label mt-3">
-              Cognome
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="congome"
-              id="cognome"
-              aria-describedby="emailHelpId"
-              placeholder="Cognome"
-              onChange={(e) => setCognome(e.target.value)}
-              value={cognome}
-            />
-            <label htmlFor="" className="form-label mt-3">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              id="email"
-              aria-describedby="emailHelpId"
-              placeholder="Email"
-              onChange={handleChange}
-              value={email}
-            />
-            <label htmlFor="" className="form-label mt-3">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              id="password"
-              aria-describedby="emailHelpId"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
-            <button type="submit" className="btn btn-secondary my-2">
-              {" "}
-              Registrati
+          <form onSubmit={register}>
+            <div className="row g-3">
+              <div className="col-sm-6 field mb-0">
+                <label htmlFor="nome">Nome</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="nome"
+                  id="nome"
+                  autoComplete="given-name"
+                  required
+                  onChange={(e) => setNome(e.target.value)}
+                  value={nome}
+                />
+              </div>
+              <div className="col-sm-6 field mb-0">
+                <label htmlFor="cognome">Cognome</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="cognome"
+                  id="cognome"
+                  autoComplete="family-name"
+                  required
+                  onChange={(e) => setCognome(e.target.value)}
+                  value={cognome}
+                />
+              </div>
+            </div>
+            <div className="field mt-3">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                id="email"
+                autoComplete="email"
+                placeholder="nome@esempio.it"
+                required
+                onChange={handleChange}
+                value={email}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                id="password"
+                autoComplete="new-password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+            </div>
+            <button type="submit" className="btn-ui btn-ui--primary btn-ui--block mt-2">
+              Crea account
             </button>
           </form>
+          <div className="auth-links">
+            <span>Hai già un account?</span>
+            <NavLink to="/login">Accedi</NavLink>
+          </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }

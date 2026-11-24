@@ -1,96 +1,76 @@
 import "./../css/CardC.scss";
-import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import Reveal from "./Reveal";
+import { whatsappLink } from "../data/site";
 
 const services = [
   {
     id: 1,
-    img: "/img/personal.webp",
-    title: "PERSONAL",
+    img: "personal",
+    title: "Personal",
     desc: "Lezioni private personalizzate con assistenza continua e monitoraggio completo.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Vorrei%20sapere%20di%20piu%20sulle%20lezioni%20private%20con%20un%20personal%20trainer.",
+    message:
+      "Ciao! Vorrei sapere di più sulle lezioni private con un personal trainer.",
   },
   {
     id: 2,
-    img: "/img/mensile.webp",
-    title: "MENSILE",
-    desc: "Piano mensile, ti permette di accedere a scheda personalizzata, sala pesi, sala corsi, spogliatoio.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Mi%20interessano%20le%20informazioni%20sull'abbonamento%20mensile.",
+    img: "mensile",
+    title: "Mensile",
+    desc: "Accesso a scheda personalizzata, sala pesi, sala corsi e spogliatoio.",
+    message: "Ciao! Mi interessano le informazioni sull'abbonamento mensile.",
   },
   {
     id: 3,
-    img: "/img/full-shot-woman-doing-burpees-indoors.webp",
-    title: "GIORNALIERO",
-    desc: "Singolo ingresso in giornata con piena disponibilità da parte della struttura e staff.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Vorrei%20sapere%20se%20è%20possibile%20fare%20un%20ingresso%20giornaliero%20e%20qual%20è%20il%20costo.",
+    img: "giornaliero",
+    title: "Giornaliero",
+    desc: "Singolo ingresso in giornata con piena disponibilità della struttura e dello staff.",
+    message:
+      "Ciao! Vorrei sapere se è possibile fare un ingresso giornaliero e qual è il costo.",
   },
   {
     id: 4,
-    img: "/img/Consulenza.webp",
-    title: "CONSULENZA",
-    desc: "Consigli personalizzati sul piano di allenamento più adatto alle tue esigenze e ai tuoi obiettivi.",
-    infoMessage:
-      "https://api.whatsapp.com/send?phone=+393280203014&text=Ciao!%20Vorrei%20ricevere%20maggiori%20informazioni%20sul%20piano%20di%20consulenza%20personalizzata.",
+    img: "consulenza",
+    title: "Consulenza",
+    desc: "Consigli sul piano di allenamento più adatto alle tue esigenze e ai tuoi obiettivi.",
+    message:
+      "Ciao! Vorrei ricevere maggiori informazioni sul piano di consulenza personalizzata.",
   },
 ];
 
 export default function CardC() {
-  const [isVisible, setIsVisible] = useState(null);
-
-  const handleToggle = (id) => {
-    setIsVisible(isVisible === id ? null : id);
-  };
-
   return (
     <>
-      {services.map((service) => (
-        <div key={service.id} className="col">
-          <div className="service-card">
-            <div className="card-image-wrapper">
-              <img
-                className="card-image"
-                src={service.img}
-                alt={service.title}
-              />
-              <div className="card-overlay">
-                <h4 className="card-title">{service.title}</h4>
-              </div>
-            </div>
-
-            <div className="card-content">
-              <button
-                className="btn-discover"
-                onClick={() => handleToggle(service.id)}
-                aria-expanded={isVisible === service.id}
-              >
-                {isVisible === service.id ? "Chiudi" : "Scopri di più"}
-                <span className="btn-icon">
-                  {isVisible === service.id ? "▲" : "▼"}
-                </span>
-              </button>
-
-              <div
-                className={`card-details ${
-                  isVisible === service.id ? "active" : ""
-                }`}
-              >
-                <p className="card-description">{service.desc}</p>
-                <a
-                  className="btn-contact"
-                  href={service.infoMessage}
-                  role="button"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="whatsapp-icon">💬</span>
-                  Contattaci su WhatsApp
-                </a>
-              </div>
-            </div>
+      {services.map((service, i) => (
+        <Reveal as="article" key={service.id} className="service-card" delay={i * 0.06}>
+          <div className="service-media">
+            <img
+              src={`/img/cards/${service.img}-800.webp`}
+              srcSet={`/img/cards/${service.img}-480.webp 480w, /img/cards/${service.img}-800.webp 800w`}
+              sizes="(max-width: 767px) 82vw, (max-width: 1199px) 45vw, 300px"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
+            <span className="service-index">0{i + 1}</span>
           </div>
-        </div>
+          <div className="service-body">
+            <h3>{service.title}</h3>
+            <p>{service.desc}</p>
+            <a
+              className="service-link"
+              href={whatsappLink(service.message)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Chiedi informazioni su ${service.title} via WhatsApp`}
+            >
+              <FontAwesomeIcon icon={faWhatsapp} aria-hidden="true" />
+              Chiedi informazioni
+            </a>
+          </div>
+        </Reveal>
       ))}
     </>
   );

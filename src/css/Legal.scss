@@ -1,0 +1,37 @@
+.legal {
+  max-width: 760px;
+
+  .legal-updated {
+    color: var(--color-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  section {
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  p,
+  li {
+    color: #d4d6db;
+    line-height: 1.7;
+  }
+
+  ul {
+    padding-left: 1.2rem;
+  }
+
+  li + li {
+    margin-top: 0.6rem;
+  }
+
+  strong {
+    color: var(--color-fg);
+  }
+}
