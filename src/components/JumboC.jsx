@@ -3,8 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPause,
-  faPlay,
   faChevronDown,
   faDumbbell,
   faPeopleGroup,
@@ -29,9 +27,6 @@ export default function Jumbo() {
   const [videoSrc] = useState(() =>
     window.innerWidth <= 768 ? "/img/jumbo-480p-light.mp4" : "/img/jumbo-altro-720p.mp4"
   );
-  const [playing, setPlaying] = useState(
-    () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
   // Il video compare solo quando ha il primo frame.
   const [ready, setReady] = useState(false);
 
@@ -50,12 +45,13 @@ export default function Jumbo() {
     const video = videoRef.current;
     if (!video) return;
     if (video.readyState >= 2) setReady(true);
-    if (playing && inView) {
-      video.play().catch(() => setPlaying(false));
+    // Sempre in loop; si ferma solo fuori schermo per non pesare sullo scroll.
+    if (inView) {
+      video.play().catch(() => {});
     } else {
       video.pause();
     }
-  }, [playing, inView]);
+  }, [inView]);
 
   return (
     <section ref={sectionRef} className="hero" aria-labelledby="hero-title">
@@ -67,7 +63,7 @@ export default function Jumbo() {
           muted
           loop
           playsInline
-          autoPlay={playing}
+          autoPlay
           preload="auto"
           aria-hidden="true"
           onLoadedData={() => setReady(true)}
@@ -102,14 +98,6 @@ export default function Jumbo() {
           <FontAwesomeIcon icon={faChevronDown} />
         </HashLink>
 
-        <button
-          type="button"
-          className="hero-video-toggle"
-          onClick={() => setPlaying((p) => !p)}
-          aria-label={playing ? "Metti in pausa il video" : "Riproduci il video"}
-        >
-          <FontAwesomeIcon icon={playing ? faPause : faPlay} />
-        </button>
       </div>
 
       <ul className="hero-strip">

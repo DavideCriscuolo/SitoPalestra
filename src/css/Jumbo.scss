@@ -87,26 +87,6 @@
   }
 }
 
-.hero-video-toggle {
-  position: absolute;
-  right: 1.25rem;
-  bottom: 1.5rem;
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(10, 10, 10, 0.5);
-  color: var(--text);
-  cursor: pointer;
-
-  &:hover {
-    border-color: var(--brand);
-    color: var(--brand);
-  }
-}
-
 // Fascia arancione con taglio diagonale
 .hero-strip {
   display: grid;
@@ -175,8 +155,5 @@
   .hero-cta .btn-ui {
     flex: 1 1 100%;
     margin-inline: 0.75rem;
-  }
-  .hero-video-toggle {
-    right: 0.75rem;
   }
 }
