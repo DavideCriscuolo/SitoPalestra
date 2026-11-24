@@ -10,7 +10,7 @@ const toMinutes = (hhmm) => {
 const rangesFor = (day) =>
   SCHEDULE.find((row) => row.days.includes(day))?.hours ?? [];
 
-// Ora corrente a Eboli, indipendente dal fuso del visitatore.
+// Ora italiana (Europe/Rome), indipendente dal fuso del visitatore.
 export function romeNow(date = new Date()) {
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone: "Europe/Rome",

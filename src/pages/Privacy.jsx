@@ -8,7 +8,7 @@ export default function Privacy() {
     document.title = "Privacy e cookie · Palasportmax";
     window.scrollTo(0, 0);
     return () => {
-      document.title = "Palasportmax · Palestra a Eboli | Sala pesi, corsi e personal trainer";
+      document.title = "Palasportmax | Sala pesi, corsi e personal trainer";
     };
   }, []);
 
