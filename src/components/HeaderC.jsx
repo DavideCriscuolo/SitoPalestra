@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { MEMBER_AREA_ENABLED, whatsappLink } from "../data/site";
+import OpenBadge from "./OpenBadge";
 
 const links = [
   { to: "/#Chi_siamo", label: "Chi siamo" },
@@ -46,10 +47,13 @@ export default function Header() {
         Vai al contenuto
       </a>
       <nav className="container site-nav" aria-label="Navigazione principale">
-        <NavLink className="brand" to="/">
-          <img src="/img/logo-96.png" alt="" width="40" height="40" />
-          <span>Palasportmax</span>
-        </NavLink>
+        <div className="brand-group">
+          <NavLink className="brand" to="/">
+            <img src="/logo.svg" alt="" width="40" height="40" />
+            <span>Palasportmax</span>
+          </NavLink>
+          <OpenBadge className="header-badge" />
+        </div>
 
         <button
           className="nav-toggle"

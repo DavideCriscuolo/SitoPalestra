@@ -1,23 +1,27 @@
 .hero {
+  margin-top: calc(var(--header-h) * -1);
+}
+
+.hero-stage {
   position: relative;
-  min-height: min(92vh, 900px);
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
   overflow: hidden;
-  background: radial-gradient(ellipse at 70% 40%, #1d2027 0%, var(--color-bg) 70%);
   isolation: isolate;
+  background: radial-gradient(ellipse at 50% 40%, #1c1c1c 0%, var(--bg) 70%);
 }
 
 .hero-video {
   position: absolute;
   inset: 0;
+  z-index: -2;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -2;
   opacity: 0;
-  transition: opacity 600ms var(--ease-out);
+  transition: opacity 600ms var(--ease);
 
   &.is-ready {
     opacity: 1;
@@ -28,106 +32,110 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(
-      90deg,
-      rgba(14, 15, 18, 0.92) 0%,
-      rgba(14, 15, 18, 0.6) 55%,
-      rgba(14, 15, 18, 0.25) 100%
-    ),
-    linear-gradient(180deg, rgba(14, 15, 18, 0) 50%, var(--color-bg) 100%);
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.55) 55%, rgba(10, 10, 10, 0.95) 100%),
+    linear-gradient(115deg, rgba(255, 77, 0, 0.28) 0%, rgba(255, 77, 0, 0) 45%);
 }
 
 .hero-content {
-  padding-top: 6rem;
-  padding-bottom: clamp(3rem, 7vw, 5.5rem);
-  animation: heroIn 700ms var(--ease-out) both;
-}
-
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1.25rem;
-  margin-bottom: 1.25rem;
+  text-align: center;
+  padding-top: calc(var(--header-h) + 3rem);
+  padding-bottom: 6rem;
+  animation: heroIn 700ms var(--ease) both;
 }
 
 .hero-title {
-  font-size: clamp(3.25rem, 11vw, 9rem);
-  font-weight: 800;
-  line-height: 0.9;
-  text-transform: uppercase;
-  max-width: 11ch;
-  margin-bottom: 1.5rem;
+  font-size: clamp(3.6rem, 11vw, 9.5rem);
+  font-weight: 900;
+  line-height: 0.88;
+  max-width: 12ch;
+  margin: 0 auto 1.5rem;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.45);
 
   span {
-    color: var(--color-primary);
+    color: var(--brand);
   }
 }
 
 .hero-subtitle {
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
-  color: #d9dbe0;
-  max-width: 46ch;
-  margin-bottom: 2.25rem;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  color: #e6e6e6;
+  max-width: 44ch;
+  margin: 0 auto 2.5rem;
 }
 
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  justify-content: center;
+  gap: 1.25rem 1.75rem;
 }
 
-.hero-strip {
-  border-top: 1px solid var(--color-border);
-  background: rgba(14, 15, 18, 0.75);
+.hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  translate: -50% 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--text);
+  animation: bob 1.8s ease-in-out infinite;
 
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 2.5rem;
-    margin: 0 auto;
-    padding-block: 1.1rem;
-    list-style: none;
-  }
-
-  li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 1.1rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-
-    &::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      background: var(--color-primary);
-      transform: rotate(45deg);
-    }
+  &:hover {
+    color: var(--brand);
   }
 }
 
 .hero-video-toggle {
   position: absolute;
-  top: 1.25rem;
   right: 1.25rem;
+  bottom: 1.5rem;
   width: 44px;
   height: 44px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  border: 1px solid rgba(245, 245, 244, 0.35);
-  background: rgba(14, 15, 18, 0.55);
-  color: var(--color-fg);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(10, 10, 10, 0.5);
+  color: var(--text);
   cursor: pointer;
-  transition: background-color var(--dur-fast) var(--ease-out);
 
   &:hover {
-    background: rgba(14, 15, 18, 0.85);
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+}
+
+// Fascia arancione con taglio diagonale
+.hero-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  padding: 2.25rem max(1rem, calc((100vw - 1320px) / 2)) 1.5rem;
+  list-style: none;
+  background: var(--brand);
+  color: var(--on-brand);
+  clip-path: polygon(0 22%, 100% 0, 100% 100%, 0 100%);
+  margin-top: -2.5rem;
+  position: relative;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2vw, 1.6rem);
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+
+    svg {
+      font-size: 1.3em;
+    }
   }
 }
 
@@ -142,36 +150,33 @@
   }
 }
 
-@media (max-width: 576px) {
-  .hero {
-    min-height: calc(100vh - var(--header-h));
-    min-height: calc(100svh - var(--header-h));
+@keyframes bob {
+  50% {
+    transform: translateY(6px);
   }
-  .hero-content {
-    padding-top: 4rem;
-    padding-bottom: 2rem;
-  }
-  .hero-subtitle {
-    margin-bottom: 1.75rem;
-  }
-  .hero-strip ul {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
+}
+
+@media (max-width: 767px) {
+  .hero-strip {
+    grid-template-columns: 1fr 1fr;
+    clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+    padding-top: 2rem;
+
+    li {
+      justify-content: flex-start;
     }
   }
-  .hero-strip li {
-    white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .hero-content {
+    padding-bottom: 5rem;
   }
   .hero-cta .btn-ui {
     flex: 1 1 100%;
+    margin-inline: 0.75rem;
   }
-  .hero-strip ul {
-    gap: 0.4rem 1.5rem;
-  }
-  .hero-strip li {
-    font-size: 0.95rem;
+  .hero-video-toggle {
+    right: 0.75rem;
   }
 }

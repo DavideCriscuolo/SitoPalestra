@@ -24,12 +24,11 @@
 .dash-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem 1.5rem;
 }
 
 .dash-title {
-  font-size: 1.9rem;
-  text-transform: uppercase;
+  font-size: 2rem;
   margin: 0;
 }
 
@@ -41,32 +40,34 @@
 }
 
 .stat {
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 1rem 1.1rem;
+  background: var(--surface-2);
+  border-left: 3px solid var(--brand);
+  padding: 0.9rem 1rem;
 
   dt {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--color-muted);
+    color: var(--muted);
     margin-bottom: 0.25rem;
   }
 
   dd {
     margin: 0;
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.1;
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1;
     font-variant-numeric: tabular-nums;
 
     small {
-      font-size: 1rem;
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: 0.9rem;
       font-weight: 600;
-      color: var(--color-primary);
+      color: var(--brand);
       margin-left: 0.25rem;
     }
   }

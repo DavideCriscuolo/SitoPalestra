@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Palasportmax">
+  <rect width="64" height="64" fill="#FF4D00"/>
+  <!-- P bold inclinata come i pulsanti del sito -->
+  <path transform="translate(6.5 0) skewX(-12)" fill="#FFFFFF" fill-rule="evenodd"
+    d="M18 8h17a11 11 0 0 1 0 22h-8v12h-9zM27 15.5h7.5a3.5 3.5 0 0 1 0 7H27z"/>
+  <!-- bilanciere: barra bianca, dischi neri -->
+  <rect x="9" y="48" width="46" height="3" fill="#FFFFFF"/>
+  <rect x="12" y="42.5" width="4" height="14" fill="#0A0A0A"/>
+  <rect x="7.5" y="45" width="3.5" height="9" fill="#0A0A0A"/>
+  <rect x="48" y="42.5" width="4" height="14" fill="#0A0A0A"/>
+  <rect x="53" y="45" width="3.5" height="9" fill="#0A0A0A"/>
+</svg>
